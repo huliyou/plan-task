@@ -99,6 +99,18 @@ const Routers = function ({ history, app }) {
             }, 'probs-pond')//routes下的文件夹prob中的index.js文件
           },
         },
+        // !!!: 此处提供的是Demo例子，请及时删除
+        // !!!: 此处是注册路由
+        {
+          path: 'probs/my-duty',
+          name: 'probs/my-duty',
+          getComponent(nextState, cb) {
+            require.ensure([], require => {
+              registerModel(app, require('./models/MyDutyModal'));
+              cb(null, require('./components/MyDuty'))
+            }, 'MyDuty');
+          }
+        },
          /**
          * 我负责的url路径
          * sp 2017.4.27
