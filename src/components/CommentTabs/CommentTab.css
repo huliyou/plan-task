@@ -1,0 +1,16 @@
+.commentTabBar {
+    margin: 0 10px;
+    border-bottom: 1px solid #e8edf2;
+}
+.commentTabBar>li {
+    display: inline-block;
+    min-width: 100px;
+    color: gray;
+}.commentTabBar>li.active {
+    color: red;
+}
+.commentTabBar>li:last-child {
+    float: right;
+    text-align: right;
+}
+
