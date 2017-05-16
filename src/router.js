@@ -19,17 +19,17 @@ function GetQueryString(name)
 }
 
 function getCookie(name)
-{ 
-  var strCookie=document.cookie; 
-  var arrCookie=strCookie.split("; "); 
+{
+  var strCookie=document.cookie;
+  var arrCookie=strCookie.split("; ");
   for(var i=0;i<arrCookie.length;i++)
-  { 
-    var arr=arrCookie[i].split("="); 
+  {
+    var arr=arrCookie[i].split("=");
     if(arr[0]==name)
-      return arr[1]; 
-  } 
-  return ""; 
-} 
+      return arr[1];
+  }
+  return "";
+}
 
 
 const Routers = function ({ history, app }) {
@@ -55,7 +55,7 @@ const Routers = function ({ history, app }) {
           },
         },
         /*
-         * 系统主页 
+         * 系统主页
          * add by 孙宝然 2017-04-27
          */
          {
@@ -88,7 +88,7 @@ const Routers = function ({ history, app }) {
               cb(null, require('./routes/probs/communicate/'))//routes下的文件夹prob
             }, 'probs-communicate')//routes下的文件夹prob中的index.js文件
           },
-        }, 
+        },
          {
           path: '/probs/pond',
           name: '/probs/pond',
@@ -98,7 +98,7 @@ const Routers = function ({ history, app }) {
               cb(null, require('./routes/probs/pond/'))//routes下的文件夹prob
             }, 'probs-pond')//routes下的文件夹prob中的index.js文件
           },
-        },    
+        },
          /**
          * 我负责的url路径
          * sp 2017.4.27
@@ -113,7 +113,7 @@ const Routers = function ({ history, app }) {
               cb(null, require('./routes/probs/responsible/'))//routes下的文件夹prob
             }, 'probs-responsible')//routes下的文件夹prob中的index.js文件
           },
-        }, 
+        },
         /**
          * 添加 url 请求路径
          * hwy 2017.5.2
@@ -128,7 +128,7 @@ const Routers = function ({ history, app }) {
               cb(null, require('./routes/probs/probmgr/'))//routes下的文件夹probs
             }, 'probmgr')//routes下的文件夹/probs/中的index.js文件
           },
-        }, 
+        },
         {
           path: '/prob_detail',
           name: '/prob_detail',
@@ -138,7 +138,7 @@ const Routers = function ({ history, app }) {
               cb(null, require('./routes/probs/prob_detail/'))//routes下的文件夹prob
             }, 'probs_detail')//routes下的文件夹prob中的index.js文件
           },
-        }, 
+        },
         {
           path: '/resprob_detail',
           name: '/resprob_detail',
@@ -163,7 +163,7 @@ const Routers = function ({ history, app }) {
               cb(null, require('./routes/probs/prob_detail/in_process/'))//routes下的文件夹probs/prob_detail
             }, 'in_process')//routes下的文件夹/probs/prob_detail/in_process中的index.js文件
           },
-        }, 
+        },
         /**
          * 添加 url 请求路径
          * hwy 2017.4.28
@@ -178,8 +178,8 @@ const Routers = function ({ history, app }) {
               cb(null, require('./routes/probs/prob_detail/to_close/'))//routes下的文件夹probs/prob_detail
             }, 'to_close')//routes下的文件夹/probs/prob_detail/to_close中的index.js文件
           },
-        },  
-        
+        },
+
         /**
          * 添加 url 请求路径
          * hwy 2017.4.28
@@ -194,8 +194,8 @@ const Routers = function ({ history, app }) {
               cb(null, require('./routes/probs/prob_detail/to_commit/'))//routes下的文件夹probs/prob_detail
             }, 'to_commit')//routes下的文件夹/probs/prob_detail/to_commit中的index.js文件
           },
-        },  
-       
+        },
+
         /**
          * 维护 url 请求路径
          * hwy 2017.4.28
@@ -210,7 +210,7 @@ const Routers = function ({ history, app }) {
               cb(null, require('./routes/pub/workplace/maintain/'))//routes下的文件夹pub/workplace
             }, 'maintain')//routes下的文件夹/pub/workplace/maintain中的index.js文件
           },
-        },  
+        },
         /**
          * 添加 url 请求路径
          * hwy 2017.4.28
@@ -225,7 +225,7 @@ const Routers = function ({ history, app }) {
               cb(null, require('./routes/probs/prob_detail/to_process/'))//routes下的文件夹probs/prob_detail
             }, 'to_process')//routes下的文件夹/probs/prob_detail/to_process中的index.js文件
           },
-        },  
+        },
         /**
          * 添加 url 请求路径
          * hwy 2017.4.28
@@ -240,8 +240,8 @@ const Routers = function ({ history, app }) {
               cb(null, require('./routes/probs/prob_detail/already/'))//routes下的文件夹probs/prob_detail
             }, 'already')//routes下的文件夹/probs/prob_detail/already中的index.js文件
           },
-        }, 
-        
+        },
+
         /**
          * 维护 url 请求路径
          * hwy 2017.4.28
@@ -256,12 +256,12 @@ const Routers = function ({ history, app }) {
               cb(null, require('./routes/pub/workplace/maintain/'))//routes下的文件夹pub/workplace
             }, 'maintain')//routes下的文件夹/pub/workplace/maintain中的index.js文件
           },
-        },  
-        
+        },
+
         /**
          * 添加 url 请求路径
          * liuym
-         * 维护计划 
+         * 维护计划
          */
         {
             path: 'proc/planDetail',
@@ -273,7 +273,7 @@ const Routers = function ({ history, app }) {
               }, 'planDetail')//routes下的文件夹prob中的index.js文件
             },
           },
-          
+
         {
             path: 'proc/UserModal',
             name: 'proc/UserModal',
@@ -284,10 +284,26 @@ const Routers = function ({ history, app }) {
               }, 'taskDetail')//routes下的文件夹prob中的index.js文件
             },
           },
-        
+
+          /**
+           * 添加 url 请求路径
+           * wxj
+           * 任务计划管理
+           */
+          {
+            path: 'procs/task-manager',
+            name: 'TaskManager',
+            getComponent (nextState, cb) {
+              require.ensure([], require => {
+                registerModel(app, require('./models/TaskManagerModal'))
+                cb(null, require('./components/TaskManager'))//routes下的文件夹prob
+              }, 'proc')//routes下的文件夹prob中的index.js文件
+            },
+          },
+
         /**
          * 添加 url 请求路径
-         * wxj 
+         * wxj
          * 任务计划
          */
         {
@@ -300,10 +316,10 @@ const Routers = function ({ history, app }) {
             }, 'proc')//routes下的文件夹prob中的index.js文件
           },
         },
-        
+
         /**
          * 添加 url 请求路径
-         * zyc 
+         * zyc
          * 计划模板
          */
         {
@@ -316,10 +332,10 @@ const Routers = function ({ history, app }) {
             }, 'templetplan')//routes/pub下的文件夹templetplan中的index.js文件
           },
         },
-        
+
         /**
          * 添加 url 请求路径
-         * zyc 
+         * zyc
          * 问题分类配置
          */
         {
@@ -332,7 +348,7 @@ const Routers = function ({ history, app }) {
             }, 'problemtype')//routes/pub下的文件夹problemsort中的index.js文件
           },
         },
-             
+
       ],
     },
   ]

@@ -3,7 +3,7 @@ module.exports = [
 	key:'homepage',
     name:'主页',
     icon:'search',
-  }, 
+  },
   {
     key: 'dashboard',
     name: '工作台',
@@ -40,7 +40,7 @@ module.exports = [
   //       key:'in_process',
   //       name:'处理中',
   //       icon:'user',
-  //      }, 
+  //      },
   //      {
   //       key:'to_close',
   //       name:'待关闭',
@@ -50,7 +50,7 @@ module.exports = [
   //       key:'already',
   //       name:'已编制',
   //       icon:'user',
-  //      }, 
+  //      },
   //   ]
   // },
   {
@@ -62,14 +62,14 @@ module.exports = [
         key:'person1',
         name:'项目队伍组建',
         icon:'search',
-       }, 
+       },
        {
         key:'person2',
         name:'考勤管理',
         icon:'search',
        },
     ]
-  },  
+  },
   {
     key: 'probs',
     name: '问题沟通',
@@ -87,7 +87,7 @@ module.exports = [
         icon: 'database',
       },
       {
-        key: '',  
+        key: '',
         name: '沟通互动',
         icon: 'bars',
       },
@@ -106,6 +106,11 @@ module.exports = [
     name: '任务计划',
     icon: 'camera-o',
     child: [
+      {
+        key: 'task-manager',
+        name: '任务计划管理',
+        icon: 'heart-o',
+      },
       {
         key: 'proc',
         name: '任务计划',
@@ -150,7 +155,7 @@ module.exports = [
       },
     ],
   },
-  
+
   {
       key: 'systemconf',
       name: '系统配置',
