@@ -33,9 +33,6 @@ class CreatePlan extends React.PureComponent {
       content,
       doctorName,
       remark,
-      idArr: this.props.idArr,
-      creatorId: this.props.userId,
-      sendall: this.props.getValue('SendGroupReducer/sendChecked'),
     };
     const handleSubmit = () => {
       this.props.form.validateFieldsAndScroll((errors, values) => {
@@ -62,17 +59,7 @@ class CreatePlan extends React.PureComponent {
                 hasFeedback
               >
               {getFieldDecorator('title')(
-                <Select showSearch
-                  filterOption={false}
-                  optionFilterProp="children"
-                  notFoundContent="无匹配项"
-                  onSearch={(value) => {
-                    // TODO 搜索接口
-                  }}
-                  onSelect={() => {}}
-                >
-                {getSelectListByValueAndOption(this.props.hospitalsList)}
-                </Select>
+                <Input />
               )}
               </FormItem>
             </Col>
@@ -83,17 +70,7 @@ class CreatePlan extends React.PureComponent {
                 hasFeedback
               >
               {getFieldDecorator('title')(
-                <Select showSearch
-                  filterOption={false}
-                  optionFilterProp="children"
-                  notFoundContent="无匹配项"
-                  onSearch={(value) => {
-                    // TODO 搜索接口
-                  }}
-                  onSelect={() => {}}
-                >
-                {getSelectListByValueAndOption(this.props.hospitalsList)}
-                </Select>
+                <Input />
               )}
               </FormItem>
             </Col>
@@ -120,17 +97,7 @@ class CreatePlan extends React.PureComponent {
                 hasFeedback
               >
               {getFieldDecorator('title')(
-                <Select showSearch
-                  filterOption={false}
-                  optionFilterProp="children"
-                  notFoundContent="无匹配项"
-                  onSearch={(value) => {
-                    // TODO 搜索接口
-                  }}
-                  onSelect={() => {}}
-                >
-                {getSelectListByValueAndOption(this.props.hospitalsList)}
-                </Select>
+                <Input />
               )}
               </FormItem>
             </Col>
@@ -141,17 +108,7 @@ class CreatePlan extends React.PureComponent {
                 hasFeedback
               >
               {getFieldDecorator('title')(
-                <Select showSearch
-                  filterOption={false}
-                  optionFilterProp="children"
-                  notFoundContent="无匹配项"
-                  onSearch={(value) => {
-                    // TODO 搜索接口
-                  }}
-                  onSelect={() => {}}
-                >
-                {getSelectListByValueAndOption(this.props.hospitalsList)}
-                </Select>
+                <Input />
               )}
               </FormItem>
             </Col>
