@@ -20,12 +20,12 @@ const taskMenu = [
     planTitle: '未计划任务', // 计划项标题
     planChild: [
       {
-        planId: 1, //计划项编号
+        planId: 3, //计划项编号
         planCode: '23141', // 计划项编码
         planTitle: '未计划任务', // 计划项标题
       },
       {
-        planId: 1, //计划项编号
+        planId: 4, //计划项编号
         planCode: '23141', // 计划项编码
         planTitle: '未计划任务', // 计划项标题
       },
@@ -56,7 +56,7 @@ class TaskMenu extends React.PureComponent {
         if (value.planChild) {
           View.push(
             <SubMenu key={value.planId} title={
-              <div>{value.planTitle}</div>
+              <div style={{ fontSize: '1.5rem' }}>{value.planTitle}</div>
             }
             >
               {this.showMenu(value.planChild)}
@@ -64,7 +64,9 @@ class TaskMenu extends React.PureComponent {
           );
         } else {
           View.push(
-            <Menu.Item key={value.planId}>{value.planTitle}</Menu.Item>
+            <Menu.Item key={value.planId}>
+              <div style={{ fontSize: '1.5rem' }}>{value.planTitle}</div>
+            </Menu.Item>
           );
         }
       });

@@ -20,49 +20,91 @@ class TaskSelect extends React.PureComponent {
       wrapperCol: { span: 15 },
     };
     const { getFieldDecorator, getFieldsValue } = this.props.form;
+    const procId = getFieldsValue().procId ? getFieldsValue().procId : '';
+    const themeName = getFieldsValue().themeName ? getFieldsValue().themeName : '';
+    const themeCode = getFieldsValue().themeCode ? getFieldsValue().themeCode : '';
+    const pDuty = getFieldsValue().pDuty ? getFieldsValue().pDuty : '';
+    const priority = getFieldsValue().priority ? getFieldsValue().priority : '';
+    const planId = getFieldsValue().procId ? getFieldsValue().planId : '';
     const params = {
+      procId,
+      themeName,
+      themeCode,
+      pDuty,
+      priority,
+      planId,
     };
     const handleSubmit = () => {
-      this.props.form.validateFieldsAndScroll((errors, values) => {
-        if (!!errors) {
-          return;
-        }
-        // TODO 确定提交新建任务
-      });
+      // TODO 任务查询
     };
     return (
       <div className={Styles.selectStyle}>
       <Form horizontal>
         <div>
           <Row>
-            <Col span={7}>
+            <Col span={6}>
               <FormItem
                 {...formItemLayout}
-                label="类型"
+                label="任务序号"
               >
-              {getFieldDecorator('title')(
+              {getFieldDecorator('procId')(
                 <Input />
               )}
               </FormItem>
             </Col>
-            <Col span={7}>
+            <Col span={6}>
+              <FormItem
+                {...formItemLayout}
+                label="任务标题"
+                hasFeedback
+              >
+              {getFieldDecorator('themeName')(
+                <Input />
+              )}
+              </FormItem>
+            </Col>
+            <Col span={6}>
+              <FormItem
+                {...formItemLayout}
+                label="任务编码"
+                hasFeedback
+              >
+              {getFieldDecorator('themeCode')(
+                <Input />
+              )}
+              </FormItem>
+            </Col>
+            <Col span={6}>
               <FormItem
                 {...formItemLayout}
                 label="负责人"
                 hasFeedback
               >
-              {getFieldDecorator('title')(
+              {getFieldDecorator('pDuty')(
                 <Input />
               )}
               </FormItem>
             </Col>
-            <Col span={7}>
+          </Row>
+          <Row>
+            <Col span={6}>
               <FormItem
                 {...formItemLayout}
-                label="关键字"
+                label="优先级"
                 hasFeedback
               >
-              {getFieldDecorator('title')(
+              {getFieldDecorator('priority')(
+                <Input />
+              )}
+              </FormItem>
+            </Col>
+            <Col span={6}>
+              <FormItem
+                {...formItemLayout}
+                label="计划项序号"
+                hasFeedback
+              >
+              {getFieldDecorator('planId')(
                 <Input />
               )}
               </FormItem>

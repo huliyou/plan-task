@@ -4,6 +4,8 @@ import TaskCharts from './TaskCharts.js';
 import TaskSelect from './TaskSelect.js';
 import ListData from './ListData.js';
 import CardListData from './CardListData.js';
+import closeImg from './taskImg/close_hover.png';
+import expandImg from './taskImg/expand_hover.png';
 
 class TaskList extends React.Component {
   state = {
@@ -49,8 +51,8 @@ class TaskList extends React.Component {
             this.setState({ showCharts: !isShow });
           }}
         >
-          图片
-          统计视图
+          <img src={this.state.showCharts ? closeImg : expandImg} style={{ width: '15px', margin: '0 5px' }}/>
+          <span>统计视图</span>
         </div>
         {this.showCharts()}
         <div className={Styles.taskSelectContent}>
@@ -60,7 +62,10 @@ class TaskList extends React.Component {
               this.setState({ visible: !visible })
             }}
             className={Styles.taskSelectButton}
-          >图片 筛选</div>
+          >
+           <img src={this.state.visible ? closeImg : expandImg} style={{ width: '15px', margin: '0 5px' }}/>
+             筛选
+           </div>
           <div className={Styles.ChangeListStyle}>
              <div
                className={this.state.showListType === 'list' ? Styles.checked : Styles.noChecked}

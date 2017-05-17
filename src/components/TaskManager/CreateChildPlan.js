@@ -23,26 +23,23 @@ class CreateChildPlan extends React.PureComponent {
       wrapperCol: { span: 19 },
     };
     const { getFieldDecorator, getFieldsValue } = this.props.form;
-    const title = getFieldsValue().title ? getFieldsValue().title : '';
-    const content = getFieldsValue().content ? getFieldsValue().content : '';
-    const doctorName = getFieldsValue().doctorName ? getFieldsValue().doctorName : '';
-    const remark = getFieldsValue().remarks ? getFieldsValue().remarks : '';
+    const themeName = getFieldsValue().themeName ? getFieldsValue().themeName : '';
+    const planBeginDate = getFieldsValue().planBeginDate ? getFieldsValue().planBeginDate : '';
+    const planEndDate = getFieldsValue().planEndDate ? getFieldsValue().planEndDate : '';
+    const parentPlanCode = getFieldsValue().parentPlanCode ? getFieldsValue().parentPlanCode : '';
+    const planWorkload = getFieldsValue().planWorkload ? getFieldsValue().planWorkload : '';
+    const planDesc = getFieldsValue().planDesc ? getFieldsValue().planDesc : '';
+
     const params = {
-      title,
-      content,
-      doctorName,
-      remark,
-      idArr: this.props.idArr,
-      creatorId: this.props.userId,
-      sendall: this.props.getValue('SendGroupReducer/sendChecked'),
+      themeName,
+      planBeginDate,
+      planEndDate,
+      parentPlanCode,
+      planWorkload,
+      planDesc,
     };
     const handleSubmit = () => {
-      this.props.form.validateFieldsAndScroll((errors, values) => {
-        if (!!errors) {
-          return;
-        }
-        // TODO 确定提交新建任务
-      });
+      // TODO 确定提交新建子任务
     };
     return (
       <div>
@@ -59,7 +56,7 @@ class CreateChildPlan extends React.PureComponent {
               label="标题"
               hasFeedback
             >
-            {getFieldDecorator('title')(
+            {getFieldDecorator('themeName')(
               <Input
                 placeholder="仅支持中英文"
                 type="text"
@@ -74,7 +71,7 @@ class CreateChildPlan extends React.PureComponent {
                 label="开始时间"
                 hasFeedback
               >
-              {getFieldDecorator('title')(
+              {getFieldDecorator('planBeginDate')(
                 <DatePicker format={'YYYY/MM/DD'} />
               )}
               </FormItem>
@@ -85,7 +82,7 @@ class CreateChildPlan extends React.PureComponent {
                 label="结束时间"
                 hasFeedback
               >
-              {getFieldDecorator('title')(
+              {getFieldDecorator('planEndDate')(
                 <DatePicker format={'YYYY/MM/DD'} />
               )}
               </FormItem>
@@ -98,11 +95,9 @@ class CreateChildPlan extends React.PureComponent {
                 label="父计划"
                 hasFeedback
               >
-              {getFieldDecorator('title')(
+              {getFieldDecorator('parentPlanCode')(
                 <Input
-                  placeholder="输入标题"
                   type="text"
-                  autoComplete="off"
                 />
               )}
               </FormItem>
@@ -113,11 +108,9 @@ class CreateChildPlan extends React.PureComponent {
                 label="预计投入天数"
                 hasFeedback
               >
-              {getFieldDecorator('title')(
+              {getFieldDecorator('planWorkload')(
                 <Input
-                  placeholder="输入标题"
                   type="text"
-                  autoComplete="off"
                 />
               )}
               </FormItem>
@@ -129,7 +122,7 @@ class CreateChildPlan extends React.PureComponent {
               label="计划描述"
               hasFeedback
             >
-            {getFieldDecorator('title')(
+            {getFieldDecorator('planDesc')(
               <Input
                 type="textarea" rows={7}
               />

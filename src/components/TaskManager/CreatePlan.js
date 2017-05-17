@@ -24,23 +24,18 @@ class CreatePlan extends React.PureComponent {
       wrapperCol: { span: 19 },
     };
     const { getFieldDecorator, getFieldsValue } = this.props.form;
+    const prjId = getFieldsValue().prjId ? getFieldsValue().prjId : '';
+    const themeName = getFieldsValue().themeName ? getFieldsValue().themeName : '';
     const title = getFieldsValue().title ? getFieldsValue().title : '';
-    const content = getFieldsValue().content ? getFieldsValue().content : '';
-    const doctorName = getFieldsValue().doctorName ? getFieldsValue().doctorName : '';
-    const remark = getFieldsValue().remarks ? getFieldsValue().remarks : '';
+    const pDuty = getFieldsValue().remarks ? getFieldsValue().pDuty : '';
     const params = {
+      prjId,
+      themeName,
       title,
-      content,
-      doctorName,
-      remark,
+      pDuty,
     };
     const handleSubmit = () => {
-      this.props.form.validateFieldsAndScroll((errors, values) => {
-        if (!!errors) {
-          return;
-        }
-        // TODO 确定提交新建任务
-      });
+      // TODO 确定提交新建任务
     };
     return (
       <div>
@@ -58,7 +53,7 @@ class CreatePlan extends React.PureComponent {
                 label="项目"
                 hasFeedback
               >
-              {getFieldDecorator('title')(
+              {getFieldDecorator('prjId')(
                 <Input />
               )}
               </FormItem>
@@ -69,7 +64,7 @@ class CreatePlan extends React.PureComponent {
                 label="类型"
                 hasFeedback
               >
-              {getFieldDecorator('title')(
+              {getFieldDecorator('themeName')(
                 <Input />
               )}
               </FormItem>
@@ -96,7 +91,7 @@ class CreatePlan extends React.PureComponent {
                 label="负责人"
                 hasFeedback
               >
-              {getFieldDecorator('title')(
+              {getFieldDecorator('pDuty')(
                 <Input />
               )}
               </FormItem>
