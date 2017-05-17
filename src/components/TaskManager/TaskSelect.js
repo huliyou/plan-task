@@ -2,7 +2,7 @@
  * Created by wanglu on 7/4/2016.
  */
 import React, { PropTypes } from 'react';
-import { Form, Select, Row, Col, DatePicker } from 'antd';
+import { Form, Select, Row, Col, Input } from 'antd';
 import * as Styles from './task.less';
 
 const FormItem = Form.Item;
@@ -17,43 +17,60 @@ class TaskSelect extends React.PureComponent {
   render() {
     const formItemLayout = {
       labelCol: { span: 6 },
-      wrapperCol: { span: 14 },
+      wrapperCol: { span: 15 },
     };
     const { getFieldDecorator, getFieldsValue } = this.props.form;
+    const procId = getFieldsValue().procId ? getFieldsValue().procId : '';
+    const themeName = getFieldsValue().themeName ? getFieldsValue().themeName : '';
+    const themeCode = getFieldsValue().themeCode ? getFieldsValue().themeCode : '';
+    const pDuty = getFieldsValue().pDuty ? getFieldsValue().pDuty : '';
+    const priority = getFieldsValue().priority ? getFieldsValue().priority : '';
+    const planId = getFieldsValue().procId ? getFieldsValue().planId : '';
     const params = {
+      procId,
+      themeName,
+      themeCode,
+      pDuty,
+      priority,
+      planId,
     };
     const handleSubmit = () => {
-      this.props.form.validateFieldsAndScroll((errors, values) => {
-        if (!!errors) {
-          return;
-        }
-        // TODO 确定提交新建任务
-      });
+      // TODO 任务查询
     };
     return (
-      <div style={{ height: '60px', backgroundColor: '#fff', width: '100%' }}>
+      <div className={Styles.selectStyle}>
       <Form horizontal>
-        <div className={Styles.bodyContent}>
+        <div>
           <Row>
-          { /*<Col span={6}>
+            <Col span={6}>
               <FormItem
                 {...formItemLayout}
-                label="类型"
+                label="任务序号"
+              >
+              {getFieldDecorator('procId')(
+                <Input />
+              )}
+              </FormItem>
+            </Col>
+            <Col span={6}>
+              <FormItem
+                {...formItemLayout}
+                label="任务标题"
                 hasFeedback
               >
-              {getFieldDecorator('title')(
-                <Select
-                  // showSearch
-                  // filterOption={false}
-                  // optionFilterProp="children"
-                  // notFoundContent="无匹配项"
-                  // onSearch={(value) => {
-                  //   // TODO 搜索接口
-                  // }}
-                  onSelect={() => {}}
-                >
-                  <Option>选项</Option>
-                </Select>
+              {getFieldDecorator('themeName')(
+                <Input />
+              )}
+              </FormItem>
+            </Col>
+            <Col span={6}>
+              <FormItem
+                {...formItemLayout}
+                label="任务编码"
+                hasFeedback
+              >
+              {getFieldDecorator('themeCode')(
+                <Input />
               )}
               </FormItem>
             </Col>
@@ -63,44 +80,37 @@ class TaskSelect extends React.PureComponent {
                 label="负责人"
                 hasFeedback
               >
-              {getFieldDecorator('title')(
-                <Select showSearch
-                  filterOption={false}
-                  optionFilterProp="children"
-                  notFoundContent="无匹配项"
-                  onSearch={(value) => {
-                    // TODO 搜索接口
-                  }}
-                  onSelect={() => {}}
-                >
-                  <Option>选项</Option>
-                </Select>
+              {getFieldDecorator('pDuty')(
+                <Input />
+              )}
+              </FormItem>
+            </Col>
+          </Row>
+          <Row>
+            <Col span={6}>
+              <FormItem
+                {...formItemLayout}
+                label="优先级"
+                hasFeedback
+              >
+              {getFieldDecorator('priority')(
+                <Input />
               )}
               </FormItem>
             </Col>
             <Col span={6}>
               <FormItem
                 {...formItemLayout}
-                label="关键字"
+                label="计划项序号"
                 hasFeedback
               >
-              {getFieldDecorator('title')(
-                <Select showSearch
-                  filterOption={false}
-                  optionFilterProp="children"
-                  notFoundContent="无匹配项"
-                  onSearch={(value) => {
-                    // TODO 搜索接口
-                  }}
-                  onSelect={() => {}}
-                >
-                  <Option>选项</Option>
-                </Select>
+              {getFieldDecorator('planId')(
+                <Input />
               )}
               </FormItem>
-            </Col> */}
-            <Col span={6}>
-              <div>查询</div>
+            </Col>
+            <Col span={3}>
+              <div className={Styles.selectButton}>查询</div>
             </Col>
           </Row>
         </div>

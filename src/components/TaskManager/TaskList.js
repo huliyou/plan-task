@@ -1,18 +1,43 @@
 import React from 'react';
-import { Popover } from 'antd';
 import Styles from './task.less';
 import TaskCharts from './TaskCharts.js';
 import TaskSelect from './TaskSelect.js';
+import ListData from './ListData.js';
+import CardListData from './CardListData.js';
+import closeImg from './taskImg/close_hover.png';
+import expandImg from './taskImg/expand_hover.png';
 
 class TaskList extends React.Component {
   state = {
     showCharts: false,
     visible: false,
+    showListType: 'list',
   }
   showCharts() {
     const isShow = this.state.showCharts;
     if (isShow) {
       return (<TaskCharts />);
+    }
+    return <div />;
+  }
+  showSelect() {
+    const isShow = this.state.visible;
+    if (isShow) {
+      return (
+        <div>
+          <TaskSelect />
+        </div>
+      );
+    }
+    return <div />;
+  }
+  showListDataByType() {
+    const type = this.state.showListType;
+    if(type === 'list') {
+      return <ListData />;
+    }
+    if(type === 'card') {
+      return <CardListData />;
     }
     return <div />;
   }
@@ -26,32 +51,36 @@ class TaskList extends React.Component {
             this.setState({ showCharts: !isShow });
           }}
         >
-          图片
-          统计视图
+          <img src={this.state.showCharts ? closeImg : expandImg} style={{ width: '15px', margin: '0 5px' }}/>
+          <span>统计视图</span>
         </div>
         {this.showCharts()}
         <div className={Styles.taskSelectContent}>
-          <Popover
-            content={<TaskSelect />}
-            trigger="click"
-            visible={this.state.visible}
-            placement="bottom"
-            trigger="click"
+          <div
+            onClick={() => {
+              const visible = this.state.visible;
+              this.setState({ visible: !visible })
+            }}
+            className={Styles.taskSelectButton}
           >
-            <div
-              onClick={() => {
-                const visible = this.state.visible;
-                this.setState({ visible: !visible })
-              }}
-              className={Styles.taskSelectButton}
-            >图片 筛选</div>
-          </Popover>
-          <div>
-             <div>列表</div>
-             <div>看板</div>
+           <img src={this.state.visible ? closeImg : expandImg} style={{ width: '15px', margin: '0 5px' }}/>
+             筛选
+           </div>
+          <div className={Styles.ChangeListStyle}>
+             <div
+               className={this.state.showListType === 'list' ? Styles.checked : Styles.noChecked}
+               onClick={() => this.setState({ showListType: 'list' })}
+             >列表</div>
+             <div
+               className={this.state.showListType === 'card' ? Styles.checked : Styles.noChecked}
+               onClick={() => this.setState({ showListType: 'card' })}
+             >看板</div>
           </div>
         </div>
-        <div>任务列表</div>
+        {this.showSelect()}
+        <div className={Styles.listDataContent}>
+          {this.showListDataByType()}
+        </div>
       </div>
     )
   }

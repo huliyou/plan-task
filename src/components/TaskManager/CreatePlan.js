@@ -24,26 +24,18 @@ class CreatePlan extends React.PureComponent {
       wrapperCol: { span: 19 },
     };
     const { getFieldDecorator, getFieldsValue } = this.props.form;
+    const prjId = getFieldsValue().prjId ? getFieldsValue().prjId : '';
+    const themeName = getFieldsValue().themeName ? getFieldsValue().themeName : '';
     const title = getFieldsValue().title ? getFieldsValue().title : '';
-    const content = getFieldsValue().content ? getFieldsValue().content : '';
-    const doctorName = getFieldsValue().doctorName ? getFieldsValue().doctorName : '';
-    const remark = getFieldsValue().remarks ? getFieldsValue().remarks : '';
+    const pDuty = getFieldsValue().remarks ? getFieldsValue().pDuty : '';
     const params = {
+      prjId,
+      themeName,
       title,
-      content,
-      doctorName,
-      remark,
-      idArr: this.props.idArr,
-      creatorId: this.props.userId,
-      sendall: this.props.getValue('SendGroupReducer/sendChecked'),
+      pDuty,
     };
     const handleSubmit = () => {
-      this.props.form.validateFieldsAndScroll((errors, values) => {
-        if (!!errors) {
-          return;
-        }
-        // TODO 确定提交新建任务
-      });
+      // TODO 确定提交新建任务
     };
     return (
       <div>
@@ -61,18 +53,8 @@ class CreatePlan extends React.PureComponent {
                 label="项目"
                 hasFeedback
               >
-              {getFieldDecorator('title')(
-                <Select showSearch
-                  filterOption={false}
-                  optionFilterProp="children"
-                  notFoundContent="无匹配项"
-                  onSearch={(value) => {
-                    // TODO 搜索接口
-                  }}
-                  onSelect={() => {}}
-                >
-                {getSelectListByValueAndOption(this.props.hospitalsList)}
-                </Select>
+              {getFieldDecorator('prjId')(
+                <Input />
               )}
               </FormItem>
             </Col>
@@ -82,18 +64,8 @@ class CreatePlan extends React.PureComponent {
                 label="类型"
                 hasFeedback
               >
-              {getFieldDecorator('title')(
-                <Select showSearch
-                  filterOption={false}
-                  optionFilterProp="children"
-                  notFoundContent="无匹配项"
-                  onSearch={(value) => {
-                    // TODO 搜索接口
-                  }}
-                  onSelect={() => {}}
-                >
-                {getSelectListByValueAndOption(this.props.hospitalsList)}
-                </Select>
+              {getFieldDecorator('themeName')(
+                <Input />
               )}
               </FormItem>
             </Col>
@@ -119,18 +91,8 @@ class CreatePlan extends React.PureComponent {
                 label="负责人"
                 hasFeedback
               >
-              {getFieldDecorator('title')(
-                <Select showSearch
-                  filterOption={false}
-                  optionFilterProp="children"
-                  notFoundContent="无匹配项"
-                  onSearch={(value) => {
-                    // TODO 搜索接口
-                  }}
-                  onSelect={() => {}}
-                >
-                {getSelectListByValueAndOption(this.props.hospitalsList)}
-                </Select>
+              {getFieldDecorator('pDuty')(
+                <Input />
               )}
               </FormItem>
             </Col>
@@ -141,17 +103,7 @@ class CreatePlan extends React.PureComponent {
                 hasFeedback
               >
               {getFieldDecorator('title')(
-                <Select showSearch
-                  filterOption={false}
-                  optionFilterProp="children"
-                  notFoundContent="无匹配项"
-                  onSearch={(value) => {
-                    // TODO 搜索接口
-                  }}
-                  onSelect={() => {}}
-                >
-                {getSelectListByValueAndOption(this.props.hospitalsList)}
-                </Select>
+                <Input />
               )}
               </FormItem>
             </Col>
