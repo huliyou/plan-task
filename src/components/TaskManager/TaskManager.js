@@ -1,9 +1,19 @@
 import React from 'react';
+import TaskHeader from './TaskHeader.js';
+import TaskMenu from './TaskMenu.js';
+import TaskList from './TaskList.js';
+import Styles from './task.less';
 
 class TaskManager extends React.Component {
   render() {
     return (
-      <div>在这里组装任务计划管理</div>
+      <div>
+        <TaskHeader />
+        <div className={Styles.taskBody}>
+           <div className={Styles.taskMenuStyle}><TaskMenu /></div>
+           <div className={Styles.taskListStyle}><TaskList /></div>
+        </div>
+      </div>
     );
   }
 }
