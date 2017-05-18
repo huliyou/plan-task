@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import Styles from './task.less';
 import { Table } from 'antd';
 
@@ -78,6 +78,9 @@ const data = [{
 }];
 
 class ListData extends React.Component {
+  static propTypes = {
+    taskList: PropTypes.array,
+  }
   constructor(props: Object, context: string) {
     super(props, context);
     this.columns = [{
@@ -122,7 +125,7 @@ class ListData extends React.Component {
   render () {
     return (
       <div style={{ padding: '20px' }}>
-        <Table columns={this.columns} dataSource={data} />
+        <Table columns={this.columns} dataSource={this.props.taskList} />
       </div>
     )
   }

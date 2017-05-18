@@ -109,7 +109,8 @@ class TaskSelect extends React.PureComponent {
               )}
               </FormItem>
             </Col>
-            <Col span={3}>
+            <Col span={6} />
+            <Col span={6}>
               <div className={Styles.selectButton}>查询</div>
             </Col>
           </Row>

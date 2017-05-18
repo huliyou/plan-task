@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import Styles from './task.less';
 import TaskCharts from './TaskCharts.js';
 import TaskSelect from './TaskSelect.js';
@@ -8,6 +8,9 @@ import closeImg from './taskImg/close_hover.png';
 import expandImg from './taskImg/expand_hover.png';
 
 class TaskList extends React.Component {
+  static propTypes = {
+    taskList: PropTypes.array,
+  }
   state = {
     showCharts: false,
     visible: false,
@@ -34,10 +37,10 @@ class TaskList extends React.Component {
   showListDataByType() {
     const type = this.state.showListType;
     if(type === 'list') {
-      return <ListData />;
+      return <ListData taskList={this.props.taskList} />;
     }
     if(type === 'card') {
-      return <CardListData />;
+      return <CardListData taskList={this.props.taskList} />;
     }
     return <div />;
   }

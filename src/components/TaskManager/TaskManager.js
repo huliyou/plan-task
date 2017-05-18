@@ -6,7 +6,8 @@ import Styles from './task.less';
 
 class TaskManager extends React.PureComponent {
   static propTypes = {
-    // taskMenu: PropTypes.array,
+    taskMenu: PropTypes.array,
+    taskList: PropTypes.array,
   }
   render() {
     return (
@@ -14,9 +15,11 @@ class TaskManager extends React.PureComponent {
         <TaskHeader />
         <div className={Styles.taskBody}>
           <div className={Styles.taskMenuStyle}>
-            <TaskMenu />
+            <TaskMenu taskMenu={this.props.taskMenu} />
           </div>
-          <div className={Styles.taskListStyle}><TaskList /></div>
+          <div className={Styles.taskListStyle}>
+            <TaskList taskList={this.props.taskList} />
+          </div>
         </div>
       </div>
     );
