@@ -10,6 +10,7 @@ import expandImg from './taskImg/expand_hover.png';
 class TaskList extends React.Component {
   static propTypes = {
     taskList: PropTypes.array,
+    taskListCard: PropTypes.array,
   }
   state = {
     showCharts: false,
@@ -40,7 +41,7 @@ class TaskList extends React.Component {
       return <ListData taskList={this.props.taskList} />;
     }
     if(type === 'card') {
-      return <CardListData taskList={this.props.taskList} />;
+      return <CardListData taskListCard={this.props.taskListCard} />;
     }
     return <div />;
   }

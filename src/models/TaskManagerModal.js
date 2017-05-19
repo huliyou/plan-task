@@ -108,6 +108,29 @@ export default {
       pDuty: 'wangsds',
       createTime: '2017-04-02',
     }],
+    taskListCard: [{
+      procType: '设计',
+      data: [{procId: 2,
+      planName: '计划2',
+      status: '已完成',
+      workDay: 30,
+      procType: '设计',
+      weight: '30%',
+      pDuty: 'wangsds',
+      createTime: '2017-04-02'}, {
+        procId: 3,
+        planName: '计划2',
+        status: '已完成',
+        workDay: 30,
+        procType: '设计',
+        weight: '30%',
+        pDuty: 'wangsds',
+        createTime: '2017-04-02',
+      }],
+    }, {
+      procType: '需求',
+      data: [],
+    }],
   },
   // !!!: Modal订阅
   subscriptions: {
