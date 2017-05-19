@@ -1,3 +1,22 @@
+::-webkit-scrollbar {
+    width:2px;
+    height: 2px;
+}
+::-webkit-scrollbar-track {
+-webkit-box-shadow:inset006pxrgba(0,0,0,0.3);
+border-radius:10px;
+}
+/* 滚动条滑块 */
+::-webkit-scrollbar-thumb {
+border-radius:2px;
+background:rgba(0,0,0,0.1);
+-webkit-box-shadow:inset006pxrgba(0,0,0,0.5);
+}
+::-webkit-scrollbar-thumb:window-inactive {
+background:rgba(255,255,255,0.4);
+}
+
+
 .taskHeader {
   height: 5rem;
   display: flex;
@@ -12,7 +31,7 @@
   font-size: 1.3rem;
   line-height: 3rem;
   text-align: center;
-  background-color: #108ee9;
+  background-color: #4B5682;
   color: #fff;
   cursor: pointer;
 }
@@ -39,10 +58,10 @@
 }
 
 .listTitle {
-  height: 50px;
+  height: 45px;
   background-color: #fff;
   font-size: 1.2rem;
-  line-height: 50px;
+  line-height: 45px;
 }
 
 :global(.ant-modal-body) {
@@ -81,7 +100,8 @@
 
 .taskChartsBody {
   margin-top: 5px;
-  height: 300px;
+  padding: 20px 40px;
+  height: 500px;
   background-color: #fff;
 }
 
@@ -94,12 +114,13 @@
 .taskSelectButton {
   width: 10rem;
   height: 3rem;
-  border: 1px solid #ccc;
+  border: 1px solid #7792BB;
   border-radius: 2rem;
   font-size: 1.3rem;
   line-height: 3rem;
   text-align: center;
   cursor: pointer;
+  color: #7792BB;
 }
 
 .chartsButton {
@@ -126,31 +147,31 @@
   line-height: 3rem;
   text-align: center;
   cursor: pointer;
-  background-color: #108ee9;
+  background-color: #7792BB;
   color: #fff;
 }
 
 .ChangeListStyle {
   display: flex;
   flex-direction: row;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   text-align: center;
   cursor: pointer;
 }
 
 .checked {
-  width: 6rem;
-  height: 3.5rem;
-  line-height: 3.5rem;
-  border: 1px solid #ccc;
-  background-color: #ccc;
+  width: 7rem;
+  height: 3.2rem;
+  line-height: 3.2rem;
+  border: 1px solid #7792BB;
+  background-color: #7792BB;
   color: #fff;
 }
 
 .noChecked {
-  width: 6rem;
-  height: 3.5rem;
-  line-height: 3.5rem;
+  width: 7rem;
+  height: 3.2rem;
+  line-height: 3.2rem;
   border: 1px solid #ccc;
 }
 

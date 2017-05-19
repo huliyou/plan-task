@@ -13,7 +13,7 @@ class TaskList extends React.Component {
     taskListCard: PropTypes.array,
   }
   state = {
-    showCharts: false,
+    showCharts: true,
     visible: false,
     showListType: 'list',
   }
@@ -55,8 +55,8 @@ class TaskList extends React.Component {
             this.setState({ showCharts: !isShow });
           }}
         >
-          <img src={this.state.showCharts ? closeImg : expandImg} style={{ width: '15px', margin: '0 5px' }}/>
-          <span>统计视图</span>
+          <img src={this.state.showCharts ? closeImg : expandImg} style={{ width: '15px', margin: '0 10px' }}/>
+          <span style={{ fontWeight: 'bold' }}>统计视图</span>
         </div>
         {this.showCharts()}
         <div className={Styles.taskSelectContent}>

@@ -2,16 +2,18 @@
  * Created by wanglu on 7/4/2016.
  */
 import React, { PropTypes } from 'react';
-import { Form, Input, Row, Col, Button, DatePicker } from 'antd';
+import { Form, Input, Row, Col, Button, DatePicker, Modal } from 'antd';
 import * as Styles from './task.less';
 
 const FormItem = Form.Item;
 
 class CreateChildPlan extends React.PureComponent {
   static propTypes = {
+    dispatch: PropTypes.func,
+    visible: PropTypes.bool,
     form: PropTypes.any,
-    submitPlan: PropTypes.func,
-    addPlan: PropTypes.func,
+    handleOk: PropTypes.func,
+    handleCancel: PropTypes.func,
   };
   render() {
     const formItemLayout = {
@@ -40,9 +42,18 @@ class CreateChildPlan extends React.PureComponent {
     };
     const handleSubmit = () => {
       // TODO 确定提交新建子任务
+      this.props.dispatch(this.props.handleOk(params));
     };
     return (
       <div>
+      <Modal
+        visible={this.state.visible}
+        closable
+        onCancel={() => this.props.handleCancel()}
+        footer={null}
+        style={{ marginLeft: '25vw' }}
+        width={'65vw'}
+      >
       <Form horizontal>
         <div className={Styles.titleContent}>
           <Row>
@@ -141,14 +152,17 @@ class CreateChildPlan extends React.PureComponent {
               <Button
                 type="primary"
                 style={{ height: '40px', fontSize: '1.5rem', marginRight: '3vw' }}
+                onClick={() => handleSubmit()}
               >确定</Button>
               <Button
                 type="primary"
                 style={{ height: '40px', fontSize: '1.5rem' }}
+                onClick={() => this.props.handleCancel()}
               >取消</Button>
            </div>
         </div>
       </Form>
+      </Modal>
       </div>
     );
   }

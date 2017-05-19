@@ -2,16 +2,18 @@
  * Created by wanglu on 7/4/2016.
  */
 import React, { PropTypes } from 'react';
-import { Form, Input, Row, Col, Button, DatePicker } from 'antd';
+import { Form, Input, Row, Col, Button, DatePicker, Modal } from 'antd';
 import * as Styles from './task.less';
 
 const FormItem = Form.Item;
 
 class EditPlan extends React.PureComponent {
   static propTypes = {
+    dispatch: PropTypes.func,
+    visible: PropTypes.bool,
     form: PropTypes.any,
-    submitPlan: PropTypes.func,
-    addPlan: PropTypes.func,
+    handleOk: PropTypes.func,
+    handleCancel: PropTypes.func,
   };
   render() {
     const formItemLayout = {
@@ -43,6 +45,13 @@ class EditPlan extends React.PureComponent {
     };
     return (
       <div>
+      <Modal
+        visible={this.state.visible}
+        closable={false}
+        footer={null}
+        style={{ marginLeft: '25vw' }}
+        width={'65vw'}
+      >
       <Form horizontal>
         <div className={Styles.titleContent}>
           <Row>
@@ -144,6 +153,7 @@ class EditPlan extends React.PureComponent {
            </div>
         </div>
       </Form>
+      </Modal>
       </div>
     );
   }

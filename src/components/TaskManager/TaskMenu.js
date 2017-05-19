@@ -70,16 +70,9 @@ class TaskMenu extends React.PureComponent {
         >
           + 新建任务
         </div>
-        <Modal
+        <CreatePlan
           visible={this.state.visible}
-          closable
-          onCancel={() => this.handleCancel()}
-          footer={null}
-          style={{ marginLeft: '25vw' }}
-          width={'65vw'}
-        >
-          <CreatePlan />
-        </Modal>
+        />
       </div>
     );
   }

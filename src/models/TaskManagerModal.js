@@ -117,8 +117,27 @@ export default {
       procType: '设计',
       weight: '30%',
       pDuty: 'wangsds',
-      createTime: '2017-04-02'}, {
+      createTime: '2017-04-02'},
+      {
         procId: 3,
+        planName: '计划2',
+        status: '已完成',
+        workDay: 30,
+        procType: '设计',
+        weight: '30%',
+        pDuty: 'wangsds',
+        createTime: '2017-04-02',
+      }, {
+        procId: 4,
+        planName: '计划2',
+        status: '已完成',
+        workDay: 30,
+        procType: '设计',
+        weight: '30%',
+        pDuty: 'wangsds',
+        createTime: '2017-04-02',
+      }, {
+        procId: 5,
         planName: '计划2',
         status: '已完成',
         workDay: 30,
@@ -129,7 +148,16 @@ export default {
       }],
     }, {
       procType: '需求',
-      data: [],
+      data: [{
+        procId: 6,
+        planName: '计划2',
+        status: '已完成',
+        workDay: 30,
+        procType: '需求',
+        weight: '30%',
+        pDuty: 'wangsds',
+        createTime: '2017-04-02',
+      }],
     }],
   },
   // !!!: Modal订阅
