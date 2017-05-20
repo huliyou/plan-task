@@ -8,7 +8,7 @@ class Card extends React.PureComponent {
     color: PropTypes.string,
   }
   state = {
-    visible: true,
+    visible: false,
   }
   showTaskInfo(procId) {
     if (this.state.visible) {

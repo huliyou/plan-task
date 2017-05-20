@@ -37,10 +37,15 @@ class TaskList extends React.Component {
     }
     return <div />;
   }
-  showListDataByType() {
+  showListDataByType () {
     const type = this.state.showListType;
-    if(type === 'list') {
-      return <ListData taskList={this.props.taskList} />;
+    if (type === 'list') {
+      return (
+        <ListData
+          taskList={this.props.taskList}
+          selectTaskAction={this.props.selectTaskAction}
+        />
+      );
     }
     if(type === 'card') {
       return <CardListData taskListCard={this.props.taskListCard} />;

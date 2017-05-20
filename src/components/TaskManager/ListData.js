@@ -1,85 +1,12 @@
 import React, { PropTypes } from 'react';
 import Styles from './task.less';
-import { Table } from 'antd';
-
-const data = [{
-  key: 1,
-  procId: 1,
-  planName: '计划1',
-  status: '新建',
-  workDay: 30,
-  procType: '设计',
-  weight: '30%',
-  pDuty: 'wangsds',
-  createTime: '2017-04-01',
-  children: [{
-    key: 2,
-    procId: 34,
-    planName: '计划1',
-    status: '新建',
-    workDay: 30,
-    procType: '设计',
-    weight: '30%',
-    pDuty: 'wangsds',
-    createTime: '2017-04-01',
-  }, {
-    key: 3,
-    procId: 6,
-    planName: '计划1',
-    status: '新建',
-    workDay: 30,
-    procType: '设计',
-    weight: '30%',
-    pDuty: 'wangsds',
-    createTime: '2017-04-01',
-    children: [{
-      key: 4,
-      procId: 7,
-      planName: '计划2',
-      status: '已完成',
-      workDay: 30,
-      procType: '设计',
-      weight: '30%',
-      pDuty: 'wangsds',
-      createTime: '2017-04-02',
-    }],
-  }, {
-    key: 5,
-    procId: 4,
-    planName: '计划2',
-    status: '已完成',
-    workDay: 30,
-    procType: '设计',
-    weight: '30%',
-    pDuty: 'wangsds',
-    createTime: '2017-04-02',
-    children: [{
-      key: 6,
-      procId: 5,
-      planName: '计划2',
-      status: '已完成',
-      workDay: 30,
-      procType: '设计',
-      weight: '30%',
-      pDuty: 'wangsds',
-      createTime: '2017-04-02',
-    }],
-  }],
-}, {
-  key: 7,
-  procId: 2,
-  planName: '计划2',
-  status: '已完成',
-  workDay: 30,
-  procType: '设计',
-  weight: '30%',
-  pDuty: 'wangsds',
-  createTime: '2017-04-02',
-}];
+import { Table, Pagination, Popover } from 'antd';
+import editIcon from './taskImg/editIcon.png';
 
 class ListData extends React.Component {
   static propTypes = {
     taskList: PropTypes.array,
+    selectTaskAction: PropTypes.func,
   }
   constructor(props: Object, context: string) {
     super(props, context);
@@ -87,7 +14,10 @@ class ListData extends React.Component {
       title: '编号',
       dataIndex: 'procId',
       key: 'procId',
-      width: '200px',
+    }, {
+      title: '',
+      dataIndex: 'editIcon',
+      key: 'editIcon',
     }, {
       title: '标题',
       dataIndex: 'planName',
@@ -118,14 +48,91 @@ class ListData extends React.Component {
       key: 'createTime',
     }, {
       title: '操作',
-      dataIndex: 'PatientResponse',
-      key: 'PatientResponse',
+      dataIndex: 'operation',
+      key: 'operation',
     }];
   }
+
+  getContent(procId) {
+    return (
+      <div style={{ fontSize: '15px' }}>
+         <div className={Styles.smallDiv}>新建子任务</div>
+         <div className={Styles.smallDiv}>编辑任务</div>
+         <div className={Styles.smallDiv}>关联任务</div>
+         <div className={Styles.smallDiv}>新建并关联任务</div>
+         <div className={Styles.smallDiv}>催办任务</div>
+         <div className={Styles.smallDiv}>关注任务</div>
+         <div className={Styles.smallDiv}>删除任务</div>
+      </div>
+    );
+  }
+  renderDataSource(data) {
+    const dataSource = [];
+    if (data) {
+      data.forEach((value) => {
+        dataSource.push({
+          key: value.procId,
+          procId: value.procId,
+          editIcon: (
+            <Popover content={this.getContent(value.procId)} placement="bottom" trigger="click">
+               <img src={editIcon} width="15px" />
+            </Popover>
+          ),
+          planName: value.planName,
+          status: value.status,
+          workDay: value.workDay,
+          procType: value.procType,
+          weight: value.weight,
+          pDuty: value.pDuty,
+          createTime: value.createTime,
+          children: this.renderDataSource(value.children),
+          operation: (
+            <div>
+              <a
+                onClick={(e) => {
+                  e.preventDefault();
+                }}
+              >
+                查看
+              </a>
+            </div>
+          ),
+        });
+      });
+    }
+    return dataSource;
+  }
+
   render () {
+    const rowSelection = {
+      onChange: (selectedRowKeys, selectedRows) => {
+        console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+      },
+      onSelect: (record, selected, selectedRows) => {
+        console.log(record, selected, selectedRows);
+      },
+      onSelectAll: (selected, selectedRows, changeRows) => {
+        console.log(selected, selectedRows, changeRows);
+      },
+    };
     return (
       <div style={{ padding: '20px' }}>
-        <Table columns={this.columns} dataSource={this.props.taskList} />
+        <Table
+          columns={this.columns}
+          dataSource={this.renderDataSource(this.props.taskList.listData)}
+          rowSelection={rowSelection}
+          pagination={false}
+        />
+        <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '2vh' }}>
+          <Pagination
+            current={this.props.taskList.current}
+            onChange={() => {
+              this.props.selectTaskAction({ current: 1 });
+            }}
+            total={this.props.taskList.total}
+          />
+        </div>
+
       </div>
     )
   }
