@@ -159,6 +159,42 @@ export default {
         createTime: '2017-04-02',
       }],
     }],
+    taskCardData: {
+      taskCount: 20,
+      completeTask: 16,
+      cardData: [
+        {
+          type: '运维',
+          taskNumber: 10,
+          completeTask: 2,
+        },
+        {
+          type: '设计',
+          taskNumber: 10,
+          completeTask: 2,
+        },
+        {
+          type: '开发',
+          taskNumber: 10,
+          completeTask: 8,
+        },
+        {
+          type: '测试',
+          taskNumber: 10,
+          completeTask: 2,
+        },
+        {
+          type: '交付',
+          taskNumber: 10,
+          completeTask: 2,
+        },
+        {
+          type: '验收',
+          taskNumber: 10,
+          completeTask: 2,
+        }
+      ]
+    }
   },
   // !!!: Modal订阅
   subscriptions: {

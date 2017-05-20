@@ -11,6 +11,7 @@ class TaskList extends React.Component {
   static propTypes = {
     taskList: PropTypes.array,
     taskListCard: PropTypes.array,
+    taskCardData: PropTypes.object,
   }
   state = {
     showCharts: true,
@@ -20,7 +21,7 @@ class TaskList extends React.Component {
   showCharts() {
     const isShow = this.state.showCharts;
     if (isShow) {
-      return (<TaskCharts />);
+      return (<TaskCharts taskCardData={this.props.taskCardData} />);
     }
     return <div />;
   }

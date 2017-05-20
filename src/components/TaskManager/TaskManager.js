@@ -9,6 +9,7 @@ class TaskManager extends React.PureComponent {
     taskMenu: PropTypes.array,
     taskList: PropTypes.array,
     taskListCard: PropTypes.array,
+    taskCardData: PropTypes.object,
   }
   render() {
     return (
@@ -22,6 +23,7 @@ class TaskManager extends React.PureComponent {
             <TaskList
               taskList={this.props.taskList}
               taskListCard={this.props.taskListCard}
+              taskCardData={this.props.taskCardData}
             />
           </div>
         </div>
