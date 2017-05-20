@@ -16,6 +16,7 @@ class Card extends React.PureComponent {
         <TaskInfoSee
           procId={procId}
           visible={this.state.visible}
+          handleCancel={() => this.setState({ visible: false })}
         />
       );
     }

@@ -9,6 +9,7 @@ class TaskInfoSee extends React.PureComponent {
   static propTypes = {
     visible: PropTypes.bool,
     procId: PropTypes.number,
+    handleCancel: PropTypes.func,
   };
   componentWillMount() {
     // 按任务序号获取任务详细信息
@@ -17,7 +18,8 @@ class TaskInfoSee extends React.PureComponent {
     return (
       <Modal
         visible={this.props.visible}
-        closable={false}
+        onCancel={() => this.props.handleCancel()}
+        closable
         footer={null}
         style={{ marginLeft: '25vw' }}
         width={'65vw'}
