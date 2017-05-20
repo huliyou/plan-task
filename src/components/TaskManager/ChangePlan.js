@@ -2,16 +2,18 @@
  * Created by wanglu on 7/4/2016.
  */
 import React, { PropTypes } from 'react';
-import { Form, Input, Row, Col, Button, Switch, DatePicker } from 'antd';
+import { Form, Input, Row, Col, Button, Switch, DatePicker, Modal } from 'antd';
 import * as Styles from './task.less';
+import moment from 'moment';
 
 const FormItem = Form.Item;
 
 class ChangePlan extends React.PureComponent {
   static propTypes = {
     form: PropTypes.any,
-    submitPlan: PropTypes.func,
-    addPlan: PropTypes.func,
+    visible: PropTypes.bool,
+    handleOk: PropTypes.func,
+    handleCancel: PropTypes.func,
   };
   render() {
     const formItemLayout = {
@@ -24,8 +26,8 @@ class ChangePlan extends React.PureComponent {
     };
     const { getFieldDecorator, getFieldsValue } = this.props.form;
     const themeName = getFieldsValue().themeName ? getFieldsValue().themeName : '';
-    const planBeginDate = getFieldsValue().planBeginDate ? getFieldsValue().planBeginDate : '';
-    const planEndDate = getFieldsValue().planEndDate ? getFieldsValue().planEndDate : '';
+    const planBeginDate = getFieldsValue().planBeginDate ? moment(getFieldsValue().planBeginDate).format('YYYY-MM-DD') : '';
+    const planEndDate = getFieldsValue().planEndDate ? momnet(getFieldsValue().planEndDate).format('YYYY-MM-DD') : '';
     const parentPlanCode = getFieldsValue().parentPlanCode ? getFieldsValue().parentPlanCode : '';
     const planWorkload = getFieldsValue().planWorkload ? getFieldsValue().planWorkload : '';
     const params = {
@@ -34,18 +36,20 @@ class ChangePlan extends React.PureComponent {
       planEndDate,
       parentPlanCode,
       planWorkload
-
     };
     const handleSubmit = () => {
-      this.props.form.validateFieldsAndScroll((errors, values) => {
-        if (!!errors) {
-          return;
-        }
-        // TODO 确定提交新建任务
-      });
+      this.props.handleOk(2, params);
     };
     return (
       <div>
+      <Modal
+        visible={this.props.visible}
+        closable
+        onCancel={() => this.props.handleCancel()}
+        footer={null}
+        style={{ marginLeft: '25vw' }}
+        width={'65vw'}
+      >
       <Form horizontal>
         <div className={Styles.titleContent}>
           <Row>
@@ -57,7 +61,6 @@ class ChangePlan extends React.PureComponent {
             <FormItem
               {...formItemLayout1}
               label="标题"
-              hasFeedback
             >
             {getFieldDecorator('themeName')(
               <Input
@@ -72,7 +75,6 @@ class ChangePlan extends React.PureComponent {
               <FormItem
                 {...formItemLayout}
                 label="开始时间"
-                hasFeedback
               >
               {getFieldDecorator('planBeginDate')(
                 <DatePicker format={'YYYY/MM/DD'} />
@@ -83,7 +85,6 @@ class ChangePlan extends React.PureComponent {
               <FormItem
                 {...formItemLayout}
                 label="结束时间"
-                hasFeedback
               >
               {getFieldDecorator('planEndDate')(
                 <DatePicker format={'YYYY/MM/DD'} />
@@ -96,7 +97,6 @@ class ChangePlan extends React.PureComponent {
               <FormItem
                 {...formItemLayout}
                 label="父计划"
-                hasFeedback
               >
               {getFieldDecorator('parentPlanCode')(
                 <Input
@@ -111,7 +111,6 @@ class ChangePlan extends React.PureComponent {
               <FormItem
                 {...formItemLayout}
                 label="预计投入天数"
-                hasFeedback
               >
               {getFieldDecorator('planWorkload')(
                 <Input
@@ -126,7 +125,6 @@ class ChangePlan extends React.PureComponent {
           <FormItem
             {...formItemLayout1}
             label="计划描述"
-            hasFeedback
           >
           {getFieldDecorator('title')(
             <Input
@@ -137,7 +135,6 @@ class ChangePlan extends React.PureComponent {
           <FormItem
             {...formItemLayout1}
             label="计划范围变更通知"
-            hasFeedback
           >
           {getFieldDecorator('title')(
             <Switch defaultChecked={false} />
@@ -146,7 +143,6 @@ class ChangePlan extends React.PureComponent {
           <FormItem
             {...formItemLayout1}
             label="通知接收人"
-            hasFeedback
           >
           {getFieldDecorator('title')(
             <Input />
@@ -155,7 +151,6 @@ class ChangePlan extends React.PureComponent {
           <FormItem
             {...formItemLayout1}
             label="审批"
-            hasFeedback
           >
           {getFieldDecorator('title')(
             <Switch defaultChecked={false} />
@@ -164,7 +159,6 @@ class ChangePlan extends React.PureComponent {
           <FormItem
             {...formItemLayout1}
             label="包含子计划"
-            hasFeedback
           >
           {getFieldDecorator('title')(
             <Switch defaultChecked={false} />
@@ -175,18 +169,22 @@ class ChangePlan extends React.PureComponent {
            <div>
               <Button
                 className={Styles.buttonStyle}
+                onClick={() => handleSubmit()}
               >继续添加</Button>
            </div>
            <div>
               <Button
                 className={Styles.buttonStyle}
+                onClick={() => handleSubmit()}
               >确定</Button>
               <Button
                 className={Styles.buttonStyle}
+                onClick={() => this.props.handleCancel()}
               >取消</Button>
            </div>
         </div>
       </Form>
+      </Modal>
       </div>
     );
   }

@@ -4,6 +4,7 @@
 import React, { PropTypes } from 'react';
 import { Form, Input, Row, Col, Button, DatePicker, Modal } from 'antd';
 import * as Styles from './task.less';
+import moment from 'moment';
 
 const FormItem = Form.Item;
 
@@ -26,8 +27,8 @@ class CreateChildPlan extends React.PureComponent {
     };
     const { getFieldDecorator, getFieldsValue } = this.props.form;
     const themeName = getFieldsValue().themeName ? getFieldsValue().themeName : '';
-    const planBeginDate = getFieldsValue().planBeginDate ? getFieldsValue().planBeginDate : '';
-    const planEndDate = getFieldsValue().planEndDate ? getFieldsValue().planEndDate : '';
+    const planBeginDate = getFieldsValue().planBeginDate ? moment(getFieldsValue().planBeginDate).format('YYYY-MM-DD') : '';
+    const planEndDate = getFieldsValue().planEndDate ? moment(getFieldsValue().planEndDate).format('YYYY-MM-DD') : '';
     const parentPlanCode = getFieldsValue().parentPlanCode ? getFieldsValue().parentPlanCode : '';
     const planWorkload = getFieldsValue().planWorkload ? getFieldsValue().planWorkload : '';
     const planDesc = getFieldsValue().planDesc ? getFieldsValue().planDesc : '';
@@ -41,13 +42,12 @@ class CreateChildPlan extends React.PureComponent {
       planDesc,
     };
     const handleSubmit = () => {
-      // TODO 确定提交新建子任务
-      this.props.dispatch(this.props.handleOk(params));
+      this.props.handleOk(1, params)
     };
     return (
       <div>
       <Modal
-        visible={this.state.visible}
+        visible={this.props.visible}
         closable
         onCancel={() => this.props.handleCancel()}
         footer={null}
@@ -65,7 +65,6 @@ class CreateChildPlan extends React.PureComponent {
             <FormItem
               {...formItemLayout1}
               label="标题"
-              hasFeedback
             >
             {getFieldDecorator('themeName')(
               <Input
@@ -80,7 +79,6 @@ class CreateChildPlan extends React.PureComponent {
               <FormItem
                 {...formItemLayout}
                 label="开始时间"
-                hasFeedback
               >
               {getFieldDecorator('planBeginDate')(
                 <DatePicker format={'YYYY/MM/DD'} />
@@ -91,7 +89,6 @@ class CreateChildPlan extends React.PureComponent {
               <FormItem
                 {...formItemLayout}
                 label="结束时间"
-                hasFeedback
               >
               {getFieldDecorator('planEndDate')(
                 <DatePicker format={'YYYY/MM/DD'} />
@@ -104,7 +101,6 @@ class CreateChildPlan extends React.PureComponent {
               <FormItem
                 {...formItemLayout}
                 label="父计划"
-                hasFeedback
               >
               {getFieldDecorator('parentPlanCode')(
                 <Input
@@ -117,7 +113,6 @@ class CreateChildPlan extends React.PureComponent {
               <FormItem
                 {...formItemLayout}
                 label="预计投入天数"
-                hasFeedback
               >
               {getFieldDecorator('planWorkload')(
                 <Input
@@ -131,7 +126,6 @@ class CreateChildPlan extends React.PureComponent {
             <FormItem
               {...formItemLayout1}
               label="计划描述"
-              hasFeedback
             >
             {getFieldDecorator('planDesc')(
               <Input
@@ -145,6 +139,7 @@ class CreateChildPlan extends React.PureComponent {
            <div>
               <Button
                 className={Styles.buttonStyle}
+                onClick={() => handleSubmit()}
               >继续添加</Button>
            </div>
            <div>

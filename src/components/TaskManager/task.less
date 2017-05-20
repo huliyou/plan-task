@@ -69,7 +69,12 @@ background:rgba(255,255,255,0.4);
 }
 
 :global(.ant-popover-inner-content) {
-  padding: 2vh 0,
+  padding: 2vh 0;
+  z-index: 2;
+}
+
+:global(.ant-form ant-form-horizontal) {
+  z-index: 999;
 }
 
 .titleContent {

@@ -5,7 +5,7 @@ import editIcon from './taskImg/editIcon.png';
 
 class ListData extends React.Component {
   static propTypes = {
-    taskList: PropTypes.array,
+    taskList: PropTypes.object,
     selectTaskAction: PropTypes.func,
   }
   constructor(props: Object, context: string) {

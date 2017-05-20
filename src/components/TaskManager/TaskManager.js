@@ -8,7 +8,7 @@ class TaskManager extends React.PureComponent {
   static propTypes = {
     planItems: PropTypes.array,
     taskMenu: PropTypes.array,
-    taskList: PropTypes.array,
+    taskList: PropTypes.object,
     taskListCard: PropTypes.array,
     taskCardData: PropTypes.object,
     dispatch: PropTypes.func,
@@ -20,16 +20,13 @@ class TaskManager extends React.PureComponent {
   }
   // 获取menu数据
   _getTaskMenuTree = (dispatch: Function) => (params: Object) => {
-     // TODO 获取menu数据
      dispatch({
-       type: 'TaskManager/getTasks',
+       type: 'TaskManager/getTasksMenu',
        payload: params,
      });
   }
   // 任务列表搜索功能
   selectTaskAction = (dispatch: Function) => (params: Object) => {
-    console.log(params);
-     // TODO 任务搜索接口  获取列表和card数据
     dispatch({
       type: 'TaskManager/getTasks',
       payload: params,
@@ -37,27 +34,64 @@ class TaskManager extends React.PureComponent {
   }
   // 按计划序号获取任务集合
   _getTaskById = (dispatch: Function) => (params: Object) => {
-    // TODO 按计划序号获取任务集合
     dispatch({
-      type: 'TaskManager/getTasks',
+      type: 'TaskManager/getTasksById',
       payload: params,
     });
   }
   // 按计划号删除计划及相关任务
-  _delectTaskById = (dispatch: Function) => (params: Object) => {
-    // TODO 按计划号删除计划及相关任务
+  delectTaskByPlanId = (dispatch: Function) => (params: Object) => {
     dispatch({
-      type: 'TaskManager/getTasks',
+      type: 'TaskManager/DeletePlan',
       payload: params,
     });
   }
+  // 按计划号归档计划及相关任务
+  fileTaskByPlanId = (dispatch: Function) => (params: Object) => {
+    dispatch({
+      type: 'TaskManager/filePlan',
+      payload: params,
+    });
+  }
+  // 创建子计划
+ createChildPlanAction = (dispatch: Function) => (params: Object) => {
+   dispatch({
+     type: 'TaskManager/CreateChildPlan',
+     payload: params,
+   });
+ }
+ // 变更计划
+ editPlanAction = (dispatch: Function) => (params: Object) => {
+  dispatch({
+    type: 'TaskManager/editPlan',
+    payload: params,
+  });
+}
+// 收藏计划
+editPlanAction = (dispatch: Function) => (params: Object) => {
+  params = {
+    planId: 1, // 计划序号
+    prjId: 3, // 项目序号
+    collectionUser: 'erw', // 收藏人
+  }
+ dispatch({
+   type: 'TaskManager/collectPlan',
+   payload: params,
+ });
+}
   render() {
     return (
       <div>
         <TaskHeader />
         <div className={Styles.taskBody}>
           <div className={Styles.taskMenuStyle}>
-            <TaskMenu planItems={this.props.planItems} taskMenu={this.props.taskMenu} />
+            <TaskMenu
+              planItems={this.props.planItems}
+              taskMenu={this.props.taskMenu}
+              createChildPlanAction={this.createChildPlanAction(this.props.dispatch)}
+              delectTaskByPlanId={this.delectTaskByPlanId(this.props.dispatch)}
+
+            />
           </div>
           <div className={Styles.taskListStyle}>
             <TaskList

@@ -9,7 +9,7 @@ import expandImg from './taskImg/expand_hover.png';
 
 class TaskList extends React.Component {
   static propTypes = {
-    taskList: PropTypes.array,
+    taskList: PropTypes.object,
     taskListCard: PropTypes.array,
     taskCardData: PropTypes.object,
     selectTaskAction: PropTypes.func,
