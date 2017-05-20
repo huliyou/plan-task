@@ -30,6 +30,24 @@ export async function createChildPlanRequest(params) {
   })
 }
 
+// 新建任务
+export async function createPlanRequest(params) {
+  return request({
+    url: '',
+    method: 'post',
+    data: params,
+  })
+}
+
+// 更改任务
+export async function changePlanRequest(params) {
+  return request({
+    url: '',
+    method: 'post',
+    data: params,
+  })
+}
+
 // 删除计划
 export async function deletePlanRequest(params) {
   return request({

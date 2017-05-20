@@ -2,7 +2,10 @@ import { create, remove, update, query, outpool ,findProjectPerson} from '../ser
 import { findByProb } from '../services/communicate';
 import { parse } from 'qs';
 import { message } from 'antd';
-import { getTasksRequest, getTasksMenuRequest, createChildPlanRequest } from '../services/planTaskService.js';
+import { getTasksRequest, getTasksMenuRequest, createChildPlanRequest,
+  createPlanRequest, deletePlanRequest, filePlanRequest, collectPlanRequest,
+  getTasksByIdRequest, editPlanRequest, changePlanPlanRequest
+ } from '../services/planTaskService.js';
 import Immutable from 'immutable';
 
 const planItems = [
@@ -1268,9 +1271,9 @@ export default {
       }
     },
     // 创建子计划
-    *CreateChildPlan({ payload }, { call, put }) {
-      put({ type: 'createChildPlanLoading' })
-      const requestResult = call(createChildPlanRequest());
+    *createTask({ payload }, { call, put }) {
+      put({ type: 'createPlanLoading' })
+      const requestResult = call(createPlanRequest());
       // 根据requestResult结果判断
       if (1) {
         put({
@@ -1337,7 +1340,7 @@ export default {
         put({ type: 'getTasksByIdFailure'});
       }
     },
-    // 变更计划
+    // 编辑计划
     *editPlan({ payload }, { call, put }) {
       put({ type: 'editPlanLoading' })
       const requestResult = call(editPlanRequest());
@@ -1349,6 +1352,19 @@ export default {
         });
       } else {
         put({ type: 'editPlanFailure'});
+      }
+    },
+    *changePlan({ payload }, { call, put }) {
+      put({ type: 'changePlanPlanLoading' })
+      const requestResult = call(changePlanPlanRequest());
+      // 根据requestResult结果判断
+      if (1) {
+        put({
+          type: 'changePlanPlanSuccess',
+          payload: requestResult.data,
+        });
+      } else {
+        put({ type: 'changePlanPlanFailure'});
       }
     },
   },

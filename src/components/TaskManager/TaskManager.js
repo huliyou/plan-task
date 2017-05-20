@@ -75,7 +75,7 @@ createTaskAction = (dispatch: Function) => (params: Object) => {
  });
 }
 // 收藏计划
-editPlanAction = (dispatch: Function) => (params: Object) => {
+collectPlanAction = (dispatch: Function) => (params: Object) => {
   params = {
     planId: 1, // 计划序号
     prjId: 3, // 项目序号
@@ -83,6 +83,14 @@ editPlanAction = (dispatch: Function) => (params: Object) => {
   }
  dispatch({
    type: 'TaskManager/collectPlan',
+   payload: params,
+ });
+}
+
+// 变更计划
+changePlan = (dispatch: Function) => (params: Object) => {
+ dispatch({
+   type: 'TaskManager/changePlan',
    payload: params,
  });
 }
@@ -96,8 +104,12 @@ editPlanAction = (dispatch: Function) => (params: Object) => {
               planItems={this.props.planItems}
               taskMenu={this.props.taskMenu}
               createChildPlanAction={this.createChildPlanAction(this.props.dispatch)}
+              createTaskAction={this.createTaskAction(this.props.dispatch)}
+              editPlanAction={this.editPlanAction(this.props.editPlanAction)}
               delectTaskByPlanId={this.delectTaskByPlanId(this.props.dispatch)}
-
+              collectPlanAction={this.collectPlanAction(this.props.dispatch)}
+              fileTaskByPlanId={this.fileTaskByPlanId(this.props.dispatch)}
+              changePlan={this.changePlan(this.props.dispatch)}
             />
           </div>
           <div className={Styles.taskListStyle}>

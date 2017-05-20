@@ -17,6 +17,12 @@ class TaskMenu extends React.PureComponent {
     static propTypes = {
       taskMenu: PropTypes.array,
       createChildPlanAction: PropTypes.func,
+      createTaskAction: PropTypes.func,
+      editPlanAction: PropTypes.func,
+      delectTaskByPlanId: PropTypes.func,
+      collectPlanAction: PropTypes.func,
+      fileTaskByPlanId: PropTypes.func,
+      changePlan: PropTypes.func,
     }
     state = {
       visible: false,
@@ -37,23 +43,27 @@ class TaskMenu extends React.PureComponent {
       }
       if(type === 2) {
         // 变更计划
-        this.props.createChildPlanAction(params);
+        this.props.changePlan(params);
       }
       if(type === 3) {
         // 新建任务
-        this.props.createChildPlanAction(params);
+        this.props.createTaskAction(params);
       }
       if(type === 4) {
         // 编辑计划
-        this.props.createChildPlanAction(params);
+        this.props.editPlanAction(params);
       }
       if(type === 5) {
         // 归档
-        this.props.createChildPlanAction(params);
+        this.props.fileTaskByPlanId(params);
       }
       if(type === 6) {
         // 删除
-        this.props.createChildPlanAction(params);
+        this.props.delectTaskByPlanId(params);
+      }
+      if(type === 7) {
+        // 收藏
+        this.props.collectPlanAction(params);
       }
     }
     handleCancel = () => {
