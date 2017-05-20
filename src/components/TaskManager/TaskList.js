@@ -14,7 +14,7 @@ class TaskList extends React.Component {
     taskCardData: PropTypes.object,
   }
   state = {
-    showCharts: true,
+    showCharts: false,
     visible: false,
     showListType: 'list',
   }

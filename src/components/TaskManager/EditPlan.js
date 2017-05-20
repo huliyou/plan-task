@@ -143,12 +143,10 @@ class EditPlan extends React.PureComponent {
            <div />
            <div>
               <Button
-                type="primary"
-                style={{ height: '40px', fontSize: '1.5rem', marginRight: '3vw' }}
+                className={Styles.buttonStyle}
               >确定</Button>
               <Button
-                type="primary"
-                style={{ height: '40px', fontSize: '1.5rem' }}
+                className={Styles.buttonStyle}
               >取消</Button>
            </div>
         </div>
