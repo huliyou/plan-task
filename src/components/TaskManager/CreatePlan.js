@@ -37,8 +37,7 @@ class CreatePlan extends React.PureComponent {
       pDuty,
     };
     const handleSubmit = () => {
-      // TODO 确定提交新建任务
-      this.props.dispatch(this.props.handleOk(params));
+      this.props.handleOk(3, params);
     };
     return (
       <div>
@@ -62,7 +61,6 @@ class CreatePlan extends React.PureComponent {
               <FormItem
                 {...formItemLayout}
                 label="项目"
-                hasFeedback
               >
               {getFieldDecorator('prjId')(
                 <Input />
@@ -73,7 +71,6 @@ class CreatePlan extends React.PureComponent {
               <FormItem
                 {...formItemLayout}
                 label="类型"
-                hasFeedback
               >
               {getFieldDecorator('themeName')(
                 <Input />
@@ -85,7 +82,6 @@ class CreatePlan extends React.PureComponent {
             <FormItem
               {...formItemLayout1}
               label="标题"
-              hasFeedback
             >
             {getFieldDecorator('title')(
               <Input
@@ -100,7 +96,6 @@ class CreatePlan extends React.PureComponent {
               <FormItem
                 {...formItemLayout}
                 label="负责人"
-                hasFeedback
               >
               {getFieldDecorator('pDuty')(
                 <Input />
@@ -111,7 +106,6 @@ class CreatePlan extends React.PureComponent {
               <FormItem
                 {...formItemLayout}
                 label="所属项目"
-                hasFeedback
               >
               {getFieldDecorator('title')(
                 <Input />
@@ -127,6 +121,7 @@ class CreatePlan extends React.PureComponent {
            <div>
               <Button
                 className={Styles.buttonStyle}
+                onClick={() => handleSubmit()}
               >继续添加</Button>
            </div>
            <div>

@@ -21,36 +21,39 @@ class TaskMenu extends React.PureComponent {
     state = {
       visible: false,
       selectId: 0,
-      onSelectPlanId: 0,
+      procId: 0,
       tree: this.props.planItems.filter(item => !item.parentPlanCode),
     }
     showModal = (id) => {
       this.setState({ visible: true, selectId: id });
     }
-    handleOk = (type, params) => {
-      console.log(type);
-
+    handleOk = (type, param) => {
       this.setState({ visible: false });
+      const params: Object = Object.assign(param, { planId: this.state.planId });
       // TODO 执行提交操作
       if(type === 1) {
-        console.log('params', params);
         // 提交子计划
         this.props.createChildPlanAction(params);
       }
       if(type === 2) {
         // 变更计划
+        this.props.createChildPlanAction(params);
       }
       if(type === 3) {
         // 新建任务
+        this.props.createChildPlanAction(params);
       }
       if(type === 4) {
         // 编辑计划
+        this.props.createChildPlanAction(params);
       }
       if(type === 5) {
         // 归档
+        this.props.createChildPlanAction(params);
       }
       if(type === 6) {
         // 删除
+        this.props.createChildPlanAction(params);
       }
     }
     handleCancel = () => {
@@ -118,6 +121,7 @@ class TaskMenu extends React.PureComponent {
     );
   }
   getListContent(procId) {
+    this.setState({ procId });
     return (
       <div style={{ fontSize: '15px' }}>
          <div className={Styles.smallDiv} onClick={() => this.showModal(1)}>新建子计划</div>
@@ -190,6 +194,7 @@ class TaskMenu extends React.PureComponent {
     }
     if(selectId === 7) {
       // 执行收藏的操作
+      this.handleOk(7);
     }
     return view;
   }
@@ -201,7 +206,7 @@ class TaskMenu extends React.PureComponent {
         </Tree>
         <div
           style={{ fontSize: '15px', textAlign: 'center', marginTop: '20px' }}
-          onClick={() => this.showModal()}
+          onClick={() => this.showModal(3)}
         >
           <span style={{ color: '#80E6BD', fontSize: '20px', marginRight: '10px' }}>+</span>新建计划
         </div>

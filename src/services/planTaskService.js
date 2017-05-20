@@ -65,7 +65,7 @@ export async function filePlanRequest(params) {
 }
 
 // 收藏计划
-export async function collectionPlanRequest(params) {
+export async function collectPlanRequest(params) {
   return request({
     url: 'http://localhost:9000/TRDP/csm_proc/rest/projectplan/savePlanCollection',
     method: 'get',

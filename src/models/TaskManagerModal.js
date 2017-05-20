@@ -1267,6 +1267,20 @@ export default {
         put({ type: 'createChildPlanFailure'});
       }
     },
+    // 创建子计划
+    *CreateChildPlan({ payload }, { call, put }) {
+      put({ type: 'createChildPlanLoading' })
+      const requestResult = call(createChildPlanRequest());
+      // 根据requestResult结果判断
+      if (1) {
+        put({
+          type: 'createChildPlanSuccess',
+          payload: requestResult.data,
+        });
+      } else {
+        put({ type: 'createChildPlanFailure'});
+      }
+    },
     // 删除计划
     *DeletePlan({ payload }, { call, put }) {
       put({ type: 'deletePlanLoading' })

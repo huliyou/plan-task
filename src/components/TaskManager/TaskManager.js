@@ -67,6 +67,13 @@ class TaskManager extends React.PureComponent {
     payload: params,
   });
 }
+// 新建任务
+createTaskAction = (dispatch: Function) => (params: Object) => {
+ dispatch({
+   type: 'TaskManager/createTask',
+   payload: params,
+ });
+}
 // 收藏计划
 editPlanAction = (dispatch: Function) => (params: Object) => {
   params = {
