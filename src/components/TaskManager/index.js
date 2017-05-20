@@ -9,6 +9,7 @@ function mapStateToProps(state) {
     taskList: state.TaskManager.taskList,
     taskMenu: state.TaskManager.taskMenu,
     taskCardData: state.TaskManager.taskCardData,
+    dispatch: state.dispatch,
   });
 }
 export default connect(mapStateToProps)(TaskManager);

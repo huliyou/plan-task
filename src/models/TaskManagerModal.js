@@ -220,7 +220,7 @@ export default {
           payload: requestResult.data,
         });
       } else {
-        put({ type: 'getTasksFailure'});
+        put({ type: 'getTasksFailure' });
       }
     },
     // 异步请求行为 获取taskList
