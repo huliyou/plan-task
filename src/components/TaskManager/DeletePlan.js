@@ -15,7 +15,7 @@ class DeletePlan extends React.PureComponent {
   render() {
     return (
       <Modal
-        visible={this.state.visible}
+        visible={this.props.visible}
         closable={false}
         footer={null}
         style={{ marginLeft: '25vw' }}
@@ -34,7 +34,7 @@ class DeletePlan extends React.PureComponent {
           >取消</Button>
         </div>
       </div>
-    <Modal>
+    </Modal>
     );
   }
 }

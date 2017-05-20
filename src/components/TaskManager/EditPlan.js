@@ -46,7 +46,7 @@ class EditPlan extends React.PureComponent {
     return (
       <div>
       <Modal
-        visible={this.state.visible}
+        visible={this.props.visible}
         closable={false}
         footer={null}
         style={{ marginLeft: '25vw' }}
