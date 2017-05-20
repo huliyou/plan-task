@@ -12,6 +12,7 @@ class TaskList extends React.Component {
     taskList: PropTypes.array,
     taskListCard: PropTypes.array,
     taskCardData: PropTypes.object,
+    selectTaskAction: PropTypes.func,
   }
   state = {
     showCharts: false,
@@ -30,7 +31,7 @@ class TaskList extends React.Component {
     if (isShow) {
       return (
         <div>
-          <TaskSelect />
+          <TaskSelect selectTaskAction={this.props.selectTaskAction} />
         </div>
       );
     }

@@ -18,24 +18,37 @@ class TaskManager extends React.PureComponent {
     // 获取图表数据
   }
   // 获取menu数据
-  _selectTaskMenuTree = (dispatch: Function) => (params: Object) => {
+  _getTaskMenuTree = (dispatch: Function) => (params: Object) => {
      // TODO 获取menu数据
-    dispatch();
+     dispatch({
+       type: 'TaskManager/getTasks',
+       payload: params,
+     });
   }
   // 任务列表搜索功能
-  _selectTaskAction = (dispatch: Function) => (params: Object) => {
+  selectTaskAction = (dispatch: Function) => (params: Object) => {
+    console.log(params);
      // TODO 任务搜索接口  获取列表和card数据
-    dispatch();
+    dispatch({
+      type: 'TaskManager/getTasks',
+      payload: params,
+    });
   }
   // 按计划序号获取任务集合
   _getTaskById = (dispatch: Function) => (params: Object) => {
     // TODO 按计划序号获取任务集合
-    dispatch();
+    dispatch({
+      type: 'TaskManager/getTasks',
+      payload: params,
+    });
   }
   // 按计划号删除计划及相关任务
   _delectTaskById = (dispatch: Function) => (params: Object) => {
     // TODO 按计划号删除计划及相关任务
-    dispatch();
+    dispatch({
+      type: 'TaskManager/getTasks',
+      payload: params,
+    });
   }
   render() {
     return (
@@ -50,6 +63,7 @@ class TaskManager extends React.PureComponent {
               taskList={this.props.taskList}
               taskListCard={this.props.taskListCard}
               taskCardData={this.props.taskCardData}
+              selectTaskAction={this.selectTaskAction(this.props.dispatch)}
             />
           </div>
         </div>

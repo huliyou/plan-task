@@ -11,8 +11,7 @@ const Option = Select.Option;
 class TaskSelect extends React.PureComponent {
   static propTypes = {
     form: PropTypes.any,
-    submitPlan: PropTypes.func,
-    addPlan: PropTypes.func,
+    selectTaskAction: PropTypes.func,
   };
   render() {
     const formItemLayout = {
@@ -35,7 +34,8 @@ class TaskSelect extends React.PureComponent {
       planId,
     };
     const handleSubmit = () => {
-      // TODO 任务查询
+      // 任务查询
+      this.props.selectTaskAction(params);
     };
     return (
       <div className={Styles.selectStyle}>
@@ -56,7 +56,6 @@ class TaskSelect extends React.PureComponent {
               <FormItem
                 {...formItemLayout}
                 label="任务标题"
-                hasFeedback
               >
               {getFieldDecorator('themeName')(
                 <Input />
@@ -67,7 +66,6 @@ class TaskSelect extends React.PureComponent {
               <FormItem
                 {...formItemLayout}
                 label="任务编码"
-                hasFeedback
               >
               {getFieldDecorator('themeCode')(
                 <Input />
@@ -78,7 +76,6 @@ class TaskSelect extends React.PureComponent {
               <FormItem
                 {...formItemLayout}
                 label="负责人"
-                hasFeedback
               >
               {getFieldDecorator('pDuty')(
                 <Input />
@@ -91,7 +88,6 @@ class TaskSelect extends React.PureComponent {
               <FormItem
                 {...formItemLayout}
                 label="优先级"
-                hasFeedback
               >
               {getFieldDecorator('priority')(
                 <Input />
@@ -102,7 +98,6 @@ class TaskSelect extends React.PureComponent {
               <FormItem
                 {...formItemLayout}
                 label="计划项序号"
-                hasFeedback
               >
               {getFieldDecorator('planId')(
                 <Input />
@@ -111,7 +106,10 @@ class TaskSelect extends React.PureComponent {
             </Col>
             <Col span={6} />
             <Col span={6}>
-              <div className={Styles.selectButton}>查询</div>
+              <div
+                className={Styles.selectButton}
+                onClick={() => handleSubmit()}
+              >查询</div>
             </Col>
           </Row>
         </div>

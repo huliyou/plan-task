@@ -5,7 +5,7 @@ import Config from '../utils/config'
 export async function getTasksRequest (params) {
   return request({
     // !!!: 次处填写正确的url
-    url: 'url',
+    url: 'http://localhost:9000/TRDP/csm_proc/rest/projectproc/',
     method: 'get',
     data: params,
   })
