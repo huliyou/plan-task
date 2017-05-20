@@ -160,8 +160,10 @@ export default {
       }],
     }],
     taskCardData: {
-      taskCount: 20,
-      completeTask: 16,
+      taskCount: 20, // 任务总数
+      completeTask: 16, // 完成任务总数
+      remainTime: 18, // 剩余时间天数
+      // 数据统计数据
       cardData: [
         {
           type: '运维',
@@ -193,7 +195,13 @@ export default {
           taskNumber: 10,
           completeTask: 2,
         }
-      ]
+      ],
+      // 燃尽图数据
+      lineData: [
+        {time: '2017-03-01', 任务总数: 4000, 实际进度: 2400 },
+        {time: '2017-04-01', 任务总数: 3000, 实际进度: 1398 },
+        {time: '2017-05-01', 任务总数: 2000, 实际进度: 9800 },
+      ],
     }
   },
   // !!!: Modal订阅

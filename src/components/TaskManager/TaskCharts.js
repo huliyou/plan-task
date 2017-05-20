@@ -66,7 +66,9 @@ class Taskcharts extends React.Component {
   }
   showChartByType() {
     const chartType = this.state.showChartType;
-    const percent = 20;
+    const taskCardData = this.props.taskCardData;
+    const remaintasks = taskCardData.taskCount - taskCardData.completeTask;
+    const percent = taskCardData.completeTask / taskCardData.taskCount * 100;
     if (chartType === 'chart1') {
       return(
         <div>
@@ -86,16 +88,16 @@ class Taskcharts extends React.Component {
                </div>
              </div>
              <div style={{ width: '22vw', margin: '0 3vw', fontSize: '1.2rem' }}>
-                {this.showLineProgress(this.props.taskCardData.cardData)}
+                {this.showLineProgress(taskCardData.cardData)}
              </div>
              <div style={chartStyle.chartText}>
                  <div style={chartStyle.textStyle} >
-                   <div>任务总数</div><div style={{ fontSize: '3.5rem' }}>20</div>
+                   <div>任务总数</div><div style={{ fontSize: '3.5rem' }}>{taskCardData.taskCount}</div>
                  </div>
                  <div style={{ width: '20vh', borderBottom: '1px solid #ccc', margin: '3vh 0' }} />
                  <div style={chartStyle.textStyle}>
                    <div>剩余任务数量</div>
-                   <div style={{ fontSize: '3.5rem' }}>20</div>
+                   <div style={{ fontSize: '3.5rem' }}>{remaintasks}</div>
                  </div>
              </div>
           </div>
@@ -103,15 +105,8 @@ class Taskcharts extends React.Component {
       );
     }
     if (chartType === 'chart2') {
-      const data = [
-      {name: 'Page A', uv: 4000, pv: 2400, amt: 2400},
-      {name: 'Page B', uv: 3000, pv: 1398, amt: 2210},
-      {name: 'Page C', uv: 2000, pv: 9800, amt: 2290},
-      {name: 'Page D', uv: 2780, pv: 3908, amt: 2000},
-      {name: 'Page E', uv: 1890, pv: 4800, amt: 2181},
-      {name: 'Page F', uv: 2390, pv: 3800, amt: 2500},
-      {name: 'Page G', uv: 3490, pv: 4300, amt: 2100},
-     ];
+      const data = taskCardData.lineData;
+      const remainTasks = taskCardData.taskCount - taskCardData.completeTask;
       return (
         <div style={chartStyle.chartBody}>
           <div style={{ width: '60vh', height: '100%', margin: '3vh 4vh 0 0' }}>
@@ -121,25 +116,25 @@ class Taskcharts extends React.Component {
                 data={data}
                 margin={{ top: 0, right: 10, left: 10, bottom: 10 }}
               >
-                  <XAxis dataKey="name" padding={{ right: 2 }} />
+                  <XAxis dataKey="time" padding={{ right: 2 }} />
                   <YAxis padding={{ top: 2 }} />
                   <CartesianGrid strokeDasharray="3 3" />
                   <Tooltip />
                   <Legend verticalAlign={'top'} />
-                  <ChartLine type="monotone" dataKey="pv" stroke="#8884d8" activeDot={{r: 8}} />
-                  <ChartLine type="monotone" dataKey="uv" stroke="#82ca9d" />
+                  <ChartLine type="monotone" dataKey="任务总数" stroke="#8884d8" activeDot={{r: 8}} />
+                  <ChartLine type="monotone" dataKey="实际进度" stroke="#82ca9d" />
               </LineChart>
             </ResponsiveContainer>
             <div style={{ display: 'flex', justifyContent: 'flex-end' }}>日期</div>
           </div>
           <div style={chartStyle.chartText}>
               <div style={chartStyle.textStyle} >
-                <div>剩余任务数</div><div style={{ fontSize: '3.5rem' }}>20</div>
+                <div>剩余任务数</div><div style={{ fontSize: '3.5rem' }}>{remainTasks}</div>
               </div>
               <div style={{ width: '20vh', borderBottom: '1px solid #ccc', margin: '3vh 0' }} />
               <div style={chartStyle.textStyle}>
                 <div>剩余天数</div>
-                <div style={{ fontSize: '3.5rem' }}>20</div>
+                <div style={{ fontSize: '3.5rem' }}>{taskCardData.remainTime}</div>
               </div>
           </div>
         </div>
