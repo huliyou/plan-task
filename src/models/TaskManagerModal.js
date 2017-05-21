@@ -4,7 +4,8 @@ import { parse } from 'qs';
 import { message } from 'antd';
 import { getTasksRequest, getTasksMenuRequest, createChildPlanRequest,
   createPlanRequest, deletePlanRequest, filePlanRequest, collectPlanRequest,
-  getTasksByIdRequest, editPlanRequest, changePlanPlanRequest, getRelationPlanListRequest
+  getTasksByIdRequest, editPlanRequest, changePlanPlanRequest, getRelationPlanListRequest,
+  getPlanInfoRequest
  } from '../services/planTaskService.js';
 import Immutable from 'immutable';
 
@@ -245,6 +246,24 @@ export default {
         {time: '2017-05-01', 任务总数: 2000, 实际进度: 9800 },
       ],
     },
+    // 计划详情
+    planInfo: {
+      planId: 1,
+      phase: '完成',
+      planCode: 'wqrqrerwr',
+      parentPlanCode: 'wqrqrerwr',
+      planDesc: 'wqrqrerwr',
+      planBeginDate: '2017-03-10',
+      planEndDate: '2017-03-10',
+      planStatus: '完成',
+      planRealBeginDate: '017-03-10',
+      planRealEndDate: '017-03-10',
+      isUse: true,
+      prjId: 12,
+      currentVersion: '',
+      planTitle: '',
+      planWorkload: '',
+    }
   },
   // !!!: Modal订阅
   subscriptions: {
@@ -253,156 +272,169 @@ export default {
   effects: {
     // 异步请求行为 搜索获取taskList
     *getTasks ({ payload }, { call, put }) {
-      put({ type: 'getTasksLoading' });
-      const requestResult = call(getTasksRequest());
+      yield put({ type: 'getTasksLoading' });
+      const requestResult = yield call(getTasksRequest());
       // 根据requestResult结果判断
       if (1) {
-        put({
+        yield put({
           type: 'getTasksByIdSuccess',
           payload: requestResult.data,
         });
       } else {
-        put({ type: 'getTasksByIdFailure'});
+        yield put({ type: 'getTasksByIdFailure'});
       }
     },
     // 异步请求行为 获取taskMenu
     *getTasksMenu ({ payload }, { call, put }) {
-      put({ type: 'getTasksMenuLoading' })
-      const requestResult = call(getTasksMenuRequest());
+      yield put({ type: 'getTasksMenuLoading' })
+      const requestResult = yield call(getTasksMenuRequest());
       // 根据requestResult结果判断
-      if (requestResult.successful === 'true') {
-        put({
+      if (requestResult.successful) {
+        yield put({
           type: 'getTasksMenuSuccess',
           payload: requestResult.data,
         });
       } else {
-        put({ type: 'getTasksMenuFailure'});
+        yield put({ type: 'getTasksMenuFailure'});
       }
     },
     // 创建子计划
     *CreateChildPlan({ payload }, { call, put }) {
-      put({ type: 'createChildPlanLoading' })
-      const requestResult = call(createChildPlanRequest());
+      yield put({ type: 'createChildPlanLoading' })
+      const requestResult = yield call(createChildPlanRequest());
       // 根据requestResult结果判断
-      if (1) {
-        put({
+      if (requestResult.successful) {
+        yield put({
           type: 'createChildPlanSuccess',
           payload: requestResult.data,
         });
       } else {
-        put({ type: 'createChildPlanFailure'});
+        yield put({ type: 'createChildPlanFailure'});
       }
     },
     // 创建子任务
     *createTask({ payload }, { call, put }) {
-      put({ type: 'createPlanLoading' })
-      const requestResult = call(createPlanRequest());
+      yield put({ type: 'createPlanLoading' })
+      const requestResult = yield call(createPlanRequest());
       // 根据requestResult结果判断
-      if (1) {
-        put({
+      if (requestResult.successful) {
+        yield put({
           type: 'createChildPlanSuccess',
           payload: requestResult.data,
         });
       } else {
-        put({ type: 'createChildPlanFailure'});
+        yield put({ type: 'createChildPlanFailure'});
       }
     },
     // 删除计划
     *DeletePlan({ payload }, { call, put }) {
-      put({ type: 'deletePlanLoading' })
-      const requestResult = call(deletePlanRequest());
+      yield put({ type: 'deletePlanLoading' })
+      const requestResult = yield call(deletePlanRequest());
       // 根据requestResult结果判断
-      if (1) {
-        put({
+      if (requestResult.successful) {
+        yield put({
           type: 'deletePlanSuccess',
           payload: requestResult.data,
         });
       } else {
-        put({ type: 'deletePlanFailure'});
+        yield put({ type: 'deletePlanFailure'});
       }
     },
     // 归档计划
     *filePlan({ payload }, { call, put }) {
-      put({ type: 'filePlanLoading' })
-      const requestResult = call(filePlanRequest());
+      yield put({ type: 'filePlanLoading' })
+      const requestResult = yield call(filePlanRequest());
       // 根据requestResult结果判断
-      if (1) {
-        put({
+      if (requestResult.successful) {
+        yield put({
           type: 'filePlanSuccess',
           payload: requestResult.data,
         });
       } else {
-        put({ type: 'filePlanFailure'});
+        yield put({ type: 'filePlanFailure'});
       }
     },
     // 收藏计划
     *collectPlan({ payload }, { call, put }) {
-      put({ type: 'collectPlanLoading' })
-      const requestResult = call(collectPlanRequest());
+      yield put({ type: 'collectPlanLoading' })
+      const requestResult = yield call(collectPlanRequest());
       // 根据requestResult结果判断
-      if (1) {
-        put({
+      if (requestResult.successful) {
+        yield put({
           type: 'collectPlanSuccess',
           payload: requestResult.data,
         });
       } else {
-        put({ type: 'collectPlanFailure'});
+        yield put({ type: 'collectPlanFailure'});
       }
     },
     // 根据任务ID获取列表
     *getTasksById({ payload }, { call, put }) {
-      console.log(payload);
-      put({ type: 'getTasksByIdLoading' })
-      const requestResult = call(getTasksByIdRequest());
+      yield put({ type: 'getTasksByIdLoading' })
+      const requestResult = yield call(getTasksByIdRequest());
       // 根据requestResult结果判断
-      if (requestResult.successful === 'true') {
-        put({
+      if (requestResult.successful) {
+        yield put({
           type: 'getTasksByIdSuccess',
           payload: requestResult.resultValue,
         });
       } else {
-        put({ type: 'getTasksByIdFailure'});
+        yield put({ type: 'getTasksByIdFailure'});
       }
     },
     // 编辑计划
     *editPlan({ payload }, { call, put }) {
-      put({ type: 'editPlanLoading' })
-      const requestResult = call(editPlanRequest());
+      yield put({ type: 'editPlanLoading' })
+      const requestResult = yield call(editPlanRequest());
       // 根据requestResult结果判断
-      if (1) {
-        put({
+      if (requestResult.successful) {
+        yield put({
           type: 'editPlanSuccess',
           payload: requestResult.data,
         });
       } else {
-        put({ type: 'editPlanFailure'});
+        yield put({ type: 'editPlanFailure'});
       }
     },
     *changePlan({ payload }, { call, put }) {
-      put({ type: 'changePlanLoading' })
-      const requestResult = call(changePlanPlanRequest());
+      yield put({ type: 'changePlanLoading' })
+      const requestResult = yield call(changePlanPlanRequest());
       // 根据requestResult结果判断
-      if (1) {
-        put({
+      if (requestResult.successful) {
+        yield put({
           type: 'changePlanSuccess',
           payload: requestResult.data,
         });
       } else {
-        put({ type: 'changePlanFailure'});
+        yield put({ type: 'changePlanFailure'});
       }
     },
     // 获取关联任务列表
     *getRelationPlanList({ payload }, { call, put }) {
-      put({ type: 'getRelationPlanListLoading' })
-      const requestResult = call(getRelationPlanListRequest());
+      yield put({ type: 'getRelationPlanListLoading' })
+      const requestResult = yield call(getRelationPlanListRequest());
       // 根据requestResult结果判断
-      if (1) {
-        put({
+      if (requestResult.successful) {
+        yield put({
           type: 'getRelationPlanListSuccess',
           payload: requestResult.data,
         });
       } else {
-        put({ type: 'getRelationPlanListFailure'});
+        yield put({ type: 'getRelationPlanListFailure'});
+      }
+    },
+    // 获取计划详情
+    *getPlanInfo({ payload }, { call, put }) {
+      yield put({ type: 'getPlanInfoLoading' })
+      const requestResult = yield call(getPlanInfoRequest());
+      // 根据requestResult结果判断
+      if (requestResult.successful) {
+        yield put({
+          type: 'getPlanInfoSuccess',
+          payload: requestResult.data,
+        });
+      } else {
+        yield put({ type: 'getPlanInfoFailure'});
       }
     },
   },
@@ -453,6 +485,30 @@ export default {
     },
     getTasksMenuFailure(state, action) {
       // 修改状态的error标志
+      return {
+        ...state,
+        isFetching: false,
+        errMsg: action.errMsg,
+      }
+    },
+
+    getPlanInfoLoading(state, action) {
+      return {
+        ...state,
+        isFetching: true,
+        errMsg: '',
+      }
+    },
+    getPlanInfoSuccess(state, action) {
+      return {
+        ...state,
+        isFetching: false,
+        errMsg: '',
+        planInfo: action.resultValue,
+      }
+    },
+
+    getPlanInfoFailure(state, action) {
       return {
         ...state,
         isFetching: false,

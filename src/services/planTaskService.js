@@ -12,6 +12,15 @@ export async function getTasksByIdRequest(params) {
   })
 }
 
+// 获取计划详情
+export async function getPlanInfoRequest(params) {
+  return request({
+    url: 'http://localhost:9000/TRDP/csm_proc/rest/projectproc/getPlanInfo',
+    method: 'get',
+    data: params,
+  })
+}
+
 // 获取task menu
 export async function getTasksMenuRequest(params) {
   return request({

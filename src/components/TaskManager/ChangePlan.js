@@ -14,7 +14,12 @@ class ChangePlan extends React.PureComponent {
     visible: PropTypes.bool,
     handleOk: PropTypes.func,
     handleCancel: PropTypes.func,
+    getPlanInfo: PropTypes.func,
+    planInfo: PropTypes.object,
   };
+  componentWillMount() {
+    this.props.getPlanInfo();
+  }
   render() {
     const formItemLayout = {
       labelCol: { span: 6 },
@@ -62,7 +67,9 @@ class ChangePlan extends React.PureComponent {
               {...formItemLayout1}
               label="标题"
             >
-            {getFieldDecorator('themeName')(
+            {getFieldDecorator('planTitle', {
+              initialValue: this.props.planInfo.planTitle,
+            })(
               <Input
                 placeholder="仅支持中英文"
                 type="text"
@@ -76,7 +83,9 @@ class ChangePlan extends React.PureComponent {
                 {...formItemLayout}
                 label="开始时间"
               >
-              {getFieldDecorator('planBeginDate')(
+              {getFieldDecorator('planBeginDate', {
+                initialValue: this.props.planInfo.planBeginDate,
+              })(
                 <DatePicker format={'YYYY/MM/DD'} />
               )}
               </FormItem>
@@ -86,7 +95,9 @@ class ChangePlan extends React.PureComponent {
                 {...formItemLayout}
                 label="结束时间"
               >
-              {getFieldDecorator('planEndDate')(
+              {getFieldDecorator('planEndDate', {
+                initialValue: this.props.planInfo.planEndDate,
+              })(
                 <DatePicker format={'YYYY/MM/DD'} />
               )}
               </FormItem>

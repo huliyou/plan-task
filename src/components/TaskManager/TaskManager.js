@@ -13,6 +13,7 @@ class TaskManager extends React.PureComponent {
     taskCardData: PropTypes.object,
     dispatch: PropTypes.func,
     selectPlanId: PropTypes.string,
+    planInfo: PropTypes.object,
   }
   componentWillMount () {
     // 获取menu数据
@@ -91,6 +92,14 @@ changePlan = (dispatch: Function) => (params: Object) => {
    payload: params,
  });
 }
+
+// 获取计划详情
+getPlanInfo = (dispatch: Function) => (params: Object) => {
+  dispatch({
+    type: 'TaskManager/getPlanInfo',
+    payload: params,
+  });
+}
   render() {
     return (
       <div>
@@ -106,7 +115,9 @@ changePlan = (dispatch: Function) => (params: Object) => {
               delectTaskByPlanId={this.delectTaskByPlanId(this.props.dispatch)}
               collectPlanAction={this.collectPlanAction(this.props.dispatch)}
               fileTaskByPlanId={this.fileTaskByPlanId(this.props.dispatch)}
+              getPlanInfo={this.getPlanInfo(this.props.dispatch)}
               changePlan={this.changePlan(this.props.dispatch)}
+              planInfo={this.props.planInfo}
               dispatch={this.props.dispatch}
             />
           </div>
