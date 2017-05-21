@@ -13,6 +13,7 @@ class TaskList extends React.Component {
     taskListCard: PropTypes.array,
     taskCardData: PropTypes.object,
     selectTaskAction: PropTypes.func,
+    dispatch: PropTypes.func,
   }
   state = {
     showCharts: false,
@@ -42,6 +43,7 @@ class TaskList extends React.Component {
     if (type === 'list') {
       return (
         <ListData
+          dispatch={this.props.dispatch}
           taskList={this.props.taskList}
           selectTaskAction={this.props.selectTaskAction}
         />

@@ -12,30 +12,27 @@ class TaskManager extends React.PureComponent {
     taskListCard: PropTypes.array,
     taskCardData: PropTypes.object,
     dispatch: PropTypes.func,
+    selectPlanId: PropTypes.string,
   }
   componentWillMount () {
-    // 获取列表和card数据
     // 获取menu数据
-    // 获取图表数据
+    this.props.dispatch({
+        type: 'TaskManager/getTasksMenu',
+        payload: {},
+    });
   }
-  // 获取menu数据
-  _getTaskMenuTree = (dispatch: Function) => (params: Object) => {
-     dispatch({
-       type: 'TaskManager/getTasksMenu',
-       payload: params,
-     });
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.selectPlanId !== this.props.selectPlanId && nextProps.selectPlanId) {
+      this.props.dispatch({
+          type: 'TaskManager/getTasksById',
+          payload: { planId: nextProps.selectPlanId},
+        });
+    }
   }
   // 任务列表搜索功能
   selectTaskAction = (dispatch: Function) => (params: Object) => {
     dispatch({
       type: 'TaskManager/getTasks',
-      payload: params,
-    });
-  }
-  // 按计划序号获取任务集合
-  _getTaskById = (dispatch: Function) => (params: Object) => {
-    dispatch({
-      type: 'TaskManager/getTasksById',
       payload: params,
     });
   }
@@ -110,6 +107,7 @@ changePlan = (dispatch: Function) => (params: Object) => {
               collectPlanAction={this.collectPlanAction(this.props.dispatch)}
               fileTaskByPlanId={this.fileTaskByPlanId(this.props.dispatch)}
               changePlan={this.changePlan(this.props.dispatch)}
+              dispatch={this.props.dispatch}
             />
           </div>
           <div className={Styles.taskListStyle}>
@@ -118,6 +116,7 @@ changePlan = (dispatch: Function) => (params: Object) => {
               taskListCard={this.props.taskListCard}
               taskCardData={this.props.taskCardData}
               selectTaskAction={this.selectTaskAction(this.props.dispatch)}
+              dispatch={this.props.dispatch}
             />
           </div>
         </div>

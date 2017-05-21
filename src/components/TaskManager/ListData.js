@@ -2,9 +2,13 @@ import React, { PropTypes } from 'react';
 import Styles from './task.less';
 import { Table, Pagination, Popover } from 'antd';
 import editIcon from './taskImg/editIcon.png';
+import CreatePlan from './CreatePlan.js';
+import RelationTask from './RelationTask.js';
+import TaskInfoEdit from './TaskInfoEdit.js';
 
 class ListData extends React.Component {
   static propTypes = {
+    dispatch: PropTypes.func,
     taskList: PropTypes.object,
     selectTaskAction: PropTypes.func,
   }
@@ -51,20 +55,75 @@ class ListData extends React.Component {
       dataIndex: 'operation',
       key: 'operation',
     }];
+    this.state = {
+      visible: false,
+      selectId: 0,
+      procId: 0,
+    }
   }
-
+  showModal = (id) => {
+    this.setState({ visible: true, selectId: id });
+  }
+  handleCancel = () => {
+    this.setState({ visible: false });
+  }
   getContent(procId) {
     return (
       <div style={{ fontSize: '15px' }}>
-         <div className={Styles.smallDiv}>新建子任务</div>
-         <div className={Styles.smallDiv}>编辑任务</div>
-         <div className={Styles.smallDiv}>关联任务</div>
-         <div className={Styles.smallDiv}>新建并关联任务</div>
-         <div className={Styles.smallDiv}>催办任务</div>
-         <div className={Styles.smallDiv}>关注任务</div>
-         <div className={Styles.smallDiv}>删除任务</div>
+         <div className={Styles.smallDiv} onClick={() => this.showModal(1)}>新建子任务</div>
+         <div className={Styles.smallDiv} onClick={() => this.showModal(2)}>编辑任务</div>
+         <div className={Styles.smallDiv} onClick={() => this.showModal(3)}>关联任务</div>
+         <div className={Styles.smallDiv} onClick={() => this.showModal(4)}>新建并关联任务</div>
+         <div className={Styles.smallDiv} onClick={() => this.showModal(5)}>催办任务</div>
+         <div className={Styles.smallDiv} onClick={() => this.showModal(6)}>关注任务</div>
+         <div className={Styles.smallDiv} onClick={() => this.showModal(7)}>删除任务</div>
       </div>
     );
+  }
+  showModalContent() {
+    const selectId = this.state.selectId;
+    const visible = this.state.visible;
+    const view = [];
+    if(selectId === 1) {
+      view.push(
+        <CreatePlan
+          visible={visible}
+          handleCancel={() => this.handleCancel()}
+          handleOk={(type, params) => this.handleOk(type, params)}
+        />
+      )
+    }
+    if(selectId === 2) {
+      view.push(
+        <TaskInfoEdit
+          visible={visible}
+          handleCancel={() => this.handleCancel()}
+          handleOk={(type, params) => this.handleOk(type, params)}
+        />
+      )
+    }
+    if(selectId === 3) {
+      view.push(
+        <RelationTask
+          visible={visible}
+          handleCancel={() => this.handleCancel()}
+          dispacth={this.props.dispatch}
+        />
+      )
+    }
+    if(selectId === 4) {
+      // 新建并关联
+    }
+    if(selectId === 5) {
+      // 催办任务
+    }
+    if(selectId === 6) {
+      // 关注任务
+    }
+    if(selectId === 7) {
+      // 删除任务
+    }
+    return view;
   }
   renderDataSource(data) {
     const dataSource = [];
@@ -132,7 +191,7 @@ class ListData extends React.Component {
             total={this.props.taskList.total}
           />
         </div>
-
+        {this.showModalContent()}
       </div>
     )
   }

@@ -10,6 +10,7 @@ function mapStateToProps(state) {
     taskList: state.TaskManager.taskList,
     taskMenu: state.TaskManager.taskMenu,
     taskCardData: state.TaskManager.taskCardData,
+    selectPlanId: state.TaskManager.selectPlanId,
     dispatch: state.dispatch,
   });
 }

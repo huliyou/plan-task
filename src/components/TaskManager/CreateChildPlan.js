@@ -57,7 +57,7 @@ class CreateChildPlan extends React.PureComponent {
       <Form horizontal>
         <div className={Styles.titleContent}>
           <Row>
-            <Col span={23}>新建子任务</Col>
+            <Col span={23}>新建子计划</Col>
           </Row>
         </div>
         <div className={Styles.bodyContent}>

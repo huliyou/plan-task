@@ -4,9 +4,8 @@ import Config from '../utils/config'
 // !!!: 此处去做异步请求
 //
 // 获取任务列表
-export async function getTasksRequest (params) {
+export async function getTasksByIdRequest(params) {
   return request({
-    // !!!: 次处填写正确的url
     url: 'http://localhost:9000/TRDP/csm_proc/rest/projectproc/',
     method: 'get',
     data: params,
@@ -52,14 +51,6 @@ export async function changePlanRequest(params) {
 export async function deletePlanRequest(params) {
   return request({
     url: 'http://localhost:9000/TRDP/csm_proc/rest/projectproc/deletePlan',
-    method: 'get',
-    data: params,
-  })
-}
-
-export async function getTasksByIdRequest(params) {
-  return request({
-    url: 'http://localhost:9000/TRDP/csm_proc/rest/projectproc/',
     method: 'get',
     data: params,
   })

@@ -23,6 +23,7 @@ class TaskMenu extends React.PureComponent {
       collectPlanAction: PropTypes.func,
       fileTaskByPlanId: PropTypes.func,
       changePlan: PropTypes.func,
+      dispatch: PropTypes.func,
     }
     state = {
       visible: false,
@@ -30,13 +31,20 @@ class TaskMenu extends React.PureComponent {
       procId: 0,
       tree: this.props.planItems.filter(item => !item.parentPlanCode),
     }
+    changePlanId(planId) {
+      this.props.dispatch({
+        type: 'TaskManager/selectPlanId',
+        payload: {
+          planId,
+        },
+      });
+    }
     showModal = (id) => {
       this.setState({ visible: true, selectId: id });
     }
     handleOk = (type, param) => {
       this.setState({ visible: false });
       const params: Object = Object.assign(param, { planId: this.state.planId });
-      // TODO 执行提交操作
       if(type === 1) {
         // 提交子计划
         this.props.createChildPlanAction(params);
@@ -105,8 +113,8 @@ class TaskMenu extends React.PureComponent {
   }
   planComponents(item) {
     return (
-      <div style={{ fontSize: '15px', height: '25px' }}>
-        {item.planTitle}&nbsp;&nbsp;50%&nbsp;&nbsp;
+      <div style={{ fontSize: '17px', height: '30px' }} onClick={() => this.changePlanId(item.planId)}>
+        {item.planTitle}&nbsp;&nbsp;{item.percent}&nbsp;&nbsp;
         <Popover
           content={this.getContent(item.procId)} placement="bottom" trigger="click"
         >
