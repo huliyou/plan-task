@@ -59,7 +59,7 @@ export async function createPlanRequest(params) {
 // 更改计划
 export async function changePlanRequest(params) {
   return request({
-    url: '',
+    url: 'http://localhost:9000/TRDP/csm_proc/rest/projectproc/savePlan',
     method: 'post',
     data: params,
   })
@@ -122,7 +122,7 @@ export async function followTaskRequest(params) {
 // 删除任务
 export async function deleteTaskRequest(params) {
   return request({
-    url: 'http://localhost:9000/TRDP/csm_proc/rest/projectplan/savePlanCollection',
+    url: 'http://localhost:9000/TRDP/csm_proc/rest/projectproc/delete',
     method: 'get',
     data: params,
   })
@@ -196,6 +196,15 @@ export async function getLogListRequest(params) {
 export async function addCommentRequest(params) {
   return request({
     url: 'http://localhost:9000/TRDP/csm_proc/rest/projectproc/saveComment',
+    method: 'get',
+    data: params,
+  })
+}
+
+// 根据任务ID保存附件
+export async function saveFileRequest(params) {
+  return request({
+    url: 'http://localhost:9000/TRDP/csm_proc/rest/projectplan/upload',
     method: 'get',
     data: params,
   })

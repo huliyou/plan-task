@@ -24,7 +24,6 @@ class TaskMenu extends React.PureComponent {
       fileTaskByPlanId: PropTypes.func,
       changePlan: PropTypes.func,
       dispatch: PropTypes.func,
-      getPlanInfo: PropTypes.func,
       planInfo: PropTypes.object,
     }
     state = {
@@ -171,7 +170,6 @@ class TaskMenu extends React.PureComponent {
       view.push(
         <ChangePlan
           visible={visible}
-          getPlanInfo={() => this.props.getPlanInfo()}
           planInfo={this.props.planInfo}
           handleCancel={() => this.handleCancel()}
           handleOk={(type, params) => this.handleOk(type, params)}

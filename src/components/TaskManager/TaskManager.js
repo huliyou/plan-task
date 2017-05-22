@@ -38,6 +38,9 @@ class TaskManager extends React.PureComponent {
       this.getCommentListAction(this.props.selectProcId);
       this.getLogListAction(this.props.selectProcId);
     }
+    if(this.props.planId) {
+      this.getPlanInfoAction(his.props.planId);
+    }
   }
   componentWillReceiveProps(nextProps) {
     if (nextProps.selectPlanId !== this.props.selectPlanId && nextProps.selectPlanId) {
@@ -47,12 +50,15 @@ class TaskManager extends React.PureComponent {
         });
     }
     if (nextProps.selectProcId !== this.props.selectProcId && nextProps.selectProcId) {
-      this.getTaskInfoAction(this.props.selectProcId);
-      this.getFilesListAction(this.props.selectProcId);
-      this.getFilesListAction(this.props.selectProcId);
-      this.getRelationTaskListAction(this.props.selectProcId);
-      this.getCommentListAction(this.props.selectProcId);
-      this.getLogListAction(this.props.selectProcId);
+      this.getTaskInfoAction(nextProps.selectProcId);
+      this.getFilesListAction(nextProps.selectProcId);
+      this.getFilesListAction(nextProps.selectProcId);
+      this.getRelationTaskListAction(nextProps.selectProcId);
+      this.getCommentListAction(nextProps.selectProcId);
+      this.getLogListAction(nextProps.selectProcId);
+    }
+    if (nextProps.planId !== this.props.planId && nextProps.planId) {
+      this.getPlanInfoAction(nextProps.planId);
     }
   }
   // 获取任务详情
@@ -108,7 +114,7 @@ class TaskManager extends React.PureComponent {
     });
   }
 
-  // 获取上操作记录列表
+  // 获取操作记录列表
  getLogListAction(procId) {
     this.props.dispatch({
       type: 'TaskManager/getLogList',
@@ -171,7 +177,12 @@ changePlan = (dispatch: Function) => (params: Object) => {
    payload: params,
  });
 }
-
+getPlanInfoAction(planId) {
+  dispatch({
+    type: 'TaskManager/getPlanInfo',
+    payload: { planId },
+  });
+}
 // 获取计划详情
 getPlanInfo = (dispatch: Function) => (params: Object) => {
   dispatch({
@@ -194,7 +205,6 @@ getPlanInfo = (dispatch: Function) => (params: Object) => {
               delectTaskByPlanId={this.delectTaskByPlanId(this.props.dispatch)}
               collectPlanAction={this.collectPlanAction(this.props.dispatch)}
               fileTaskByPlanId={this.fileTaskByPlanId(this.props.dispatch)}
-              getPlanInfo={this.getPlanInfo(this.props.dispatch)}
               changePlan={this.changePlan(this.props.dispatch)}
               planInfo={this.props.planInfo}
               dispatch={this.props.dispatch}

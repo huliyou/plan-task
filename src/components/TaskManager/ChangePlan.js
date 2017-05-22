@@ -14,12 +14,8 @@ class ChangePlan extends React.PureComponent {
     visible: PropTypes.bool,
     handleOk: PropTypes.func,
     handleCancel: PropTypes.func,
-    getPlanInfo: PropTypes.func,
     planInfo: PropTypes.object,
   };
-  componentWillMount() {
-    this.props.getPlanInfo();
-  }
   render() {
     const formItemLayout = {
       labelCol: { span: 6 },

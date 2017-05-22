@@ -6,7 +6,8 @@ import { getTasksRequest, getTasksMenuRequest, createChildPlanRequest,
   createPlanRequest, deletePlanRequest, filePlanRequest, collectPlanRequest,
   getTasksByIdRequest, editPlanRequest, changePlanPlanRequest, getRelationPlanListRequest,
   getPlanInfoRequest, remindersTaskRequest, followTaskRequest, deleteTaskRequest, relationTaskRequest, getTaskInfoRequest,
-  getRelationTaskListRequest, getFilesListRequest, getParentTaskListRequest, getCommentListRequest, getLogListRequest, addCommentRequest
+  getRelationTaskListRequest, getFilesListRequest, getParentTaskListRequest, getCommentListRequest, getLogListRequest, addCommentRequest,
+  saveFileRequest, deleteTaskRequest
  } from '../services/planTaskService.js';
 import Immutable from 'immutable';
 
@@ -721,7 +722,7 @@ export default {
     // 添加评论
     *addComment({ payload }, { call, put }) {
           yield put({ type: 'addCommentLoading' })
-          const requestResult = yield call(gaddCommentRequest());
+          const requestResult = yield call(addCommentRequest());
           // 根据requestResult结果判断
           if (requestResult.successful) {
             yield put({
@@ -735,6 +736,26 @@ export default {
             // })
           } else {
             yield put({ type: 'addCommentFailure'});
+            message.success('添加成功');
+          }
+    },
+    // saveFileRequest添加附件
+    *addfile({ payload }, { call, put }) {
+          yield put({ type: 'addfileLoading' })
+          const requestResult = yield call(saveFileRequest());
+          // 根据requestResult结果判断
+          if (requestResult.successful) {
+            yield put({
+              type: 'addfileSuccess',
+              payload: requestResult.resultValue,
+            });
+            message.success('添加成功');
+            // dispatch({
+            //   type: 'TaskManager/getFilesList',
+            //   payload,
+            // })
+          } else {
+            yield put({ type: 'addfileFailure'});
             message.success('添加成功');
           }
     },
