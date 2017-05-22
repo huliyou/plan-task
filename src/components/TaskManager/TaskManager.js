@@ -104,7 +104,7 @@ getPlanInfo = (dispatch: Function) => (params: Object) => {
   render() {
     return (
       <div>
-        <TaskHeader />
+        <TaskHeader createTaskAction={this.createTaskAction(this.props.dispatch)}/>
         <div className={Styles.taskBody}>
           <div className={Styles.taskMenuStyle}>
             <TaskMenu

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import Styles from './task.less';
 import { Form, Input, Row, Col, Button, Select, Modal } from 'antd';
 import CreatePlan from './CreatePlan.js';
@@ -7,14 +7,18 @@ const FormItem = Form.Item;
 const Option = Select.Option;
 
 class TaskHeader extends React.PureComponent {
+  static propTypes = {
+    createTaskAction: PropTypes.func,
+  };
   state = {
     visible: false,
   }
   showModal = () => {
     this.setState({ visible: true });
   }
-  handleOk = () => {
+  handleOk = (type, params) => {
     this.setState({ visible: false });
+    this.props.createTaskAction(params);
   }
   handleCancel = () => {
     this.setState({ visible: false });
@@ -30,8 +34,8 @@ class TaskHeader extends React.PureComponent {
         </div>
         <CreatePlan
           visible={this.state.visible}
-          handleOk={this.handleOk}
-          handleCancel={this.handleCancel}
+          handleOk={(type, params) => this.handleOk(type, params)}
+          handleCancel={() => this.handleCancel()}
         />
       </div>
     );
