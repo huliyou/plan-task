@@ -16,6 +16,11 @@ class TaskList extends React.Component {
     relationPlanList: PropTypes.object,
     dispatch: PropTypes.func,
     selectParams: PropTypes.object,
+    parentTaskList: PropTypes.array,
+    filesList: PropTypes.array,
+    relationTaskList: PropTypes.array,
+    planInfo: PropTypes.object,
+    selectProcId: PropTypes.any,
   }
   state = {
     showCharts: false,
@@ -53,6 +58,11 @@ class TaskList extends React.Component {
           selectTaskAction={this.props.selectTaskAction}
           relationPlanList={this.props.relationPlanList}
           selectParams={this.props.selectParams}
+          parentTaskList={this.props.parentTaskList}
+          filesList={this.props.filesList}
+          relationTaskList={this.props.relationTaskList}
+          planInfo={this.props.planInfo}
+          selectProcId={this.props.selectProcId}
         />
       );
     }

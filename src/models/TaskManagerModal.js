@@ -69,6 +69,7 @@ export default {
     isFetching: false,
     errMsg: '',
     selectPlanId: null,
+    selectProcId: null,
     // menu树
     planItems,
     // 任务列表
@@ -430,7 +431,7 @@ export default {
         yield put({ type: 'createChildPlanFailure'});
       }
     },
-    // 创建子任务
+    // 保存任务
     *createTask({ payload }, { call, put }) {
       yield put({ type: 'createPlanLoading' })
       const requestResult = yield call(createPlanRequest());
@@ -648,7 +649,7 @@ export default {
     // 获取附件列表
     *getFilesList({ payload }, { call, put }) {
           yield put({ type: 'getQueryListLoading' })
-          const requestResult = yield call(getQueryListRequest());
+          const requestResult = yield call(getFilesListRequest());
           // 根据requestResult结果判断
           if (requestResult.successful) {
             yield put({
@@ -934,10 +935,19 @@ export default {
         errMsg: action.errMsg,
       }
     },
+    // 选中的计划Id
     selectPlanId(state, action) {
       return {
         ...state,
         selectPlanId: action.payload.planId,
+      }
+    },
+    // 选中的任务Id
+    selectProcId(state, action) {
+      console.log('1:' , action.payload.procId);
+      return {
+        ...state,
+        selectProcId: action.payload.procId,
       }
     },
     selectParams(state, action) {

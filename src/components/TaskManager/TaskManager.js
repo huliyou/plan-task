@@ -16,6 +16,11 @@ class TaskManager extends React.PureComponent {
     planInfo: PropTypes.object,
     relationPlanList: PropTypes.array,
     selectParams: PropTypes.object,
+    parentTaskList: PropTypes.array,
+    filesList: PropTypes.array,
+    relationTaskList: PropTypes.array,
+    planInfo: PropTypes.object,
+    selectProcId: PropTypes.number,
   }
   componentWillMount () {
     // 获取menu数据
@@ -23,6 +28,12 @@ class TaskManager extends React.PureComponent {
         type: 'TaskManager/getTasksMenu',
         payload: {},
     });
+    if(this.props.selectProcId) {
+      this.getTaskInfoAction(this.props.selectProcId);
+      this.getFilesListAction(this.props.selectProcId);
+      this.getFilesListAction(this.props.selectProcId);
+      this.getRelationTaskListAction(this.prosp.selectProcId);
+    }
   }
   componentWillReceiveProps(nextProps) {
     if (nextProps.selectPlanId !== this.props.selectPlanId && nextProps.selectPlanId) {
@@ -31,7 +42,45 @@ class TaskManager extends React.PureComponent {
           payload: { planId: nextProps.selectPlanId},
         });
     }
+    if (nextProps.selectProcId !== this.props.selectProcId && nextProps.selectProcId) {
+      this.getTaskInfoAction(this.props.selectProcId);
+      this.getFilesListAction(this.props.selectProcId);
+      this.getFilesListAction(this.props.selectProcId);
+      this.getRelationTaskListAction(this.props.selectProcId);
+    }
   }
+  // 获取任务详情
+  getTaskInfoAction(selectProcId) {
+    this.props.dispatch({
+      type: 'TaskManager/getTaskInfo',
+      payload: { procId: selectProcId },
+    });
+  }
+
+  // 获取附件列表
+  getFilesListAction(selectProcId) {
+    this.props.dispatch({
+      type: 'TaskManager/getFilesList',
+      payload: { procId: selectProcId },
+    });
+  }
+
+  // 获取关联任务列表
+  getRelationTaskListAction(selectProcId) {
+    this.props.dispatch({
+      type: 'TaskManager/getRelationTaskList',
+      payload: { procId: selectProcId },
+    });
+  }
+
+  // 获取上级任务列表
+  getParentTaskListAction() {
+    this.props.dispatch({
+      type: 'TaskManager/getParentTaskList',
+      payload: { procId },
+    });
+  }
+
   // 任务列表搜索功能
   selectTaskAction = (dispatch: Function) => (params: Object, current: number = 1) => {
     dispatch({
@@ -44,6 +93,7 @@ class TaskManager extends React.PureComponent {
       payload: localParams,
     });
   }
+
   // 按计划号删除计划及相关任务
   delectTaskByPlanId = (dispatch: Function) => (params: Object) => {
     dispatch({
@@ -137,6 +187,11 @@ getPlanInfo = (dispatch: Function) => (params: Object) => {
               relationPlanList={this.props.relationPlanList}
               dispatch={this.props.dispatch}
               selectParams={this.props.selectParams}
+              parentTaskList={this.props.parentTaskList}
+              filesList={this.props.filesList}
+              relationTaskList={this.props.relationTaskList}
+              planInfo={this.props.planInfo}
+              selectProcId={this.props.selectProcId}
             />
           </div>
         </div>

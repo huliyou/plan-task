@@ -13,6 +13,11 @@ class ListData extends React.Component {
     selectTaskAction: PropTypes.func,
     relationPlanList: PropTypes.array,
     selectParams: PropTypes.object,
+    parentTaskList: PropTypes.array,
+    filesList: PropTypes.array,
+    relationTaskList: PropTypes.array,
+    planInfo: PropTypes.object,
+    selectProcId: PropTypes.any,
   }
   constructor(props: Object, context: string) {
     super(props, context);
@@ -60,14 +65,36 @@ class ListData extends React.Component {
     this.state = {
       visible: false,
       selectId: 0,
-      procId: 0,
     }
   }
   showModal = (id, procId = 0) => {
-    this.setState({ visible: true, selectId: id, procId });
+    this.props.dispatch({
+        type: 'TaskManager/selectProcId',
+        payload: { procId },
+    });
+    this.setState({ visible: true, selectId: id });
   }
   handleCancel = () => {
     this.setState({ visible: false });
+  }
+  handleOk = (type, params) => {
+    this.setState({ visible: false });
+    if(type in [1, 2, 4] ) {
+      const localParams = { ...params, procId: this.prosp.procId}
+      // 保存任务
+      this.props.dispatch({
+          type: 'TaskManager/createTask',
+          payload: { procId },
+      });
+    }
+    if(type === 3) {
+      // 关联任务
+      this.props.dispatch({
+          type: 'TaskManager/relationTask',
+          payload: params,
+      });
+    }
+
   }
   getContent(procId) {
     return (
@@ -101,6 +128,10 @@ class ListData extends React.Component {
           visible={visible}
           handleCancel={() => this.handleCancel()}
           handleOk={(type, params) => this.handleOk(type, params)}
+          parentTaskList={this.props.parentTaskList}
+          filesList={this.props.filesList}
+          relationTaskList={this.props.relationTaskList}
+          planInfo={this.props.planInfo}
         />
       )
     }
@@ -115,7 +146,15 @@ class ListData extends React.Component {
       )
     }
     if(selectId === 4) {
-      // 新建并关联
+      <TaskInfoEdit
+        visible={visible}
+        handleCancel={() => this.handleCancel()}
+        handleOk={(type, params) => this.handleOk(type, params)}
+        parentTaskList={this.props.parentTaskList}
+        filesList={this.props.filesList}
+        relationTaskList={this.props.relationTaskList}
+        planInfo={this.props.planInfo}
+      />
     }
     if(selectId === 5) {
       // 催办任务
