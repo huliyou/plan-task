@@ -373,6 +373,7 @@ export default {
       commentDesc: '123',
       rCommentId: '123',
     }],
+    // 操作记录
     logList: [{
       logId: 1, // 日志序号
       prjId: '3123', // 项目序号
