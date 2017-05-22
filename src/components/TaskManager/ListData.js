@@ -11,7 +11,7 @@ class ListData extends React.Component {
     dispatch: PropTypes.func,
     taskList: PropTypes.object,
     selectTaskAction: PropTypes.func,
-    relationPlanList: PropTypes.object,
+    relationPlanList: PropTypes.array,
   }
   constructor(props: Object, context: string) {
     super(props, context);

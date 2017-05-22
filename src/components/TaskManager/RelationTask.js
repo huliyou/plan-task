@@ -57,7 +57,7 @@ class RelationTask extends React.PureComponent {
     form: PropTypes.any,
     procId: PropTypes.number,
     handleCancel: PropTypes.func,
-    relationPlanList: PropTypes.object,
+    relationPlanList: PropTypes.array,
   };
   componentWillMount () {
     // 获取已关联任务
@@ -84,10 +84,10 @@ class RelationTask extends React.PureComponent {
     };
     const handleSubmit = () => {
       // 关联任务
-      this.props.dispatch({
-        type: 'TaskManager/relationTask',
-        payload: params,
-      });
+      // this.props.dispatch({
+      //   type: 'TaskManager/relationTask',
+      //   payload: params,
+      // });
       this.props.handleCancel();
     };
     return (
