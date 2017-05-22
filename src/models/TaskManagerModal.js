@@ -7,7 +7,7 @@ import { getTasksRequest, getTasksMenuRequest, createChildPlanRequest,
   getTasksByIdRequest, editPlanRequest, changePlanPlanRequest, getRelationPlanListRequest,
   getPlanInfoRequest, remindersTaskRequest, followTaskRequest, deleteTaskRequest, relationTaskRequest, getTaskInfoRequest,
   getRelationTaskListRequest, getFilesListRequest, getParentTaskListRequest, getCommentListRequest, getLogListRequest, addCommentRequest,
-  saveFileRequest, deleteTaskRequest
+  saveFileRequest
  } from '../services/planTaskService.js';
 import Immutable from 'immutable';
 
