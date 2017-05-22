@@ -13,6 +13,9 @@ class TaskManager extends React.PureComponent {
     taskCardData: PropTypes.object,
     dispatch: PropTypes.func,
     selectPlanId: PropTypes.string,
+    planInfo: PropTypes.object,
+    relationPlanList: PropTypes.array,
+    selectParams: PropTypes.object,
   }
   componentWillMount () {
     // 获取menu数据
@@ -30,10 +33,15 @@ class TaskManager extends React.PureComponent {
     }
   }
   // 任务列表搜索功能
-  selectTaskAction = (dispatch: Function) => (params: Object) => {
+  selectTaskAction = (dispatch: Function) => (params: Object, current: number = 1) => {
+    dispatch({
+      type: 'TaskManager/selectParams',
+      payload: params,
+    });
+    const localParams = { params, current };
     dispatch({
       type: 'TaskManager/getTasks',
-      payload: params,
+      payload: localParams,
     });
   }
   // 按计划号删除计划及相关任务
@@ -91,10 +99,18 @@ changePlan = (dispatch: Function) => (params: Object) => {
    payload: params,
  });
 }
+
+// 获取计划详情
+getPlanInfo = (dispatch: Function) => (params: Object) => {
+  dispatch({
+    type: 'TaskManager/getPlanInfo',
+    payload: params,
+  });
+}
   render() {
     return (
       <div>
-        <TaskHeader />
+        <TaskHeader createTaskAction={this.createTaskAction(this.props.dispatch)}/>
         <div className={Styles.taskBody}>
           <div className={Styles.taskMenuStyle}>
             <TaskMenu
@@ -106,7 +122,9 @@ changePlan = (dispatch: Function) => (params: Object) => {
               delectTaskByPlanId={this.delectTaskByPlanId(this.props.dispatch)}
               collectPlanAction={this.collectPlanAction(this.props.dispatch)}
               fileTaskByPlanId={this.fileTaskByPlanId(this.props.dispatch)}
+              getPlanInfo={this.getPlanInfo(this.props.dispatch)}
               changePlan={this.changePlan(this.props.dispatch)}
+              planInfo={this.props.planInfo}
               dispatch={this.props.dispatch}
             />
           </div>
@@ -116,7 +134,9 @@ changePlan = (dispatch: Function) => (params: Object) => {
               taskListCard={this.props.taskListCard}
               taskCardData={this.props.taskCardData}
               selectTaskAction={this.selectTaskAction(this.props.dispatch)}
+              relationPlanList={this.props.relationPlanList}
               dispatch={this.props.dispatch}
+              selectParams={this.props.selectParams}
             />
           </div>
         </div>

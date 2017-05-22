@@ -24,6 +24,8 @@ class TaskMenu extends React.PureComponent {
       fileTaskByPlanId: PropTypes.func,
       changePlan: PropTypes.func,
       dispatch: PropTypes.func,
+      getPlanInfo: PropTypes.func,
+      planInfo: PropTypes.object,
     }
     state = {
       visible: false,
@@ -169,6 +171,8 @@ class TaskMenu extends React.PureComponent {
       view.push(
         <ChangePlan
           visible={visible}
+          getPlanInfo={() => this.props.getPlanInfo()}
+          planInfo={this.props.planInfo}
           handleCancel={() => this.handleCancel()}
           handleOk={(type, params) => this.handleOk(type, params)}
         />
@@ -224,7 +228,7 @@ class TaskMenu extends React.PureComponent {
         </Tree>
         <div
           style={{ fontSize: '15px', textAlign: 'center', marginTop: '20px' }}
-          onClick={() => this.showModal(3)}
+          onClick={() => this.showModal(1)}
         >
           <span style={{ color: '#80E6BD', fontSize: '20px', marginRight: '10px' }}>+</span>新建计划
         </div>

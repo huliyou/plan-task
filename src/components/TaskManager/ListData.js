@@ -11,6 +11,8 @@ class ListData extends React.Component {
     dispatch: PropTypes.func,
     taskList: PropTypes.object,
     selectTaskAction: PropTypes.func,
+    relationPlanList: PropTypes.array,
+    selectParams: PropTypes.object,
   }
   constructor(props: Object, context: string) {
     super(props, context);
@@ -61,8 +63,8 @@ class ListData extends React.Component {
       procId: 0,
     }
   }
-  showModal = (id) => {
-    this.setState({ visible: true, selectId: id });
+  showModal = (id, procId = 0) => {
+    this.setState({ visible: true, selectId: id, procId });
   }
   handleCancel = () => {
     this.setState({ visible: false });
@@ -70,13 +72,13 @@ class ListData extends React.Component {
   getContent(procId) {
     return (
       <div style={{ fontSize: '15px' }}>
-         <div className={Styles.smallDiv} onClick={() => this.showModal(1)}>新建子任务</div>
-         <div className={Styles.smallDiv} onClick={() => this.showModal(2)}>编辑任务</div>
-         <div className={Styles.smallDiv} onClick={() => this.showModal(3)}>关联任务</div>
-         <div className={Styles.smallDiv} onClick={() => this.showModal(4)}>新建并关联任务</div>
-         <div className={Styles.smallDiv} onClick={() => this.showModal(5)}>催办任务</div>
-         <div className={Styles.smallDiv} onClick={() => this.showModal(6)}>关注任务</div>
-         <div className={Styles.smallDiv} onClick={() => this.showModal(7)}>删除任务</div>
+         <div className={Styles.smallDiv} onClick={() => this.showModal(1, procId)}>新建子任务</div>
+         <div className={Styles.smallDiv} onClick={() => this.showModal(2, procId)}>编辑任务</div>
+         <div className={Styles.smallDiv} onClick={() => this.showModal(3, procId)}>关联任务</div>
+         <div className={Styles.smallDiv} onClick={() => this.showModal(4, procId)}>新建并关联任务</div>
+         <div className={Styles.smallDiv} onClick={() => this.showModal(5, procId)}>催办任务</div>
+         <div className={Styles.smallDiv} onClick={() => this.showModal(6, procId)}>关注任务</div>
+         <div className={Styles.smallDiv} onClick={() => this.showModal(7, procId)}>删除任务</div>
       </div>
     );
   }
@@ -108,6 +110,7 @@ class ListData extends React.Component {
           visible={visible}
           handleCancel={() => this.handleCancel()}
           dispacth={this.props.dispatch}
+          relationPlanList={this.props.relationPlanList}
         />
       )
     }
@@ -116,12 +119,24 @@ class ListData extends React.Component {
     }
     if(selectId === 5) {
       // 催办任务
+      this.props.dispatch({
+          type: 'TaskManager/remindersTask',
+          payload: { procId: this.state.procId },
+      });
     }
     if(selectId === 6) {
       // 关注任务
+      this.props.dispatch({
+          type: 'TaskManager/followTask',
+          payload: { procId: this.state.procId },
+      });
     }
     if(selectId === 7) {
       // 删除任务
+      this.props.dispatch({
+          type: 'TaskManager/deleteTask',
+          payload: { procId: this.state.procId },
+      });
     }
     return view;
   }
@@ -185,8 +200,8 @@ class ListData extends React.Component {
         <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '2vh' }}>
           <Pagination
             current={this.props.taskList.current}
-            onChange={() => {
-              this.props.selectTaskAction({ current: 1 });
+            onChange={(current) => {
+              this.props.selectTaskAction(this.props.selectParams, current);
             }}
             total={this.props.taskList.total}
           />

@@ -12,6 +12,7 @@ class TaskSelect extends React.PureComponent {
   static propTypes = {
     form: PropTypes.any,
     selectTaskAction: PropTypes.func,
+    dispatch: PropTypes.func,
   };
   render() {
     const formItemLayout = {
@@ -32,9 +33,14 @@ class TaskSelect extends React.PureComponent {
       pDuty,
       priority,
       planId,
+      current: 1,
     };
     const handleSubmit = () => {
       // 任务查询
+      this.props.dispatch({
+        type: 'TaskManager/selectParams',
+        payload: params,
+      });
       this.props.selectTaskAction(params);
     };
     return (

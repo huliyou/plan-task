@@ -15,6 +15,9 @@ class EditPlan extends React.PureComponent {
     handleOk: PropTypes.func,
     handleCancel: PropTypes.func,
   };
+  componentWillMount() {
+    //获取计划详情
+  }
   render() {
     const formItemLayout = {
       labelCol: { span: 6 },

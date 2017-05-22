@@ -3,10 +3,28 @@ import Config from '../utils/config'
 
 // !!!: 此处去做异步请求
 //
+//
+// 搜索获取任务列表
+export async function getTasksRequest(params) {
+  return request({
+    url: 'http://localhost:9000/TRDP/csm_proc/rest/projectproc/',
+    method: 'get',
+    data: params,
+  })
+}
 // 获取任务列表
 export async function getTasksByIdRequest(params) {
   return request({
     url: 'http://localhost:9000/TRDP/csm_proc/rest/projectproc/',
+    method: 'get',
+    data: params,
+  })
+}
+
+// 获取计划详情
+export async function getPlanInfoRequest(params) {
+  return request({
+    url: 'http://localhost:9000/TRDP/csm_proc/rest/projectproc/getPlanInfo',
     method: 'get',
     data: params,
   })
@@ -77,6 +95,43 @@ export async function filePlanRequest(params) {
 export async function collectPlanRequest(params) {
   return request({
     url: 'http://localhost:9000/TRDP/csm_proc/rest/projectplan/savePlanCollection',
+    method: 'get',
+    data: params,
+  })
+}
+
+
+// 催办任务
+export async function remindersTaskRequest(params) {
+  return request({
+    url: 'http://localhost:9000/TRDP/csm_proc/rest/projectproc/saveVice',
+    method: 'get',
+    data: params,
+  })
+}
+
+// 关注任务
+export async function followTaskRequest(params) {
+  return request({
+    url: 'http://localhost:9000/TRDP/csm_proc/rest/projectplan/savePlanCollection',
+    method: 'get',
+    data: params,
+  })
+}
+
+// 删除任务
+export async function deleteTaskRequest(params) {
+  return request({
+    url: 'http://localhost:9000/TRDP/csm_proc/rest/projectplan/savePlanCollection',
+    method: 'get',
+    data: params,
+  })
+}
+
+// 关联任务
+export async function relationTaskRequest(params) {
+  return request({
+    url: 'http://localhost:9000/TRDP/csm_proc/rest/projectplan/saveProcRelation',
     method: 'get',
     data: params,
   })

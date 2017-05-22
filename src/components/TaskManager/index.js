@@ -3,7 +3,6 @@ import { connect } from 'dva'
 import TaskManager from './TaskManager';
 
 function mapStateToProps(state) {
-  // !!!: 绑定Modal的这两部分数据
   return ({
     planItems: state.TaskManager.planItems,
     taskListCard: state.TaskManager.taskListCard,
@@ -12,6 +11,9 @@ function mapStateToProps(state) {
     taskCardData: state.TaskManager.taskCardData,
     selectPlanId: state.TaskManager.selectPlanId,
     dispatch: state.dispatch,
+    relationPlanList: state.TaskManager.relationPlanList,
+    planInfo: state.TaskManager.planInfo,
+    selectParams: state.TaskManager.selectParams,
   });
 }
 export default connect(mapStateToProps)(TaskManager);
