@@ -32,7 +32,7 @@ class ChangePlan extends React.PureComponent {
     const { getFieldDecorator, getFieldsValue } = this.props.form;
     const themeName = getFieldsValue().themeName ? getFieldsValue().themeName : '';
     const planBeginDate = getFieldsValue().planBeginDate ? moment(getFieldsValue().planBeginDate).format('YYYY-MM-DD') : '';
-    const planEndDate = getFieldsValue().planEndDate ? momnet(getFieldsValue().planEndDate).format('YYYY-MM-DD') : '';
+    const planEndDate = getFieldsValue().planEndDate ? moment(getFieldsValue().planEndDate).format('YYYY-MM-DD') : '';
     const parentPlanCode = getFieldsValue().parentPlanCode ? getFieldsValue().parentPlanCode : '';
     const planWorkload = getFieldsValue().planWorkload ? getFieldsValue().planWorkload : '';
     const params = {
@@ -47,6 +47,7 @@ class ChangePlan extends React.PureComponent {
     };
     return (
       <div>
+      {console.log(this.props.planInfo)}
       <Modal
         visible={this.props.visible}
         closable
@@ -84,7 +85,7 @@ class ChangePlan extends React.PureComponent {
                 label="开始时间"
               >
               {getFieldDecorator('planBeginDate', {
-                initialValue: this.props.planInfo.planBeginDate,
+                initialValue: this.props.planInfo. planBeginDate ? moment(this.props.planInfo.planBeginDate, 'YYYY-MM-DD') : undefined
               })(
                 <DatePicker format={'YYYY/MM/DD'} />
               )}
@@ -96,7 +97,7 @@ class ChangePlan extends React.PureComponent {
                 label="结束时间"
               >
               {getFieldDecorator('planEndDate', {
-                initialValue: this.props.planInfo.planEndDate,
+                initialValue: this.props.planInfo.planBeginDate ? moment(this.props.planInfo.planEndDate, 'YYYY-MM-DD') : undefined
               })(
                 <DatePicker format={'YYYY/MM/DD'} />
               )}
@@ -109,11 +110,12 @@ class ChangePlan extends React.PureComponent {
                 {...formItemLayout}
                 label="父计划"
               >
-              {getFieldDecorator('parentPlanCode')(
+              {getFieldDecorator('parentPlanCode', {
+                initialValue: this.props.planInfo.parentPlanCode,
+              })(
                 <Input
                   placeholder="输入标题"
                   type="text"
-                  autoComplete="off"
                 />
               )}
               </FormItem>
@@ -123,7 +125,9 @@ class ChangePlan extends React.PureComponent {
                 {...formItemLayout}
                 label="预计投入天数"
               >
-              {getFieldDecorator('planWorkload')(
+              {getFieldDecorator('planWorkload', {
+                initialValue: this.props.planInfo.planWorkload,
+              })(
                 <Input
                   placeholder="输入标题"
                   type="text"
@@ -137,7 +141,9 @@ class ChangePlan extends React.PureComponent {
             {...formItemLayout1}
             label="计划描述"
           >
-          {getFieldDecorator('title')(
+          {getFieldDecorator('planDesc', {
+            initialValue: this.props.planInfo.planDesc,
+          })(
             <Input
               type="textarea" rows={7}
             />
