@@ -47,7 +47,6 @@ class ChangePlan extends React.PureComponent {
     };
     return (
       <div>
-      {console.log(this.props.planInfo)}
       <Modal
         visible={this.props.visible}
         closable
