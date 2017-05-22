@@ -326,6 +326,7 @@ export default {
           type: 'createChildPlanSuccess',
           payload: requestResult.data,
         });
+        message.success('创建成功');
       } else {
         yield put({ type: 'createChildPlanFailure'});
       }
@@ -340,8 +341,10 @@ export default {
           type: 'createChildPlanSuccess',
           payload: requestResult.data,
         });
+        message.success('创建成功');
       } else {
         yield put({ type: 'createChildPlanFailure'});
+          message.success('创建失败');
       }
     },
     // 删除计划
@@ -354,8 +357,10 @@ export default {
           type: 'deletePlanSuccess',
           payload: requestResult.data,
         });
+        message.success('删除成功');
       } else {
         yield put({ type: 'deletePlanFailure'});
+          message.success('删除失败');
       }
     },
     // 归档计划
@@ -368,8 +373,10 @@ export default {
           type: 'filePlanSuccess',
           payload: requestResult.data,
         });
+        message.success('归档成功');
       } else {
         yield put({ type: 'filePlanFailure'});
+          message.success('归档失败');
       }
     },
     // 收藏计划
@@ -382,8 +389,10 @@ export default {
           type: 'collectPlanSuccess',
           payload: requestResult.data,
         });
+          message.success('收藏成功');
       } else {
         yield put({ type: 'collectPlanFailure'});
+          message.success('收藏失败');
       }
     },
     // 根据任务ID获取列表
@@ -414,6 +423,8 @@ export default {
         yield put({ type: 'editPlanFailure'});
       }
     },
+
+    // 更改计划
     *changePlan({ payload }, { call, put }) {
       yield put({ type: 'changePlanLoading' })
       const requestResult = yield call(changePlanPlanRequest());
@@ -423,8 +434,10 @@ export default {
           type: 'changePlanSuccess',
           payload: requestResult.data,
         });
+        message.success('更改成功');
       } else {
         yield put({ type: 'changePlanFailure'});
+          message.success('更新失败');
       }
     },
     // 获取关联任务列表
@@ -451,8 +464,10 @@ export default {
               type: 'relationTaskSuccess',
               payload: requestResult.data,
             });
+            message.success('关联成功');
           } else {
             yield put({ type: 'relationTaskFailure'});
+              message.success('关联失败');
           }
         },
     // 获取计划详情
@@ -479,8 +494,10 @@ export default {
           type: 'remindersTaskSuccess',
           payload: requestResult.data,
         });
+        message.success('操作成功');
       } else {
         yield put({ type: 'remindersTaskFailure'});
+          message.success('操作失败');
       }
     },
       // 关注任务
@@ -493,8 +510,10 @@ export default {
             type: 'followTaskSuccess',
             payload: requestResult.data,
           });
+          message.success('关注成功');
         } else {
           yield put({ type: 'followTaskFailure'});
+            message.success('关注失败');
         }
       },
         // 删除任务
@@ -507,8 +526,10 @@ export default {
               type: 'deleteTaskSuccess',
               payload: requestResult.data,
             });
+            message.success('删除成功');
           } else {
             yield put({ type: 'deleteTaskFailure'});
+            message.success('删除失败');
           }
         },
   },
