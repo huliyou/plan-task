@@ -19,7 +19,7 @@ class TaskList extends React.Component {
     parentTaskList: PropTypes.array,
     filesList: PropTypes.array,
     relationTaskList: PropTypes.array,
-    planInfo: PropTypes.object,
+    getTaskInfo: PropTypes.object,
     selectProcId: PropTypes.any,
   }
   state = {
@@ -61,7 +61,7 @@ class TaskList extends React.Component {
           parentTaskList={this.props.parentTaskList}
           filesList={this.props.filesList}
           relationTaskList={this.props.relationTaskList}
-          planInfo={this.props.planInfo}
+          getTaskInfo={this.props.getTaskInfo}
           selectProcId={this.props.selectProcId}
         />
       );

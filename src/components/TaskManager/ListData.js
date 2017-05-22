@@ -5,6 +5,7 @@ import editIcon from './taskImg/editIcon.png';
 import CreatePlan from './CreatePlan.js';
 import RelationTask from './RelationTask.js';
 import TaskInfoEdit from './TaskInfoEdit.js';
+import TaskInfoSee from './TaskInfoSee';
 
 class ListData extends React.Component {
   static propTypes = {
@@ -16,7 +17,7 @@ class ListData extends React.Component {
     parentTaskList: PropTypes.array,
     filesList: PropTypes.array,
     relationTaskList: PropTypes.array,
-    planInfo: PropTypes.object,
+    getTaskInfo: PropTypes.object,
     selectProcId: PropTypes.any,
   }
   constructor(props: Object, context: string) {
@@ -146,15 +147,17 @@ class ListData extends React.Component {
       )
     }
     if(selectId === 4) {
-      <TaskInfoEdit
-        visible={visible}
-        handleCancel={() => this.handleCancel()}
-        handleOk={(type, params) => this.handleOk(type, params)}
-        parentTaskList={this.props.parentTaskList}
-        filesList={this.props.filesList}
-        relationTaskList={this.props.relationTaskList}
-        planInfo={this.props.planInfo}
-      />
+      view.push(
+        <TaskInfoEdit
+          visible={visible}
+          handleCancel={() => this.handleCancel()}
+          handleOk={(type, params) => this.handleOk(type, params)}
+          parentTaskList={this.props.parentTaskList}
+          filesList={this.props.filesList}
+          relationTaskList={this.props.relationTaskList}
+          getTaskInfo={this.props.getTaskInfo}
+        />
+      )
     }
     if(selectId === 5) {
       // 催办任务
@@ -176,6 +179,19 @@ class ListData extends React.Component {
           type: 'TaskManager/deleteTask',
           payload: { procId: this.state.procId },
       });
+    }
+    if(selectId === 8) {
+      view.push(
+        <TaskInfoSee
+          visible={visible}
+          handleCancel={() => this.handleCancel()}
+          handleOk={() => this.showModal(2, this.props.selectProcId)}
+          parentTaskList={this.props.parentTaskList}
+          filesList={this.props.filesList}
+          relationTaskList={this.props.relationTaskList}
+          getTaskInfo={this.props.getTaskInfo}
+        />
+      );
     }
     return view;
   }
@@ -204,7 +220,7 @@ class ListData extends React.Component {
               <a
                 onClick={(e) => {
                   e.preventDefault();
-                }}
+                  this.showModal(8, value.procId); }}
               >
                 查看
               </a>

@@ -108,26 +108,6 @@ const relateData = [{
   status: '完成',
 }];
 
-const data = [{
-  key: '1',
-  name: 'name',
-  time: 'time',
-  type: 32,
-  file: 'New York No. 1 Lake Park',
-}, {
-  key: '2',
-  name: 'name',
-  time: 'time',
-  type: 32,
-  file: 'New York No. 1 Lake Park',
-}, {
-  key: '3',
-  name: 'name',
-  time: 'time',
-  type: 32,
-  file: 'New York No. 1 Lake Park',
-}];
-
 class TaskInfoEdit extends React.PureComponent {
   static propTypes = {
     visible: PropTypes.bool,
@@ -136,7 +116,7 @@ class TaskInfoEdit extends React.PureComponent {
     parentTaskList: PropTypes.array,
     filesList: PropTypes.array,
     relationTaskList: PropTypes.array,
-    planInfo: PropTypes.object,
+    getTaskInfo: PropTypes.object,
   };
   render() {
     const formItemLayout = {
@@ -318,17 +298,17 @@ class TaskInfoEdit extends React.PureComponent {
           { /* 附件展示 */ }
           <div style={relationStyles.title}>附件</div>
           <div style={{ marginBottom: '20px' }}>
-            <Table columns={columns} dataSource={data} pagination={false} />
+            <Table columns={columns} dataSource={this.props.filesList} pagination={false} />
           </div>
           { /* 关联任务展示 */ }
           <div style={relationStyles.title}>关联的任务</div>
           <div style={{ marginBottom: '20px' }}>
-            <Table columns={relateColumns} dataSource={data} pagination={false} />
+            <Table columns={relateColumns} dataSource={this.props.relationTaskList} pagination={false} />
           </div>
           { /* 上级任务展示 */ }
           <div style={relationStyles.title}>上级任务</div>
           <div style={{ marginBottom: '20px' }}>
-            <Table columns={relateColumns} dataSource={data} pagination={false} />
+            <Table columns={relateColumns} dataSource={this.props.parentTaskList} pagination={false} />
           </div>
          <div className={Styles.bottomButton}>
            <div />

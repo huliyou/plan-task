@@ -19,7 +19,7 @@ class TaskManager extends React.PureComponent {
     parentTaskList: PropTypes.array,
     filesList: PropTypes.array,
     relationTaskList: PropTypes.array,
-    planInfo: PropTypes.object,
+    getTaskInfo: PropTypes.object,
     selectProcId: PropTypes.number,
   }
   componentWillMount () {
@@ -190,7 +190,7 @@ getPlanInfo = (dispatch: Function) => (params: Object) => {
               parentTaskList={this.props.parentTaskList}
               filesList={this.props.filesList}
               relationTaskList={this.props.relationTaskList}
-              planInfo={this.props.planInfo}
+              getTaskInfo={this.props.getTaskInfo}
               selectProcId={this.props.selectProcId}
             />
           </div>

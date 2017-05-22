@@ -3,7 +3,6 @@ import { connect } from 'dva'
 import TaskManager from './TaskManager';
 
 function mapStateToProps(state) {
-  {console.log('procId', state.TaskManager.selectProcId)}
   return ({
     planItems: state.TaskManager.planItems,
     taskListCard: state.TaskManager.taskListCard,
@@ -19,7 +18,7 @@ function mapStateToProps(state) {
     parentTaskList: state.TaskManager.parentTaskList,
     filesList: state.TaskManager.filesList,
     relationTaskList: state.TaskManager.relationTaskList,
-    planInfo: state.TaskManager.planInfo,
+    getTaskInfo: state.TaskManager.planInfo,
   });
 }
 export default connect(mapStateToProps)(TaskManager);

@@ -8,7 +8,6 @@ const Panel = Collapse.Panel;
 const FormItem = Form.Item;
 const TabPane = Tabs.TabPane;
 
-
 const columns = [{
   title: '上传人',
   dataIndex: 'name',
@@ -65,31 +64,6 @@ const relateColumns = [{
   key: 'status',
   render: (type) => <span>{type}</span>,
 }];
-const relateData = [{
-  key: '1',
-  id: '1',
-  title: '题目',
-  name: 'name',
-  time: 'time',
-  type: 32,
-  status: '完成',
-}, {
-  key: '2',
-  id: '3',
-  title: '题目',
-  name: 'name',
-  time: 'time',
-  type: 32,
-  status: '完成',
-}, {
-  key: '3',
-  id: '3',
-  title: '题目',
-  name: 'name',
-  time: 'time',
-  type: 32,
-  status: '完成',
-}];
 
 const data = [{
   key: '1',
@@ -113,28 +87,13 @@ const data = [{
 class TaskInfoSee extends React.PureComponent {
   static propTypes = {
     visible: PropTypes.bool,
-    edit: PropTypes.bool,
-    procId: PropTypes.number,
     handleCancel: PropTypes.func,
+    handleOk: PropTypes.func,
+    parentTaskList: PropTypes.array,
+    filesList: PropTypes.array,
+    relationTaskList: PropTypes.array,
+    getTaskInfo: PropTypes.object,
   };
-  state = {
-    edit: false,
-  }
-  componentWillMount() {
-    // 按任务序号获取任务详细信息
-  }
-  showTaskEdit(procId) {
-    if (this.state.edit) {
-      return (
-        <TaskInfoEdit
-          procId={procId}
-          visible={this.state.edit}
-          handleCancel={() => this.setState({ edit: false })}
-        />
-      );
-    }
-    return <div />;
-  }
   render() {
     const formItemLayout = {
       labelCol: { span: 4 },
@@ -142,61 +101,60 @@ class TaskInfoSee extends React.PureComponent {
     };
     return (
       <Modal
-        visible={this.props.visible}
+        visible={true}
         onCancel={() => this.props.handleCancel()}
         closable
         footer={null}
         style={{ marginLeft: '25vw' }}
         width={'65vw'}
       >
-      {this.showTaskEdit(this.props.procId)}
       <div style={{ padding: '5vh' }}>
-        <Row gutter={16}>
-          <Col span={1}>#1</Col>
+        <Row gutter={16} style={{ fontSize: '20px', fontWeight: 'bold' }}>
+          <Col span={1}>#{this.props.getTaskInfo.procId}</Col>
           <Col span={20}>【需求】</Col>
           <Col span={3}>
-            <Button onClick={() => {
-                console.log(this.state);
-                this.setState({ edit: true });
-              }}
+            <Button
+               className={Styles.buttonStyle}
+               onClick={() => {
+                  this.props.handleOk();
+                }}
             >
               编辑
             </Button>
           </Col>
+          <hr style={{ border: '1px solid #ccc', margin: '10px 0' }} />
           <Col span={24}>业务需求评审</Col>
         </Row>
-        <Row gutter={16}>
+        <Row gutter={16} style={{ fontSize: '15px', margin: '10px', color: '#ccc' }}>
           <Col span={2}>dsfsd</Col>
           <Col span={8}>创建与 2017-04-02</Col>
         </Row>
-        <div />
+        <hr style={{ border: '1px solid #ccc', margin: '10px 0' }} />
         <Collapse defaultActiveKey={['1']}>
-          <Panel header="字段" key="1">
-            <Row gutter={16}>
+          <Panel header={<span style={{ fontSize: '16px', fontWeight: 'bold' }}>字段</span>} key="1">
+            <Row gutter={16} style={{ fontSize: '15px', lineHeight: '2' }}>
               <Col span={3}>流程状态</Col>
-              <Col span={5}>新建</Col>
+              <Col span={5}>{'23213'}</Col>
               <Col span={3}>负责人</Col>
-              <Col span={5}>某某某</Col>
+              <Col span={5}>{'23213'}</Col>
               <Col span={3}>优先级</Col>
-              <Col span={5}>高</Col>
+              <Col span={5}>{'23213'}</Col>
               <Col span={3}>截止时间</Col>
-              <Col span={5}>2017-06-01</Col>
+              <Col span={5}>{'23213'}</Col>
               <Col span={3}>所属计划</Col>
-              <Col span={5}>需求确认</Col>
-              <Col span={3}>流程状态</Col>
-              <Col span={5}>流程状态</Col>
-
+              <Col span={5}>{'23213'}</Col>
+              <Col span={3}>上级任务</Col>
+              <Col span={5}>{'23213'}</Col>
+              <Col span={3}>估算工时</Col>
+              <Col span={5}>{'23213'}</Col>
+              <Col span={3}>所属集成</Col>
+              <Col span={5}>{'23213'}</Col>
+              <Col span={3}>占整个项目比例</Col>
+              <Col span={5}>{'23213'}</Col>
             </Row>
-            <Row gutter={16}>
-              <Col span={4} offset={16}>
-                <a href="#" className="ant-dropdown-link">
-                  显示更多<Icon type="down" />
-                </a>
-              </Col>
-            </Row>
-
           </Panel>
-          <Panel header="内容" key="2">
+
+          <Panel header={<span style={{ fontSize: '16px', fontWeight: 'bold' }}>内容</span>} key="2">
             <FormItem
               {...formItemLayout}
               label="任务描述"
@@ -210,17 +168,18 @@ class TaskInfoSee extends React.PureComponent {
               <Input type="textarea" />
             </FormItem>
           </Panel>
-          <Panel header="附件" key="5">
-            <Table columns={columns} dataSource={data} />
+
+          <Panel header={<span style={{ fontSize: '16px', fontWeight: 'bold' }}>附件</span>} key="5">
+            <Table columns={columns} dataSource={this.props.filesList} pagination={false} />
           </Panel>
-          <Panel header="关联任务" key="3">
-            <Table columns={relateColumns} dataSource={relateData} />
+          <Panel header={<span style={{ fontSize: '16px', fontWeight: 'bold' }}>关联任务</span>} key="3">
+            <Table columns={relateColumns} dataSource={this.props.relationTaskList} pagination={false} />
           </Panel>
-          <Panel header="任务层级" key="4">
-            <Table columns={relateColumns} dataSource={relateData} />
+          <Panel header={<span style={{ fontSize: '16px', fontWeight: 'bold' }}>任务层级</span>} key="4">
+            <Table columns={relateColumns} dataSource={this.props.parentTaskList} pagination={false} />
           </Panel>
 
-          <Panel header="动态" key="6">
+          <Panel header={<span style={{ fontSize: '16px', fontWeight: 'bold' }}>动态</span>} key="6">
             <Tabs defaultActiveKey="1">
               <TabPane tab="操作记录" key="1">
                 <Timeline>
