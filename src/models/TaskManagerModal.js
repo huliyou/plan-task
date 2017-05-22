@@ -296,7 +296,7 @@ export default {
       if (requestResult.successful) {
         yield put({
           type: 'getTasksByIdSuccess',
-          payload: requestResult.data,
+          payload: requestResult.resultValue,
         });
       } else {
         yield put({ type: 'getTasksByIdFailure'});
@@ -310,7 +310,7 @@ export default {
       if (requestResult.successful) {
         yield put({
           type: 'getTasksMenuSuccess',
-          payload: requestResult.data,
+          payload: requestResult.resultValue,
         });
       } else {
         yield put({ type: 'getTasksMenuFailure'});
@@ -324,7 +324,7 @@ export default {
       if (requestResult.successful) {
         yield put({
           type: 'createChildPlanSuccess',
-          payload: requestResult.data,
+          payload,
         });
         message.success('创建成功');
       } else {
@@ -339,7 +339,7 @@ export default {
       if (requestResult.successful) {
         yield put({
           type: 'createChildPlanSuccess',
-          payload: requestResult.data,
+          payload: requestResult.resultValue,
         });
         message.success('创建成功');
       } else {
@@ -355,7 +355,7 @@ export default {
       if (requestResult.successful) {
         yield put({
           type: 'deletePlanSuccess',
-          payload: requestResult.data,
+          payload: requestResult.resultValue,
         });
         message.success('删除成功');
       } else {
@@ -371,7 +371,7 @@ export default {
       if (requestResult.successful) {
         yield put({
           type: 'filePlanSuccess',
-          payload: requestResult.data,
+          payload: requestResult.resultValue,
         });
         message.success('归档成功');
       } else {
@@ -387,7 +387,7 @@ export default {
       if (requestResult.successful) {
         yield put({
           type: 'collectPlanSuccess',
-          payload: requestResult.data,
+          payload: requestResult.resultValue,
         });
           message.success('收藏成功');
       } else {
@@ -417,7 +417,7 @@ export default {
       if (requestResult.successful) {
         yield put({
           type: 'editPlanSuccess',
-          payload: requestResult.data,
+          payload: requestResult.resultValue,
         });
       } else {
         yield put({ type: 'editPlanFailure'});
@@ -432,7 +432,7 @@ export default {
       if (requestResult.successful) {
         yield put({
           type: 'changePlanSuccess',
-          payload: requestResult.data,
+          payload: requestResult.resultValue,
         });
         message.success('更改成功');
       } else {
@@ -448,7 +448,7 @@ export default {
       if (requestResult.successful) {
         yield put({
           type: 'getRelationPlanListSuccess',
-          payload: requestResult.data,
+          payload: requestResult.resultValue,
         });
       } else {
         yield put({ type: 'getRelationPlanListFailure'});
@@ -462,7 +462,7 @@ export default {
           if (requestResult.successful) {
             yield put({
               type: 'relationTaskSuccess',
-              payload: requestResult.data,
+              payload: requestResult.resultValue,
             });
             message.success('关联成功');
           } else {
@@ -478,7 +478,7 @@ export default {
       if (requestResult.successful) {
         yield put({
           type: 'getPlanInfoSuccess',
-          payload: requestResult.data,
+          payload: requestResult.resultValue,
         });
       } else {
         yield put({ type: 'getPlanInfoFailure'});
@@ -492,7 +492,7 @@ export default {
       if (requestResult.successful) {
         yield put({
           type: 'remindersTaskSuccess',
-          payload: requestResult.data,
+          payload: requestResult.resultValue,
         });
         message.success('操作成功');
       } else {
@@ -508,7 +508,7 @@ export default {
         if (requestResult.successful) {
           yield put({
             type: 'followTaskSuccess',
-            payload: requestResult.data,
+            payload: requestResult.resultValue,
           });
           message.success('关注成功');
         } else {
@@ -524,7 +524,7 @@ export default {
           if (requestResult.successful) {
             yield put({
               type: 'deleteTaskSuccess',
-              payload: requestResult.data,
+              payload: requestResult.resultValue,
             });
             message.success('删除成功');
           } else {
@@ -549,7 +549,7 @@ export default {
         ...state,
         isFetching: false,
         errMsg: '',
-        taskListCard: action.resultValue,
+        taskListCard: action.payload,
       }
     },
     getTasksByIdFailure(state, action) {
@@ -575,7 +575,7 @@ export default {
         ...state,
         isFetching: false,
         errMsg: '',
-        planItems: action.resultValue,
+        planItems: action.payload,
       }
     },
     getTasksMenuFailure(state, action) {
@@ -599,7 +599,7 @@ export default {
         ...state,
         isFetching: false,
         errMsg: '',
-        planInfo: action.resultValue,
+        planInfo: action.payload,
       }
     },
     getPlanInfoFailure(state, action) {
@@ -624,7 +624,7 @@ export default {
         ...state,
         isFetching: false,
         errMsg: '',
-        taskList: action.resultValue,
+        taskList: action.payload,
       }
     },
     getTasksFailure(state, action) {
@@ -650,10 +650,34 @@ export default {
         ...state,
         isFetching: false,
         errMsg: '',
-        relationPlanList: action.resultValue,
+        relationPlanList: action.payload,
       }
     },
     getRelationPlanListFailure(state, action) {
+      // 修改状态的error标志
+      return {
+        ...state,
+        isFetching: false,
+        errMsg: action.errMsg,
+      }
+    },
+
+    CreateChildLoading(state, action) {
+      return {
+        ...state,
+        isFetching: true,
+        errMsg: '',
+      }
+    },
+    CreateChildListSuccess(state, action) {
+      return {
+        ...state,
+        isFetching: false,
+        errMsg: '',
+        planItems: state.planItems.push(action.payload),
+      }
+    },
+    CreateChildListFailure(state, action) {
       // 修改状态的error标志
       return {
         ...state,
