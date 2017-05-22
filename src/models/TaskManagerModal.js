@@ -5,7 +5,8 @@ import { message } from 'antd';
 import { getTasksRequest, getTasksMenuRequest, createChildPlanRequest,
   createPlanRequest, deletePlanRequest, filePlanRequest, collectPlanRequest,
   getTasksByIdRequest, editPlanRequest, changePlanPlanRequest, getRelationPlanListRequest,
-  getPlanInfoRequest, remindersTaskRequest, followTaskRequest, deleteTaskRequest, relationTaskRequest
+  getPlanInfoRequest, remindersTaskRequest, followTaskRequest, deleteTaskRequest, relationTaskRequest, getTaskInfoRequest,
+  getRelationTaskListRequest, getFilesListRequest, getParentTaskListRequest, getCommentListRequest
  } from '../services/planTaskService.js';
 import Immutable from 'immutable';
 
@@ -202,6 +203,25 @@ export default {
         createTime: '2017-04-02',
       }],
     }],
+    // 任务详情
+    getTaskInfo: {
+      procId: 6,
+      phase: '已完成',
+      procType: '',
+      themeCode: '',
+      themeName: '计划2',
+      themeDesc: 'erwrwrwer',
+      planId: '',
+      prjId: '',
+      priority: '',
+      pDuty: 'wangsds',
+      workDay: '',
+      dateTo: '',
+      rPocId: '',
+      weight: '',
+      createTime: '2017-04-02',
+      createName: 'fdsfs',
+    },
     taskCardData: {
       taskCount: 20, // 任务总数
       completeTask: 16, // 完成任务总数
@@ -266,21 +286,91 @@ export default {
     },
 
     // 关联任务列表
-    relationPlanList: [{
-      procId: '1',
-      themeName: 'John Brown',
-      relationTime: 32,
-      status: 'New York No. 1 Lake Park',
+    relationTaskList: [{
+      procId: 1,
+      themeName: 'eweqwe',
+      themeCode: 'eweqwe',
+      pDuty: 'fwerwr',
+      priority: 'erwerw',
+      rPocId: 'ewrwe',
     }, {
-      procId: '2',
-      themeName: 'Jim Green',
-      relationTime: 42,
-      status: 'London No. 1 Lake Park',
+      procId: 2,
+      themeName: 'eweqwe',
+      themeCode: 'eweqwe',
+      pDuty: 'fwerwr',
+      priority: 'erwerw',
+      rPocId: 'ewrwe',
     }, {
-      procId: '3',
-      themeName: 'Joe Black',
-      relationTime: 32,
-      status: 'Sidney No. 1 Lake Park',
+      procId: 3,
+      themeName: 'eweqwe',
+      themeCode: 'eweqwe',
+      pDuty: 'fwerwr',
+      priority: 'erwerw',
+      rPocId: 'ewrwe',
+    }],
+    // 附件列表
+    filesList: [{
+      fileId: 1,
+      prjId: 'eweq',
+      procId: 'eweq',
+      fileTypeId: 'eweq',
+      fileName: 'eweq',
+      fileSize: 'eweq',
+      fileExtention: 'eweq',
+      fileUrl: 'eweq',
+      uploadName: 'eweq',
+      uploadDate: 'eweq',
+      deliverableId: 'eweq',
+      isDeliverable: 'eweq',
+    },{
+      fileId: 2,
+      prjId: 'eweq',
+      procId: 'eweq',
+      fileTypeId: 'eweq',
+      fileName: 'eweq',
+      fileSize: 'eweq',
+      fileExtention: 'eweq',
+      fileUrl: 'eweq',
+      uploadName: 'eweq',
+      uploadDate: 'eweq',
+      deliverableId: 'eweq',
+      isDeliverable: 'eweq',
+    }],
+    // 获取上级关联列表
+    parentTaskList: [{
+      procId: 1,
+      themeName: 'ewe',
+      themeCode: 'ewe',
+      pDuty: 'ewe',
+      priority: 'ewe',
+      rPocId: 'ewe',
+      status: 'ewe',
+    }, {
+      procId: 2,
+      themeName: 'ewe',
+      themeCode: 'ewe',
+      pDuty: 'ewe',
+      priority: 'ewe',
+      rPocId: 'ewe',
+      status: 'ewe',
+    }],
+    // 获取评论列表
+    commentList: [{
+      commentId: 1,
+      prjId: '123',
+      procId: '123',
+      commentName: '123',
+      commentDate: '123',
+      commentDesc: '123',
+      rCommentId: '123',
+    }, {
+      commentId: 2,
+      prjId: '123',
+      procId: '123',
+      commentName: '123',
+      commentDate: '123',
+      commentDesc: '123',
+      rCommentId: '123',
     }],
     // 搜索参数
     selectParams: {
@@ -450,17 +540,17 @@ export default {
       }
     },
     // 获取关联任务列表
-    *getRelationPlanList({ payload }, { call, put }) {
-      yield put({ type: 'getRelationPlanListLoading' })
-      const requestResult = yield call(getRelationPlanListRequest());
+    *getRelationTaskList({ payload }, { call, put }) {
+      yield put({ type: 'getRelationTaskListLoading' })
+      const requestResult = yield call(getRelationTaskListRequest());
       // 根据requestResult结果判断
       if (requestResult.successful) {
         yield put({
-          type: 'getRelationPlanListSuccess',
+          type: 'getRelationTaskListSuccess',
           payload: requestResult.resultValue,
         });
       } else {
-        yield put({ type: 'getRelationPlanListFailure'});
+        yield put({ type: 'getRelationTaskListFailure'});
       }
     },
     // 关联任务
@@ -540,8 +630,66 @@ export default {
             yield put({ type: 'deleteTaskFailure'});
             message.success('删除失败');
           }
-        },
+    },
+    // 获取任务详情
+    *getTaskInfo({ payload }, { call, put }) {
+          yield put({ type: 'getTaskInfoLoading' })
+          const requestResult = yield call(getTaskInfoRequest());
+          // 根据requestResult结果判断
+          if (requestResult.successful) {
+            yield put({
+              type: 'getTaskInfoSuccess',
+              payload: requestResult.resultValue,
+            });
+          } else {
+            yield put({ type: 'getTaskInfoFailure'});
+          }
+    },
+    // 获取附件列表
+    *getFilesList({ payload }, { call, put }) {
+          yield put({ type: 'getQueryListLoading' })
+          const requestResult = yield call(getQueryListRequest());
+          // 根据requestResult结果判断
+          if (requestResult.successful) {
+            yield put({
+              type: 'getQueryListSuccess',
+              payload: requestResult.resultValue,
+            });
+          } else {
+            yield put({ type: 'getQueryListFailure'});
+          }
+    },
+    // 获取上级任务列表
+    *getParentTaskList({ payload }, { call, put }) {
+          yield put({ type: 'getParentTaskListLoading' })
+          const requestResult = yield call(getParentTaskListRequest());
+          // 根据requestResult结果判断
+          if (requestResult.successful) {
+            yield put({
+              type: 'getParentTaskListSuccess',
+              payload: requestResult.resultValue,
+            });
+          } else {
+            yield put({ type: 'getParentTaskListFailure'});
+          }
+    },
+    // 获取评论列表
+    *getCommentList({ payload }, { call, put }) {
+          yield put({ type: 'getCommentListLoading' })
+          const requestResult = yield call(getCommentListRequest());
+          // 根据requestResult结果判断
+          if (requestResult.successful) {
+            yield put({
+              type: 'getCommentListSuccess',
+              payload: requestResult.resultValue,
+            });
+          } else {
+            yield put({ type: 'getCommentListFailure'});
+          }
+    },
   },
+
+
   // !!!: 行为产生的对state的数据加工，函数名跟effect中的type匹配
   reducers: {
     getTasksByIdLoading(state, action) {
@@ -645,7 +793,7 @@ export default {
       }
     },
 
-    getRelationPlanListLoading(state, action) {
+    getRelationTaskListLoading(state, action) {
       // 修改状态的loading标志
       return {
         ...state,
@@ -653,17 +801,109 @@ export default {
         errMsg: '',
       }
     },
-    getRelationPlanListSuccess(state, action) {
+    getRelationTaskListSuccess(state, action) {
       // 修改状态的tasks状态
       return {
         ...state,
         isFetching: false,
         errMsg: '',
-        relationPlanList: action.payload,
+        relationTaskList: action.payload,
       }
     },
-    getRelationPlanListFailure(state, action) {
+    getRelationTaskListFailure(state, action) {
       // 修改状态的error标志
+      return {
+        ...state,
+        isFetching: false,
+        errMsg: action.errMsg,
+      }
+    },
+
+    getTaskInfoLoading(state, action) {
+      return {
+        ...state,
+        isFetching: true,
+        errMsg: '',
+      }
+    },
+    getTaskInfoSuccess(state, action) {
+      return {
+        ...state,
+        isFetching: false,
+        errMsg: '',
+        taskInfo: action.payload,
+      }
+    },
+    getTaskInfoFailure(state, action) {
+      return {
+        ...state,
+        isFetching: false,
+        errMsg: action.errMsg,
+      }
+    },
+
+    getFilesListLoading(state, action) {
+      return {
+        ...state,
+        isFetching: true,
+        errMsg: '',
+      }
+    },
+    getFilesListSuccess(state, action) {
+      return {
+        ...state,
+        isFetching: false,
+        errMsg: '',
+        filesList: action.payload,
+      }
+    },
+    getFilesListFailure(state, action) {
+      return {
+        ...state,
+        isFetching: false,
+        errMsg: action.errMsg,
+      }
+    },
+
+    getParentTaskListLoading(state, action) {
+      return {
+        ...state,
+        isFetching: true,
+        errMsg: '',
+      }
+    },
+    getParentTaskListSuccess(state, action) {
+      return {
+        ...state,
+        isFetching: false,
+        errMsg: '',
+        parentTaskList: action.payload,
+      }
+    },
+    getParentTaskListFailure(state, action) {
+      return {
+        ...state,
+        isFetching: false,
+        errMsg: action.errMsg,
+      }
+    },
+
+    getCommentListLoading(state, action) {
+      return {
+        ...state,
+        isFetching: true,
+        errMsg: '',
+      }
+    },
+    getCommentListSuccess(state, action) {
+      return {
+        ...state,
+        isFetching: false,
+        errMsg: '',
+        commentList: action.payload,
+      }
+    },
+    getCommentListFailure(state, action) {
       return {
         ...state,
         isFetching: false,

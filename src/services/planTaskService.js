@@ -12,7 +12,7 @@ export async function getTasksRequest(params) {
     data: params,
   })
 }
-// 获取任务列表
+// 根据planId获取任务列表
 export async function getTasksByIdRequest(params) {
   return request({
     url: 'http://localhost:9000/TRDP/csm_proc/rest/projectproc/',
@@ -132,6 +132,52 @@ export async function deleteTaskRequest(params) {
 export async function relationTaskRequest(params) {
   return request({
     url: 'http://localhost:9000/TRDP/csm_proc/rest/projectplan/saveProcRelation',
+    method: 'get',
+    data: params,
+  })
+}
+
+// 获取任务详情
+export async function getTaskInfoRequest(params) {
+  return request({
+    url: 'http://localhost:9000/TRDP/csm_proc/rest/projectproc/getQueryInfo',
+    method: 'get',
+    data: params,
+  })
+}
+
+// 根据任务ID获取关联任务列表
+export async function getRelationTaskListRequest(params) {
+  return request({
+    url: 'http://localhost:9000/TRDP/csm_proc/rest/projectproc/getRelevance',
+    method: 'get',
+    data: params,
+  })
+}
+
+// 根据任务ID获取附件列表
+export async function getFilesListRequest(params) {
+  return request({
+    url: 'http://localhost:9000/TRDP/csm_proc/rest/projectproc/getQueryFiles',
+    method: 'get',
+    data: params,
+  })
+}
+
+
+// 根据任务ID获取上级任务列表
+export async function getParentTaskListRequest(params) {
+  return request({
+    url: 'http://localhost:9000/TRDP/csm_proc/rest/projectproc/getAllRelation',
+    method: 'get',
+    data: params,
+  })
+}
+
+// 根据任务ID获取评论列表
+export async function getCommentListRequest(params) {
+  return request({
+    url: 'http://localhost:9000/TRDP/csm_proc/rest/projectproc/getQueryComment',
     method: 'get',
     data: params,
   })
