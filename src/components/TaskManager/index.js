@@ -13,6 +13,7 @@ function mapStateToProps(state) {
     dispatch: state.dispatch,
     relationPlanList: state.TaskManager.relationPlanList,
     planInfo: state.TaskManager.planInfo,
+    selectParams: state.TaskManager.selectParams,
   });
 }
 export default connect(mapStateToProps)(TaskManager);

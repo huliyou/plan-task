@@ -15,6 +15,7 @@ class TaskManager extends React.PureComponent {
     selectPlanId: PropTypes.string,
     planInfo: PropTypes.object,
     relationPlanList: PropTypes.array,
+    selectParams: PropTypes.object,
   }
   componentWillMount () {
     // 获取menu数据
@@ -32,10 +33,15 @@ class TaskManager extends React.PureComponent {
     }
   }
   // 任务列表搜索功能
-  selectTaskAction = (dispatch: Function) => (params: Object) => {
+  selectTaskAction = (dispatch: Function) => (params: Object, current: number = 1) => {
+    dispatch({
+      type: 'TaskManager/selectParams',
+      payload: params,
+    });
+    const localParams = { params, current };
     dispatch({
       type: 'TaskManager/getTasks',
-      payload: params,
+      payload: localParams,
     });
   }
   // 按计划号删除计划及相关任务
@@ -130,6 +136,7 @@ getPlanInfo = (dispatch: Function) => (params: Object) => {
               selectTaskAction={this.selectTaskAction(this.props.dispatch)}
               relationPlanList={this.props.relationPlanList}
               dispatch={this.props.dispatch}
+              selectParams={this.props.selectParams}
             />
           </div>
         </div>

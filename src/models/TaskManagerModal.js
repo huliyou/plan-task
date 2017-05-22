@@ -282,6 +282,15 @@ export default {
       relationTime: 32,
       status: 'Sidney No. 1 Lake Park',
     }],
+    // 搜索参数
+    selectParams: {
+      procId,
+      themeName,
+      themeCode,
+      pDuty,
+      priority,
+      planId,
+    }
   },
   // !!!: Modal订阅
   subscriptions: {
@@ -689,6 +698,12 @@ export default {
       return {
         ...state,
         selectPlanId: action.payload.planId,
+      }
+    },
+    selectParams(state, action) {
+      return {
+        ...state,
+        selectParams: action.payload,
       }
     }
   },

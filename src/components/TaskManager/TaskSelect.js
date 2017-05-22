@@ -32,9 +32,14 @@ class TaskSelect extends React.PureComponent {
       pDuty,
       priority,
       planId,
+      current: 1,
     };
     const handleSubmit = () => {
       // 任务查询
+      this.props.dispatch({
+        type: 'TaskManager/selectParams',
+        payload: params,
+      });
       this.props.selectTaskAction(params);
     };
     return (

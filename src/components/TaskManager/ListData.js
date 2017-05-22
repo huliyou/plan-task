@@ -12,6 +12,7 @@ class ListData extends React.Component {
     taskList: PropTypes.object,
     selectTaskAction: PropTypes.func,
     relationPlanList: PropTypes.array,
+    selectParams: PropTypes.object,
   }
   constructor(props: Object, context: string) {
     super(props, context);
@@ -199,8 +200,8 @@ class ListData extends React.Component {
         <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '2vh' }}>
           <Pagination
             current={this.props.taskList.current}
-            onChange={() => {
-              this.props.selectTaskAction({ current: 1 });
+            onChange={(current) => {
+              this.props.selectTaskAction(this.props.selectParams, current);
             }}
             total={this.props.taskList.total}
           />
