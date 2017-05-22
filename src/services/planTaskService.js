@@ -90,3 +90,40 @@ export async function collectPlanRequest(params) {
     data: params,
   })
 }
+
+
+// 催办任务
+export async function remindersTaskRequest(params) {
+  return request({
+    url: 'http://localhost:9000/TRDP/csm_proc/rest/projectproc/saveVice',
+    method: 'get',
+    data: params,
+  })
+}
+
+// 关注任务
+export async function followTaskRequest(params) {
+  return request({
+    url: 'http://localhost:9000/TRDP/csm_proc/rest/projectplan/savePlanCollection',
+    method: 'get',
+    data: params,
+  })
+}
+
+// 删除任务
+export async function deleteTaskRequest(params) {
+  return request({
+    url: 'http://localhost:9000/TRDP/csm_proc/rest/projectplan/savePlanCollection',
+    method: 'get',
+    data: params,
+  })
+}
+
+// 关联任务
+export async function relationTaskRequest(params) {
+  return request({
+    url: 'http://localhost:9000/TRDP/csm_proc/rest/projectplan/saveProcRelation',
+    method: 'get',
+    data: params,
+  })
+}

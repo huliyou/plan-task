@@ -14,6 +14,7 @@ class TaskManager extends React.PureComponent {
     dispatch: PropTypes.func,
     selectPlanId: PropTypes.string,
     planInfo: PropTypes.object,
+    relationPlanList: PropTypes.array,
   }
   componentWillMount () {
     // 获取menu数据
@@ -127,6 +128,7 @@ getPlanInfo = (dispatch: Function) => (params: Object) => {
               taskListCard={this.props.taskListCard}
               taskCardData={this.props.taskCardData}
               selectTaskAction={this.selectTaskAction(this.props.dispatch)}
+              relationPlanList={this.props.relationPlanList}
               dispatch={this.props.dispatch}
             />
           </div>

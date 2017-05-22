@@ -11,6 +11,7 @@ function mapStateToProps(state) {
     taskCardData: state.TaskManager.taskCardData,
     selectPlanId: state.TaskManager.selectPlanId,
     dispatch: state.dispatch,
+    relationPlanList: state.TaskManager.relationPlanList,
     planInfo: state.TaskManager.planInfo,
   });
 }

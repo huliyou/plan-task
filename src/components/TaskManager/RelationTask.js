@@ -49,22 +49,6 @@ const columns = [{
   dataIndex: 'operation',
   key: 'operation',
 }];
-const data = [{
-  procId: '1',
-  themeName: 'John Brown',
-  relationTime: 32,
-  status: 'New York No. 1 Lake Park',
-}, {
-  procId: '2',
-  themeName: 'Jim Green',
-  relationTime: 42,
-  status: 'London No. 1 Lake Park',
-}, {
-  procId: '3',
-  themeName: 'Joe Black',
-  relationTime: 32,
-  status: 'Sidney No. 1 Lake Park',
-}];
 
 class RelationTask extends React.PureComponent {
   static propTypes = {
@@ -73,6 +57,7 @@ class RelationTask extends React.PureComponent {
     form: PropTypes.any,
     procId: PropTypes.number,
     handleCancel: PropTypes.func,
+    relationPlanList: PropTypes.object,
   };
   componentWillMount () {
     // 获取已关联任务
@@ -98,7 +83,12 @@ class RelationTask extends React.PureComponent {
       planTitle,
     };
     const handleSubmit = () => {
-
+      // 关联任务
+      this.props.dispatch({
+        type: 'TaskManager/relationTask',
+        payload: params,
+      });
+      this.props.handleCancel();
     };
     return (
       <div>
@@ -133,7 +123,7 @@ class RelationTask extends React.PureComponent {
               </FormItem>
             <div style={relationStyles.title}>已关联的任务</div>
             <div style={{ marginBottom: '20px' }}>
-              <Table columns={columns} dataSource={data} pagination={false} />
+              <Table columns={columns} dataSource={this.props.relationPlanList} pagination={false} />
             </div>
             <div style={relationStyles.button}>
                <div>

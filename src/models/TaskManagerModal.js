@@ -5,7 +5,7 @@ import { message } from 'antd';
 import { getTasksRequest, getTasksMenuRequest, createChildPlanRequest,
   createPlanRequest, deletePlanRequest, filePlanRequest, collectPlanRequest,
   getTasksByIdRequest, editPlanRequest, changePlanPlanRequest, getRelationPlanListRequest,
-  getPlanInfoRequest
+  getPlanInfoRequest, remindersTaskRequest, followTaskRequest, deleteTaskRequest, relationTaskRequest
  } from '../services/planTaskService.js';
 import Immutable from 'immutable';
 
@@ -263,7 +263,23 @@ export default {
       currentVersion: '',
       planTitle: '',
       planWorkload: '',
-    }
+    },
+    relationPlanList: [{
+      procId: '1',
+      themeName: 'John Brown',
+      relationTime: 32,
+      status: 'New York No. 1 Lake Park',
+    }, {
+      procId: '2',
+      themeName: 'Jim Green',
+      relationTime: 42,
+      status: 'London No. 1 Lake Park',
+    }, {
+      procId: '3',
+      themeName: 'Joe Black',
+      relationTime: 32,
+      status: 'Sidney No. 1 Lake Park',
+    }],
   },
   // !!!: Modal订阅
   subscriptions: {
@@ -275,7 +291,7 @@ export default {
       yield put({ type: 'getTasksLoading' });
       const requestResult = yield call(getTasksRequest());
       // 根据requestResult结果判断
-      if (1) {
+      if (requestResult.successful) {
         yield put({
           type: 'getTasksByIdSuccess',
           payload: requestResult.data,
@@ -423,6 +439,20 @@ export default {
         yield put({ type: 'getRelationPlanListFailure'});
       }
     },
+    // 关联任务
+    *relationTask({ payload }, { call, put }) {
+          yield put({ type: 'relationTaskLoading' })
+          const requestResult = yield call(relationTaskRequest());
+          // 根据requestResult结果判断
+          if (requestResult.successful) {
+            yield put({
+              type: 'relationTaskSuccess',
+              payload: requestResult.data,
+            });
+          } else {
+            yield put({ type: 'relationTaskFailure'});
+          }
+        },
     // 获取计划详情
     *getPlanInfo({ payload }, { call, put }) {
       yield put({ type: 'getPlanInfoLoading' })
@@ -437,6 +467,48 @@ export default {
         yield put({ type: 'getPlanInfoFailure'});
       }
     },
+    // 催办任务
+    *remindersTask({ payload }, { call, put }) {
+      yield put({ type: 'remindersTaskLoading' })
+      const requestResult = yield call(remindersTaskRequest());
+      // 根据requestResult结果判断
+      if (requestResult.successful) {
+        yield put({
+          type: 'remindersTaskSuccess',
+          payload: requestResult.data,
+        });
+      } else {
+        yield put({ type: 'remindersTaskFailure'});
+      }
+    },
+      // 关注任务
+    *followTask({ payload }, { call, put }) {
+        yield put({ type: 'followTaskLoading' })
+        const requestResult = yield call(followTaskRequest());
+        // 根据requestResult结果判断
+        if (requestResult.successful) {
+          yield put({
+            type: 'followTaskSuccess',
+            payload: requestResult.data,
+          });
+        } else {
+          yield put({ type: 'followTaskFailure'});
+        }
+      },
+        // 删除任务
+    *deleteTask({ payload }, { call, put }) {
+          yield put({ type: 'deleteTaskLoading' })
+          const requestResult = yield call(deleteTaskRequest());
+          // 根据requestResult结果判断
+          if (requestResult.successful) {
+            yield put({
+              type: 'deleteTaskSuccess',
+              payload: requestResult.data,
+            });
+          } else {
+            yield put({ type: 'deleteTaskFailure'});
+          }
+        },
   },
   // !!!: 行为产生的对state的数据加工，函数名跟effect中的type匹配
   reducers: {
@@ -454,7 +526,7 @@ export default {
         ...state,
         isFetching: false,
         errMsg: '',
-        taskList: action.resultValue,
+        taskListCard: action.resultValue,
       }
     },
     getTasksByIdFailure(state, action) {
@@ -507,7 +579,6 @@ export default {
         planInfo: action.resultValue,
       }
     },
-
     getPlanInfoFailure(state, action) {
       return {
         ...state,
@@ -516,6 +587,57 @@ export default {
       }
     },
 
+    getTasksLoading(state, action) {
+      // 修改状态的loading标志
+      return {
+        ...state,
+        isFetching: true,
+        errMsg: '',
+      }
+    },
+    getTasksSuccess(state, action) {
+      // 修改状态的tasks状态
+      return {
+        ...state,
+        isFetching: false,
+        errMsg: '',
+        taskList: action.resultValue,
+      }
+    },
+    getTasksFailure(state, action) {
+      // 修改状态的error标志
+      return {
+        ...state,
+        isFetching: false,
+        errMsg: action.errMsg,
+      }
+    },
+
+    getRelationPlanListLoading(state, action) {
+      // 修改状态的loading标志
+      return {
+        ...state,
+        isFetching: true,
+        errMsg: '',
+      }
+    },
+    getRelationPlanListSuccess(state, action) {
+      // 修改状态的tasks状态
+      return {
+        ...state,
+        isFetching: false,
+        errMsg: '',
+        relationPlanList: action.resultValue,
+      }
+    },
+    getRelationPlanListFailure(state, action) {
+      // 修改状态的error标志
+      return {
+        ...state,
+        isFetching: false,
+        errMsg: action.errMsg,
+      }
+    },
     selectPlanId(state, action) {
       return {
         ...state,
