@@ -12,6 +12,7 @@ class TaskSelect extends React.PureComponent {
   static propTypes = {
     form: PropTypes.any,
     selectTaskAction: PropTypes.func,
+    dispatch: PropTypes.func,
   };
   render() {
     const formItemLayout = {

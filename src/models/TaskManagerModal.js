@@ -284,12 +284,12 @@ export default {
     }],
     // 搜索参数
     selectParams: {
-      procId,
-      themeName,
-      themeCode,
-      pDuty,
-      priority,
-      planId,
+      procId: '',
+      themeName: '',
+      themeCode: '',
+      pDuty: '',
+      priority: '',
+      planId: '',
     }
   },
   // !!!: Modal订阅

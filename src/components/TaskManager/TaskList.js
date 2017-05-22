@@ -34,7 +34,10 @@ class TaskList extends React.Component {
     if (isShow) {
       return (
         <div>
-          <TaskSelect selectTaskAction={this.props.selectTaskAction} />
+          <TaskSelect
+            selectTaskAction={this.props.selectTaskAction}
+            dispatch={this.props.dispatch}
+          />
         </div>
       );
     }
