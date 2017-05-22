@@ -10,20 +10,20 @@ const TabPane = Tabs.TabPane;
 
 const columns = [{
   title: '上传人',
-  dataIndex: 'name',
-  key: 'name',
+  dataIndex: 'uploadName',
+  key: 'uploadName',
 }, {
   title: '上传时间',
-  dataIndex: 'time',
-  key: 'time',
+  dataIndex: 'uploadDate',
+  key: 'uploadDate',
 }, {
   title: '附件类型',
-  dataIndex: 'type',
-  key: 'type',
+  dataIndex: 'fileTypeId',
+  key: 'fileTypeId',
 }, {
   title: '文件名称',
-  dataIndex: 'file',
-  key: 'file',
+  dataIndex: 'fileName',
+  key: 'fileName',
   render: (type) => <a href="#">{type}</a>,
 }, {
   title: '操作',
@@ -40,12 +40,12 @@ const columns = [{
 // 关联任务
 const relateColumns = [{
   title: '编号',
-  dataIndex: 'id',
-  key: 'id',
+  dataIndex: 'procId',
+  key: 'procId',
 }, {
   title: '标题',
-  dataIndex: 'title',
-  key: 'title',
+  dataIndex: 'themeName',
+  key: 'themeName',
 }, {
   title: '类型',
   dataIndex: 'type',
@@ -56,8 +56,8 @@ const relateColumns = [{
   key: 'time',
 }, {
   title: '负责人',
-  dataIndex: 'name',
-  key: 'name',
+  dataIndex: 'pDuty',
+  key: 'pDuty',
 }, {
   title: '流程状态',
   dataIndex: 'status',
@@ -65,25 +65,6 @@ const relateColumns = [{
   render: (type) => <span>{type}</span>,
 }];
 
-const data = [{
-  key: '1',
-  name: 'name',
-  time: 'time',
-  type: 32,
-  file: 'New York No. 1 Lake Park',
-}, {
-  key: '2',
-  name: 'name',
-  time: 'time',
-  type: 32,
-  file: 'New York No. 1 Lake Park',
-}, {
-  key: '3',
-  name: 'name',
-  time: 'time',
-  type: 32,
-  file: 'New York No. 1 Lake Park',
-}];
 class TaskInfoSee extends React.PureComponent {
   static propTypes = {
     visible: PropTypes.bool,
@@ -93,12 +74,57 @@ class TaskInfoSee extends React.PureComponent {
     filesList: PropTypes.array,
     relationTaskList: PropTypes.array,
     getTaskInfo: PropTypes.object,
+    commentList: PropTypes.array,
+    logList: PropTypes.array,
   };
+  getLogList(logList) {
+    const view = [];
+    if(logList) {
+      logList.forEach((value) => {
+        view.push(
+          <Timeline.Item>
+            <Row gutter={16}>
+              <Col span={6}><span>{value.operationDate}</span></Col>
+              <Col span={2}>{value.logId}楼</Col>
+              <Col span={2}><span>{value.operationName}</span></Col>
+            </Row>
+            <Row gutter={16}>
+              <Col span={22}>{value.operationDesc}</Col>
+              <Col span={2}><a href="#">回复</a></Col>
+            </Row>
+          </Timeline.Item>
+        );
+      });
+    }
+    return view;
+  }
+  getCommentList(commentList) {
+    const view = [];
+    if(commentList) {
+      commentList.forEach((value) => {
+        view.push(
+          <Timeline.Item>
+            <Row gutter={16}>
+              <Col span={6}><span>{value.commentdate}</span></Col>
+              <Col span={2}>{value.commentId}楼</Col>
+              <Col span={2}><span>{value.commentName}</span></Col>
+            </Row>
+            <Row gutter={16}>
+              <Col span={22}>{value.commentDesc}</Col>
+              <Col span={2}><a href="#">回复</a></Col>
+            </Row>
+          </Timeline.Item>
+        );
+      });
+    }
+    return view;
+  }
   render() {
     const formItemLayout = {
       labelCol: { span: 4 },
       wrapperCol: { span: 16 },
     };
+    const taskInfo = this.props.getTaskInfo;
     return (
       <Modal
         visible={true}
@@ -110,7 +136,7 @@ class TaskInfoSee extends React.PureComponent {
       >
       <div style={{ padding: '5vh' }}>
         <Row gutter={16} style={{ fontSize: '20px', fontWeight: 'bold' }}>
-          <Col span={1}>#{this.props.getTaskInfo.procId}</Col>
+          <Col span={1}>#{taskInfo.procId}</Col>
           <Col span={20}>【需求】</Col>
           <Col span={3}>
             <Button
@@ -126,31 +152,31 @@ class TaskInfoSee extends React.PureComponent {
           <Col span={24}>业务需求评审</Col>
         </Row>
         <Row gutter={16} style={{ fontSize: '15px', margin: '10px', color: '#ccc' }}>
-          <Col span={2}>dsfsd</Col>
-          <Col span={8}>创建与 2017-04-02</Col>
+          <Col span={2}>{taskInfo.createName}</Col>
+          <Col span={8}>创建与 {taskInfo.createTime}</Col>
         </Row>
         <hr style={{ border: '1px solid #ccc', margin: '10px 0' }} />
         <Collapse defaultActiveKey={['1']}>
           <Panel header={<span style={{ fontSize: '16px', fontWeight: 'bold' }}>字段</span>} key="1">
             <Row gutter={16} style={{ fontSize: '15px', lineHeight: '2' }}>
               <Col span={3}>流程状态</Col>
-              <Col span={5}>{'23213'}</Col>
+              <Col span={5}>{taskInfo.phase || '无'}</Col>
               <Col span={3}>负责人</Col>
-              <Col span={5}>{'23213'}</Col>
+              <Col span={5}>{taskInfo.pDuty || '无'}</Col>
               <Col span={3}>优先级</Col>
-              <Col span={5}>{'23213'}</Col>
+              <Col span={5}>{taskInfo.priority || '无'}</Col>
               <Col span={3}>截止时间</Col>
-              <Col span={5}>{'23213'}</Col>
+              <Col span={5}>{taskInfo.dataTo || '无'}</Col>
               <Col span={3}>所属计划</Col>
-              <Col span={5}>{'23213'}</Col>
+              <Col span={5}>{taskInfo.planId || '无'}</Col>
               <Col span={3}>上级任务</Col>
-              <Col span={5}>{'23213'}</Col>
+              <Col span={5}>{taskInfo.prjId || '无'}</Col>
               <Col span={3}>估算工时</Col>
-              <Col span={5}>{'23213'}</Col>
+              <Col span={5}>{taskInfo.workDay || '无'}</Col>
               <Col span={3}>所属集成</Col>
-              <Col span={5}>{'23213'}</Col>
+              <Col span={5}>{taskInfo.rPocId || '无'}</Col>
               <Col span={3}>占整个项目比例</Col>
-              <Col span={5}>{'23213'}</Col>
+              <Col span={5}>{taskInfo.weight || '无'}</Col>
             </Row>
           </Panel>
 
@@ -159,7 +185,7 @@ class TaskInfoSee extends React.PureComponent {
               {...formItemLayout}
               label="任务描述"
             >
-              <Input type="textarea" />
+              <Input type="textarea" value={taskInfo.themeDesc} />
             </FormItem>
             <FormItem
               {...formItemLayout}
@@ -183,15 +209,7 @@ class TaskInfoSee extends React.PureComponent {
             <Tabs defaultActiveKey="1">
               <TabPane tab="操作记录" key="1">
                 <Timeline>
-                  <Row gutter={16}>
-                    <Col span={6}><span>2015-09-01 10:40</span></Col>
-                    <Col span={2}>1楼</Col>
-                    <Col span={2}><span>XXX</span></Col>
-                  </Row>
-                  <Row gutter={16}>
-                    <Col span={22}>sfsdfsdfsfsf</Col>
-                    <Col span={2}><a href="#">详情</a></Col>
-                  </Row>
+                 {this.getLogList(this.props.logList)}
                 </Timeline>
               </TabPane>
               <TabPane tab="评论" key="2">
@@ -201,17 +219,7 @@ class TaskInfoSee extends React.PureComponent {
                 </Row>
                 <div style={{ marginTop: '10px' }}>
                   <Timeline>
-                    <Timeline.Item>
-                      <Row gutter={16}>
-                        <Col span={6}><span>2015-09-01 10:40</span></Col>
-                        <Col span={2}>1楼</Col>
-                        <Col span={2}><span>XXX</span></Col>
-                      </Row>
-                      <Row gutter={16}>
-                        <Col span={22}>sfsdfsdfsfsf</Col>
-                        <Col span={2}><a href="#">回复</a></Col>
-                      </Row>
-                    </Timeline.Item>
+                    {this.getCommentList(this.props.commentList)}
                   </Timeline>
                 </div>
               </TabPane>

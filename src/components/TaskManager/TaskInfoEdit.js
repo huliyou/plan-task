@@ -1,8 +1,9 @@
 
 import React, { PropTypes } from 'react';
-import { Button, Modal, Collapse, Form, Input, Icon, Table, Tabs, Timeline, Row, Col, Radio } from 'antd';
+import { Button, Modal, Collapse, Form, Input, Icon, Table, Tabs, Timeline, Row, Col, Radio, DatePicker} from 'antd';
 import * as Styles from './task.less';
 import { Editor } from 'react-draft-wysiwyg';
+import moment from 'moment';
 
 const Panel = Collapse.Panel;
 const FormItem = Form.Item;
@@ -27,20 +28,20 @@ const relationStyles = ({
 
 const columns = [{
   title: '上传人',
-  dataIndex: 'name',
-  key: 'name',
+  dataIndex: 'uploadName',
+  key: 'uploadName',
 }, {
   title: '上传时间',
-  dataIndex: 'time',
-  key: 'time',
+  dataIndex: 'uploadDate',
+  key: 'uploadDate',
 }, {
   title: '附件类型',
-  dataIndex: 'type',
-  key: 'type',
+  dataIndex: 'fileTypeId',
+  key: 'fileTypeId',
 }, {
   title: '文件名称',
-  dataIndex: 'file',
-  key: 'file',
+  dataIndex: 'fileName',
+  key: 'fileName',
   render: (type) => <a href="#">{type}</a>,
 }, {
   title: '操作',
@@ -57,12 +58,12 @@ const columns = [{
 // 关联任务
 const relateColumns = [{
   title: '编号',
-  dataIndex: 'id',
-  key: 'id',
+  dataIndex: 'procId',
+  key: 'procId',
 }, {
   title: '标题',
-  dataIndex: 'title',
-  key: 'title',
+  dataIndex: 'themeName',
+  key: 'themeName',
 }, {
   title: '类型',
   dataIndex: 'type',
@@ -73,39 +74,13 @@ const relateColumns = [{
   key: 'time',
 }, {
   title: '负责人',
-  dataIndex: 'name',
-  key: 'name',
+  dataIndex: 'pDuty',
+  key: 'pDuty',
 }, {
   title: '流程状态',
   dataIndex: 'status',
   key: 'status',
   render: (type) => <span>{type}</span>,
-}];
-
-const relateData = [{
-  key: '1',
-  id: '1',
-  title: '题目',
-  name: 'name',
-  time: 'time',
-  type: 32,
-  status: '完成',
-}, {
-  key: '2',
-  id: '3',
-  title: '题目',
-  name: 'name',
-  time: 'time',
-  type: 32,
-  status: '完成',
-}, {
-  key: '3',
-  id: '3',
-  title: '题目',
-  name: 'name',
-  time: 'time',
-  type: 32,
-  status: '完成',
 }];
 
 class TaskInfoEdit extends React.PureComponent {
@@ -128,19 +103,38 @@ class TaskInfoEdit extends React.PureComponent {
       wrapperCol: { span: 19 },
     };
     const { getFieldDecorator, getFieldsValue } = this.props.form;
-    const prjId = getFieldsValue().prjId ? getFieldsValue().prjId : '';
+    const phase = getFieldsValue().phase ? getFieldsValue().phase : '';
     const themeName = getFieldsValue().themeName ? getFieldsValue().themeName : '';
-    const title = getFieldsValue().title ? getFieldsValue().title : '';
+    const procType = getFieldsValue().procType ? getFieldsValue().procType : '';
     const pDuty = getFieldsValue().remarks ? getFieldsValue().pDuty : '';
+    const themeDesc = getFieldsValue().themeDesc ? getFieldsValue().themeDesc : '';
+    const themeStandard = getFieldsValue().themeStandard ? getFieldsValue().themeStandard : '';
+    const workDay = getFieldsValue().workDay ? getFieldsValue().workDay : '';
+    const priority = getFieldsValue().priority ? getFieldsValue().priority : '';
+    const weight = getFieldsValue().weight ? getFieldsValue().weight : '';
+    const planId = getFieldsValue().planId ? getFieldsValue().planId : '';
+    const rPocId = getFieldsValue().rPocId ? getFieldsValue().rPocId : '';
+    const dateTo = getFieldsValue().dateTo ? moment(getFieldsValue().dateTo).format('YYYY-MM-DD') : '';
+    const comment = getFieldsValue().comment ? getFieldsValue().comment : '';
     const params = {
-      prjId,
+      phase,
       themeName,
-      title,
+      procType,
       pDuty,
+      themeDesc,
+      themeStandard,
+      workDay,
+      priority,
+      weight,
+      planId,
+      rPocId,
+      dateTo,
+      comment
     };
     const handleSubmit = () => {
       this.props.handleOk(3, params);
     };
+    const taskInfo = this.props.getTaskInfo;
     return (
       <Modal
         visible={this.props.visible}
@@ -163,7 +157,9 @@ class TaskInfoEdit extends React.PureComponent {
             {...formItemLayout1}
             label="标题"
           >
-            {getFieldDecorator('prjId')(
+            {getFieldDecorator('themeName', {
+              initialValue: taskInfo.themeName,
+            })(
               <Input />
             )}
           </FormItem>
@@ -172,7 +168,9 @@ class TaskInfoEdit extends React.PureComponent {
             label="故事描述"
           >
             {/* <Editor /> */}
-            {getFieldDecorator('prjId')(
+            {getFieldDecorator('themeDesc', {
+              initialValue: taskInfo.themeDesc,
+            })(
               <Input type="textarea" />
             )}
           </FormItem>
@@ -181,7 +179,9 @@ class TaskInfoEdit extends React.PureComponent {
             label="验证标准"
           >
             {/* <Editor /> */}
-            {getFieldDecorator('prjId')(
+            {getFieldDecorator('themeStandard', {
+              initialValue: taskInfo.themeStandard,
+            })(
               <Input type="textarea" />
             )}
           </FormItem>
@@ -189,12 +189,14 @@ class TaskInfoEdit extends React.PureComponent {
             {...formItemLayout1}
             label="流程状态"
           >
-          {getFieldDecorator('prjId')(
-              <RadioGroup onChange="" value="">
-                <Radio value={1}>新建</Radio>
-                <Radio value={2}>开发中</Radio>
-                <Radio value={3}>验证</Radio>
-                <Radio value={4}>已完成</Radio>
+          {getFieldDecorator('phase', {
+            initialValue: taskInfo.phase,
+          })(
+              <RadioGroup>
+                <Radio value="新建">新建</Radio>
+                <Radio value="开发中">开发中</Radio>
+                <Radio value="验证">验证</Radio>
+                <Radio value="已完成">已完成</Radio>
               </RadioGroup>
           )}
           </FormItem>
@@ -204,7 +206,9 @@ class TaskInfoEdit extends React.PureComponent {
                 {...formItemLayout}
                 label="负责人"
               >
-              {getFieldDecorator('prjId')(
+              {getFieldDecorator('pDuty', {
+                initialValue: taskInfo.pDuty,
+              })(
                 <Input />
               )}
               </FormItem>
@@ -226,7 +230,9 @@ class TaskInfoEdit extends React.PureComponent {
                 {...formItemLayout}
                 label="优先级"
               >
-              {getFieldDecorator('prjId')(
+              {getFieldDecorator('priority', {
+                initialValue: taskInfo.priority,
+              })(
                 <Input />
               )}
               </FormItem>
@@ -236,7 +242,9 @@ class TaskInfoEdit extends React.PureComponent {
                 {...formItemLayout}
                 label="占整个项目比例"
               >
-              {getFieldDecorator('themeName')(
+              {getFieldDecorator('weight', {
+                initialValue: taskInfo.weight,
+              })(
                 <Input />
               )}
               </FormItem>
@@ -248,7 +256,9 @@ class TaskInfoEdit extends React.PureComponent {
                 {...formItemLayout}
                 label="所属计划"
               >
-              {getFieldDecorator('prjId')(
+              {getFieldDecorator('planId', {
+                initialValue: taskInfo.planId,
+              })(
                 <Input />
               )}
               </FormItem>
@@ -258,7 +268,9 @@ class TaskInfoEdit extends React.PureComponent {
                 {...formItemLayout}
                 label="上级任务"
               >
-              {getFieldDecorator('themeName')(
+              {getFieldDecorator('rPocId', {
+                initialValue: taskInfo.rPocId,
+              })(
                 <Input />
               )}
               </FormItem>
@@ -270,8 +282,10 @@ class TaskInfoEdit extends React.PureComponent {
                 {...formItemLayout}
                 label="截止时间"
               >
-              {getFieldDecorator('prjId')(
-                <Input />
+              {getFieldDecorator('dateTo', {
+                initialValue: taskInfo.dateTo ? moment(taskInfo.dateTo, 'YYYY/MM/DD') : undefined
+              })(
+                <DatePicker format={'YYYY/MM/DD'} />
               )}
               </FormItem>
             </Col>
@@ -280,7 +294,9 @@ class TaskInfoEdit extends React.PureComponent {
                 {...formItemLayout}
                 label="所属集成"
               >
-              {getFieldDecorator('themeName')(
+              {getFieldDecorator('procType', {
+                initialValue: taskInfo.procType,
+              })(
                 <Input />
               )}
               </FormItem>
@@ -290,8 +306,10 @@ class TaskInfoEdit extends React.PureComponent {
             {...formItemLayout1}
             label="评论"
           >
-            {getFieldDecorator('prjId')(
-              <Input />
+            {getFieldDecorator('comment', {
+              initialValue: taskInfo.comment,
+            })(
+              <Input type="textarea" />
             )}
           </FormItem>
           </div>

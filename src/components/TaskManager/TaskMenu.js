@@ -193,6 +193,7 @@ class TaskMenu extends React.PureComponent {
           visible={visible}
           handleCancel={() => this.handleCancel()}
           handleOk={(type, params) => this.handleOk(type, params)}
+          planInfo={this.props.planInfo}
         />
       );
     }

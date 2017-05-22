@@ -4,6 +4,7 @@
 import React, { PropTypes } from 'react';
 import { Form, Input, Row, Col, Button, DatePicker, Modal } from 'antd';
 import * as Styles from './task.less';
+import moment from 'moment';
 
 const FormItem = Form.Item;
 
@@ -14,10 +15,8 @@ class EditPlan extends React.PureComponent {
     form: PropTypes.any,
     handleOk: PropTypes.func,
     handleCancel: PropTypes.func,
+    planInfo: PropTypes.object,
   };
-  componentWillMount() {
-    //获取计划详情
-  }
   render() {
     const formItemLayout = {
       labelCol: { span: 6 },
@@ -29,8 +28,8 @@ class EditPlan extends React.PureComponent {
     };
     const { getFieldDecorator, getFieldsValue } = this.props.form;
     const themeName = getFieldsValue().themeName ? getFieldsValue().themeName : '';
-    const planBeginDate = getFieldsValue().planBeginDate ? getFieldsValue().planBeginDate : '';
-    const planEndDate = getFieldsValue().planEndDate ? getFieldsValue().planEndDate : '';
+    const planBeginDate = getFieldsValue().planBeginDate ? moment(getFieldsValue().planBeginDate).format('YYYY-MM-DD') : '';
+    const planEndDate = getFieldsValue().planEndDate ? moment(getFieldsValue().planEndDate).format('YYYY-MM-DD') : '';
     const parentPlanCode = getFieldsValue().parentPlanCode ? getFieldsValue().parentPlanCode : '';
     const planWorkload = getFieldsValue().planWorkload ? getFieldsValue().planWorkload : '';
     const planDesc = getFieldsValue().planDesc ? getFieldsValue().planDesc : '';
@@ -44,8 +43,9 @@ class EditPlan extends React.PureComponent {
       planDesc,
     };
     const handleSubmit = () => {
-      // TODO 确定提交新建任务
+      this.props.handleOk(4, params);
     };
+    const planInfo = this.props.planInfo;
     return (
       <div>
       <Modal
@@ -58,7 +58,7 @@ class EditPlan extends React.PureComponent {
       <Form horizontal>
         <div className={Styles.titleContent}>
           <Row>
-            <Col span={23}>编辑任务</Col>
+            <Col span={23}>编辑计划</Col>
           </Row>
         </div>
         <div className={Styles.bodyContent}>
@@ -68,7 +68,9 @@ class EditPlan extends React.PureComponent {
               label="标题"
               hasFeedback
             >
-            {getFieldDecorator('themeName')(
+            {getFieldDecorator('themeName', {
+              initialValue: planInfo.themeName,
+            })(
               <Input
                 placeholder="仅支持中英文"
                 type="text"
@@ -83,7 +85,9 @@ class EditPlan extends React.PureComponent {
                 label="开始时间"
                 hasFeedback
               >
-              {getFieldDecorator('planBeginDate')(
+              {getFieldDecorator('planBeginDate', {
+                initialValue: planInfo.planBeginDate ? moment(planInfo.planBeginDate, 'YYYY/MM/DD') : undefined
+              })(
                 <DatePicker format={'YYYY/MM/DD'} />
               )}
               </FormItem>
@@ -94,7 +98,9 @@ class EditPlan extends React.PureComponent {
                 label="结束时间"
                 hasFeedback
               >
-              {getFieldDecorator('planEndDate')(
+              {getFieldDecorator('planEndDate', {
+                initialValue: planInfo.planEndDate ? moment(planInfo.planEndDate, 'YYYY/MM/DD') : undefined
+              })(
                 <DatePicker format={'YYYY/MM/DD'} />
               )}
               </FormItem>
@@ -107,7 +113,9 @@ class EditPlan extends React.PureComponent {
                 label="父计划"
                 hasFeedback
               >
-              {getFieldDecorator('parentPlanCode')(
+              {getFieldDecorator('parentPlanCode', {
+                initialValue: planInfo.parentPlanCode,
+              })(
                 <Input
                   type="text"
                 />
@@ -120,7 +128,9 @@ class EditPlan extends React.PureComponent {
                 label="预计投入天数"
                 hasFeedback
               >
-              {getFieldDecorator('planWorkload')(
+              {getFieldDecorator('planWorkload', {
+                initialValue: planInfo.planWorkload,
+              })(
                 <Input
                   type="text"
                 />
@@ -134,7 +144,9 @@ class EditPlan extends React.PureComponent {
               label="计划描述"
               hasFeedback
             >
-            {getFieldDecorator('planDesc')(
+            {getFieldDecorator('planDesc', {
+              initialValue: planInfo.planDesc,
+            })(
               <Input
                 type="textarea" rows={7}
               />

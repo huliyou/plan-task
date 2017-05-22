@@ -6,7 +6,7 @@ import { getTasksRequest, getTasksMenuRequest, createChildPlanRequest,
   createPlanRequest, deletePlanRequest, filePlanRequest, collectPlanRequest,
   getTasksByIdRequest, editPlanRequest, changePlanPlanRequest, getRelationPlanListRequest,
   getPlanInfoRequest, remindersTaskRequest, followTaskRequest, deleteTaskRequest, relationTaskRequest, getTaskInfoRequest,
-  getRelationTaskListRequest, getFilesListRequest, getParentTaskListRequest, getCommentListRequest
+  getRelationTaskListRequest, getFilesListRequest, getParentTaskListRequest, getCommentListRequest, getLogListRequest, addCommentRequest
  } from '../services/planTaskService.js';
 import Immutable from 'immutable';
 
@@ -373,6 +373,21 @@ export default {
       commentDesc: '123',
       rCommentId: '123',
     }],
+    logList: [{
+      logId: 1, // 日志序号
+      prjId: '3123', // 项目序号
+      procId: '3123', // 任务序号
+      operationName: '3123', // 操作人
+      operationDesc: '3123', // 操作内容
+      operationDate: '3123', // 操作时间
+    }, {
+      logId: 2, // 日志序号
+      prjId: '3123', // 项目序号
+      procId: '3123', // 任务序号
+      operationName: '3123', // 操作人
+      operationDesc: '3123', // 操作内容
+      operationDate: '3123', // 操作时间
+    }],
     // 搜索参数
     selectParams: {
       procId: '',
@@ -688,6 +703,40 @@ export default {
             yield put({ type: 'getCommentListFailure'});
           }
     },
+    // 获取操作记录列表
+    *getLogList({ payload }, { call, put }) {
+          yield put({ type: 'getLogListLoading' })
+          const requestResult = yield call(getLogListRequest());
+          // 根据requestResult结果判断
+          if (requestResult.successful) {
+            yield put({
+              type: 'getLogListSuccess',
+              payload: requestResult.resultValue,
+            });
+          } else {
+            yield put({ type: 'getLogListFailure'});
+          }
+    },
+    // 添加评论
+    *addComment({ payload }, { call, put }) {
+          yield put({ type: 'addCommentLoading' })
+          const requestResult = yield call(gaddCommentRequest());
+          // 根据requestResult结果判断
+          if (requestResult.successful) {
+            yield put({
+              type: 'addCommentSuccess',
+              payload: requestResult.resultValue,
+            });
+            message.success('添加成功');
+            // dispatch({
+            //   type: 'TaskManager/getCommentList',
+            //   payload,
+            // })
+          } else {
+            yield put({ type: 'addCommentFailure'});
+            message.success('添加成功');
+          }
+    },
   },
 
 
@@ -935,6 +984,33 @@ export default {
         errMsg: action.errMsg,
       }
     },
+
+    getLogListLoading(state, action) {
+      return {
+        ...state,
+        isFetching: true,
+        errMsg: '',
+      }
+    },
+    getLogListSuccess(state, action) {
+      return {
+        ...state,
+        isFetching: false,
+        errMsg: '',
+        logList: action.payload,
+      }
+    },
+    getLogListFailure(state, action) {
+      // 修改状态的error标志
+      return {
+        ...state,
+        isFetching: false,
+        errMsg: action.errMsg,
+      }
+    },
+
+
+
     // 选中的计划Id
     selectPlanId(state, action) {
       return {

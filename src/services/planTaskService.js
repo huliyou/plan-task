@@ -182,3 +182,21 @@ export async function getCommentListRequest(params) {
     data: params,
   })
 }
+
+// 根据任务ID获取操作记录列表
+export async function getLogListRequest(params) {
+  return request({
+    url: 'http://localhost:9000/TRDP/csm_proc/rest/projectproc/getQueryLog',
+    method: 'get',
+    data: params,
+  })
+}
+
+// 根据任务ID添加评论
+export async function addCommentRequest(params) {
+  return request({
+    url: 'http://localhost:9000/TRDP/csm_proc/rest/projectproc/saveComment',
+    method: 'get',
+    data: params,
+  })
+}

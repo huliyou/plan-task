@@ -18,7 +18,9 @@ function mapStateToProps(state) {
     parentTaskList: state.TaskManager.parentTaskList,
     filesList: state.TaskManager.filesList,
     relationTaskList: state.TaskManager.relationTaskList,
-    getTaskInfo: state.TaskManager.planInfo,
+    getTaskInfo: state.TaskManager.getTaskInfo,
+    commentList: state.TaskManager.commentList,
+    logList: state.TaskManager.logList,
   });
 }
 export default connect(mapStateToProps)(TaskManager);

@@ -20,6 +20,8 @@ class TaskManager extends React.PureComponent {
     filesList: PropTypes.array,
     relationTaskList: PropTypes.array,
     getTaskInfo: PropTypes.object,
+    commentList: PropTypes.array,
+    logList: PropTypes.array,
     selectProcId: PropTypes.number,
   }
   componentWillMount () {
@@ -33,6 +35,8 @@ class TaskManager extends React.PureComponent {
       this.getFilesListAction(this.props.selectProcId);
       this.getFilesListAction(this.props.selectProcId);
       this.getRelationTaskListAction(this.prosp.selectProcId);
+      this.getCommentListAction(this.props.selectProcId);
+      this.getLogListAction(this.props.selectProcId);
     }
   }
   componentWillReceiveProps(nextProps) {
@@ -47,6 +51,8 @@ class TaskManager extends React.PureComponent {
       this.getFilesListAction(this.props.selectProcId);
       this.getFilesListAction(this.props.selectProcId);
       this.getRelationTaskListAction(this.props.selectProcId);
+      this.getCommentListAction(this.props.selectProcId);
+      this.getLogListAction(this.props.selectProcId);
     }
   }
   // 获取任务详情
@@ -91,6 +97,22 @@ class TaskManager extends React.PureComponent {
     dispatch({
       type: 'TaskManager/getTasks',
       payload: localParams,
+    });
+  }
+
+  // 获取评论列表
+  getCommentListAction(procId) {
+    this.props.dispatch({
+      type: 'TaskManager/getCommentList',
+      payload: { procId },
+    });
+  }
+
+  // 获取上操作记录列表
+ getLogListAction(procId) {
+    this.props.dispatch({
+      type: 'TaskManager/getLogList',
+      payload: { procId },
     });
   }
 
@@ -192,6 +214,8 @@ getPlanInfo = (dispatch: Function) => (params: Object) => {
               relationTaskList={this.props.relationTaskList}
               getTaskInfo={this.props.getTaskInfo}
               selectProcId={this.props.selectProcId}
+              commentList={this.props.commentList}
+              logList={this.props.logList}
             />
           </div>
         </div>

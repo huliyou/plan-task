@@ -18,6 +18,8 @@ class ListData extends React.Component {
     filesList: PropTypes.array,
     relationTaskList: PropTypes.array,
     getTaskInfo: PropTypes.object,
+    commentList: PropTypes.array,
+    logList: PropTypes.array,
     selectProcId: PropTypes.any,
   }
   constructor(props: Object, context: string) {
@@ -132,7 +134,7 @@ class ListData extends React.Component {
           parentTaskList={this.props.parentTaskList}
           filesList={this.props.filesList}
           relationTaskList={this.props.relationTaskList}
-          planInfo={this.props.planInfo}
+          getTaskInfo={this.props.getTaskInfo}
         />
       )
     }
@@ -190,6 +192,8 @@ class ListData extends React.Component {
           filesList={this.props.filesList}
           relationTaskList={this.props.relationTaskList}
           getTaskInfo={this.props.getTaskInfo}
+          commentList={this.props.commentList}
+          logList={this.props.logList}
         />
       );
     }
