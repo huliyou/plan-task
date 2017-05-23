@@ -50,7 +50,8 @@ class EditPlan extends React.PureComponent {
       <div>
       <Modal
         visible={this.props.visible}
-        closable={false}
+        closable
+        onCancel={() => this.props.handleCancel()}
         footer={null}
         style={{ marginLeft: '25vw' }}
         width={'65vw'}
@@ -66,7 +67,6 @@ class EditPlan extends React.PureComponent {
             <FormItem
               {...formItemLayout1}
               label="标题"
-              hasFeedback
             >
             {getFieldDecorator('themeName', {
               initialValue: planInfo.themeName,
@@ -83,7 +83,6 @@ class EditPlan extends React.PureComponent {
               <FormItem
                 {...formItemLayout}
                 label="开始时间"
-                hasFeedback
               >
               {getFieldDecorator('planBeginDate', {
                 initialValue: planInfo.planBeginDate ? moment(planInfo.planBeginDate, 'YYYY/MM/DD') : undefined
@@ -96,7 +95,6 @@ class EditPlan extends React.PureComponent {
               <FormItem
                 {...formItemLayout}
                 label="结束时间"
-                hasFeedback
               >
               {getFieldDecorator('planEndDate', {
                 initialValue: planInfo.planEndDate ? moment(planInfo.planEndDate, 'YYYY/MM/DD') : undefined
@@ -111,7 +109,6 @@ class EditPlan extends React.PureComponent {
               <FormItem
                 {...formItemLayout}
                 label="父计划"
-                hasFeedback
               >
               {getFieldDecorator('parentPlanCode', {
                 initialValue: planInfo.parentPlanCode,
@@ -126,7 +123,6 @@ class EditPlan extends React.PureComponent {
               <FormItem
                 {...formItemLayout}
                 label="预计投入天数"
-                hasFeedback
               >
               {getFieldDecorator('planWorkload', {
                 initialValue: planInfo.planWorkload,
@@ -142,7 +138,6 @@ class EditPlan extends React.PureComponent {
             <FormItem
               {...formItemLayout1}
               label="计划描述"
-              hasFeedback
             >
             {getFieldDecorator('planDesc', {
               initialValue: planInfo.planDesc,
@@ -159,9 +154,11 @@ class EditPlan extends React.PureComponent {
            <div>
               <Button
                 className={Styles.buttonStyle}
+                onClick={() => handleSubmit()}
               >确定</Button>
               <Button
                 className={Styles.buttonStyle}
+                onClick={() => this.props.handleCancel()}
               >取消</Button>
            </div>
         </div>
