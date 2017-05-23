@@ -208,6 +208,7 @@ getPlanInfo = (dispatch: Function) => (params: Object) => {
               changePlan={this.changePlan(this.props.dispatch)}
               planInfo={this.props.planInfo}
               dispatch={this.props.dispatch}
+              selectPlanId={this.props.selectPlanId}
             />
           </div>
           <div className={Styles.taskListStyle}>

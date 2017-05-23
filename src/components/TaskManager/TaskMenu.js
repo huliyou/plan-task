@@ -25,6 +25,7 @@ class TaskMenu extends React.PureComponent {
       changePlan: PropTypes.func,
       dispatch: PropTypes.func,
       planInfo: PropTypes.object,
+      selectPlanId: PropTypes.string,
     }
     state = {
       visible: false,
@@ -45,7 +46,7 @@ class TaskMenu extends React.PureComponent {
     }
     handleOk = (type, param) => {
       this.setState({ visible: false });
-      const params: Object = Object.assign(param, { planId: this.state.planId });
+      const params: Object = Object.assign(param, { planId: this.props.selectPlanId });
       if(type === 1) {
         // 提交子计划
         this.props.createChildPlanAction(params);
