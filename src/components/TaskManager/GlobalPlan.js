@@ -16,11 +16,11 @@ const data = [{
   planTitle: 'Jim',
   startTime: '2017-02-01',
   endTime: '2017-02-16',
-  percen: '30%',
+  percen: '100%',
 }, {
   planTitle: 'Joe',
   startTime: '2017-02-01',
-  endTime: '2018-02-06',
+  endTime: '2017-02-06',
   percen: '20%',
 }];
 
@@ -101,6 +101,7 @@ class GlobalPlan extends React.PureComponent {
          // 开始时间据1月1号有几天 left
          const left = moment(startTime).diff(`${this.state.year}-01-01`,'days') * 34 + 270;
          // 完成的宽度
+         const coverWidth = (Number(value.percen.split("%")[0]) / 100.00 * moment(endTime).diff(startTime,'days')) * 54;
          view.push(
            <div
              style={{
@@ -119,7 +120,7 @@ class GlobalPlan extends React.PureComponent {
                   position: 'relative',
                   top: 0,
                   left: 0,
-                  width: 200,
+                  width: coverWidth,
                   height: 28,
                   color: '#fff'
                }}
