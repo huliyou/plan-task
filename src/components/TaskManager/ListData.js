@@ -82,19 +82,20 @@ class ListData extends React.Component {
   }
   handleOk = (type, params) => {
     this.setState({ visible: false });
-    if(type in [1, 2, 4] ) {
-      const localParams = { ...params, procId: this.prosp.procId}
+    if(type in [3, 2, 4] ) {
+      const localParams = { ...params, procId: this.props.selectProcId}
       // 保存任务
       this.props.dispatch({
           type: 'TaskManager/createTask',
-          payload: { procId },
+          payload: localParams,
       });
     }
-    if(type === 3) {
+    if(type === 9) {
+      const localParams = { ...params, procId: this.props.selectProcId}
       // 关联任务
       this.props.dispatch({
           type: 'TaskManager/relationTask',
-          payload: params,
+          payload: localParams,
       });
     }
 
@@ -142,7 +143,7 @@ class ListData extends React.Component {
       view.push(
         <RelationTask
           visible={visible}
-          handleCancel={() => this.handleCancel()}
+          handleCancel={(type, params) => this.handleCancel(type, params)}
           dispacth={this.props.dispatch}
           relationPlanList={this.props.relationPlanList}
         />

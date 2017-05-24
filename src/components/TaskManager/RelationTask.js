@@ -52,20 +52,11 @@ const columns = [{
 
 class RelationTask extends React.PureComponent {
   static propTypes = {
-    dispatch: PropTypes.func,
     visible: PropTypes.bool,
     form: PropTypes.any,
-    procId: PropTypes.number,
     handleCancel: PropTypes.func,
     relationPlanList: PropTypes.array,
   };
-  componentWillMount () {
-    // 获取已关联任务
-    // this.props.dispatch({
-    //   type: 'TaskManager/getTasksMenu',
-    //   payload: {},
-    // });
-  }
   render() {
     const formItemLayout1 = {
       labelCol: { span: 3 },
@@ -84,11 +75,7 @@ class RelationTask extends React.PureComponent {
     };
     const handleSubmit = () => {
       // 关联任务
-      // this.props.dispatch({
-      //   type: 'TaskManager/relationTask',
-      //   payload: params,
-      // });
-      this.props.handleCancel();
+      this.props.handleCancel(9, {});
     };
     return (
       <div>

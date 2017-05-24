@@ -40,7 +40,6 @@ class TaskMenu extends React.PureComponent {
       });
     }
 
-
     changePlanId(planId) {
       this.props.dispatch({
         type: 'TaskManager/selectPlanId',
@@ -224,7 +223,7 @@ class TaskMenu extends React.PureComponent {
     }
     if(selectId === 7) {
       // 执行收藏的操作
-      this.handleOk(7， {});
+      this.handleOk(7, {});
     }
     return view;
   }

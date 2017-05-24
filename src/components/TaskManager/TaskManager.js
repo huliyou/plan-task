@@ -40,8 +40,8 @@ class TaskManager extends React.PureComponent {
       this.getCommentListAction(this.props.selectProcId);
       this.getLogListAction(this.props.selectProcId);
     }
-    if(this.props.planId) {
-      this.getPlanInfoAction(this.props.planId);
+    if(this.props.selectPlanId) {
+      this.getPlanInfoAction(this.props.selectPlanId);
     }
   }
   componentWillReceiveProps(nextProps) {
@@ -59,8 +59,8 @@ class TaskManager extends React.PureComponent {
       this.getCommentListAction(nextProps.selectProcId);
       this.getLogListAction(nextProps.selectProcId);
     }
-    if (nextProps.planId !== this.props.planId && nextProps.planId) {
-      this.getPlanInfoAction(nextProps.planId);
+    if (nextProps.selectPlanId !== this.props.selectPlanId && nextProps.selectPlanId) {
+      this.getPlanInfoAction(nextProps.selectPlanId);
     }
   }
   // 获取任务详情
@@ -180,7 +180,7 @@ changePlan = (dispatch: Function) => (params: Object) => {
  });
 }
 getPlanInfoAction(planId) {
-  dispatch({
+  this.props.dispatch({
     type: 'TaskManager/getPlanInfo',
     payload: { planId },
   });
@@ -238,7 +238,12 @@ getPlanInfo = (dispatch: Function) => (params: Object) => {
         );
       }
       if(type === 2) {
-        return <GlobalPlan />;
+        return (
+          <GlobalPlan
+             dispatch={this.props.dispatch}
+             taskMenu={this.props.taskMenu}
+          />
+        );
       }
     }
     return (
