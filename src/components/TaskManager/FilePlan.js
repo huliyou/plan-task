@@ -28,7 +28,7 @@ class FilePlan extends React.PureComponent {
         <div className={Styles.bottomButton}>
           <Button
             className={Styles.buttonStyle}
-            onClick={() => this.props.handleOk(5)}
+            onClick={() => this.props.handleOk(5, {})}
           >确定</Button>
           <Button
             className={Styles.buttonStyle}

@@ -3,6 +3,7 @@ import TaskHeader from './TaskHeader.js';
 import TaskMenu from './TaskMenu.js';
 import TaskList from './TaskList.js';
 import Styles from './task.less';
+import GlobalPlan from './GlobalPlan.js';
 
 class TaskManager extends React.PureComponent {
   static propTypes = {
@@ -23,6 +24,7 @@ class TaskManager extends React.PureComponent {
     commentList: PropTypes.array,
     logList: PropTypes.array,
     selectProcId: PropTypes.number,
+    showType: PropTypes.number,
   }
   componentWillMount () {
     // 获取menu数据
@@ -39,7 +41,7 @@ class TaskManager extends React.PureComponent {
       this.getLogListAction(this.props.selectProcId);
     }
     if(this.props.planId) {
-      this.getPlanInfoAction(his.props.planId);
+      this.getPlanInfoAction(this.props.planId);
     }
   }
   componentWillReceiveProps(nextProps) {
@@ -191,45 +193,57 @@ getPlanInfo = (dispatch: Function) => (params: Object) => {
   });
 }
   render() {
+    const showView = (type) => {
+      if(type === 1) {
+        return (
+          <div>
+          <TaskHeader createTaskAction={this.createTaskAction(this.props.dispatch)}/>
+          <div className={Styles.taskBody}>
+            <div className={Styles.taskMenuStyle}>
+              <TaskMenu
+                planItems={this.props.planItems}
+                taskMenu={this.props.taskMenu}
+                createChildPlanAction={this.createChildPlanAction(this.props.dispatch)}
+                createTaskAction={this.createTaskAction(this.props.dispatch)}
+                editPlanAction={this.editPlanAction(this.props.editPlanAction)}
+                delectTaskByPlanId={this.delectTaskByPlanId(this.props.dispatch)}
+                collectPlanAction={this.collectPlanAction(this.props.dispatch)}
+                fileTaskByPlanId={this.fileTaskByPlanId(this.props.dispatch)}
+                changePlan={this.changePlan(this.props.dispatch)}
+                planInfo={this.props.planInfo}
+                dispatch={this.props.dispatch}
+                selectPlanId={this.props.selectPlanId}
+              />
+            </div>
+            <div className={Styles.taskListStyle}>
+              <TaskList
+                taskList={this.props.taskList}
+                taskListCard={this.props.taskListCard}
+                taskCardData={this.props.taskCardData}
+                selectTaskAction={this.selectTaskAction(this.props.dispatch)}
+                relationPlanList={this.props.relationPlanList}
+                dispatch={this.props.dispatch}
+                selectParams={this.props.selectParams}
+                parentTaskList={this.props.parentTaskList}
+                filesList={this.props.filesList}
+                relationTaskList={this.props.relationTaskList}
+                getTaskInfo={this.props.getTaskInfo}
+                selectProcId={this.props.selectProcId}
+                commentList={this.props.commentList}
+                logList={this.props.logList}
+              />
+            </div>
+          </div>
+          </div>
+        );
+      }
+      if(type === 2) {
+        return <GlobalPlan />;
+      }
+    }
     return (
       <div>
-        <TaskHeader createTaskAction={this.createTaskAction(this.props.dispatch)}/>
-        <div className={Styles.taskBody}>
-          <div className={Styles.taskMenuStyle}>
-            <TaskMenu
-              planItems={this.props.planItems}
-              taskMenu={this.props.taskMenu}
-              createChildPlanAction={this.createChildPlanAction(this.props.dispatch)}
-              createTaskAction={this.createTaskAction(this.props.dispatch)}
-              editPlanAction={this.editPlanAction(this.props.editPlanAction)}
-              delectTaskByPlanId={this.delectTaskByPlanId(this.props.dispatch)}
-              collectPlanAction={this.collectPlanAction(this.props.dispatch)}
-              fileTaskByPlanId={this.fileTaskByPlanId(this.props.dispatch)}
-              changePlan={this.changePlan(this.props.dispatch)}
-              planInfo={this.props.planInfo}
-              dispatch={this.props.dispatch}
-              selectPlanId={this.props.selectPlanId}
-            />
-          </div>
-          <div className={Styles.taskListStyle}>
-            <TaskList
-              taskList={this.props.taskList}
-              taskListCard={this.props.taskListCard}
-              taskCardData={this.props.taskCardData}
-              selectTaskAction={this.selectTaskAction(this.props.dispatch)}
-              relationPlanList={this.props.relationPlanList}
-              dispatch={this.props.dispatch}
-              selectParams={this.props.selectParams}
-              parentTaskList={this.props.parentTaskList}
-              filesList={this.props.filesList}
-              relationTaskList={this.props.relationTaskList}
-              getTaskInfo={this.props.getTaskInfo}
-              selectProcId={this.props.selectProcId}
-              commentList={this.props.commentList}
-              logList={this.props.logList}
-            />
-          </div>
-        </div>
+        {showView(this.props.showType)}
       </div>
     );
   }

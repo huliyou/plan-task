@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import Styles from './task.less';
-import { Tree, Menu, Popover, Modal } from 'antd';
+import { Tree, Menu, Popover, Modal, Icon, Tooltip } from 'antd';
 const TreeNode = Tree.TreeNode;
 import CreatePlan from './CreatePlan.js';
 import EditPlan from './EditPlan.js';
@@ -33,6 +33,14 @@ class TaskMenu extends React.PureComponent {
       procId: 0,
       tree: this.props.planItems.filter(item => !item.parentPlanCode),
     }
+
+    componentWillReceiveProps(nextProps) {
+      this.setState({
+        tree: nextProps.planItems.filter(item => !item.parentPlanCode),
+      });
+    }
+
+
     changePlanId(planId) {
       this.props.dispatch({
         type: 'TaskManager/selectPlanId',
@@ -216,13 +224,27 @@ class TaskMenu extends React.PureComponent {
     }
     if(selectId === 7) {
       // 执行收藏的操作
-      this.handleOk(7);
+      this.handleOk(7， {});
     }
     return view;
   }
   render() {
     return (
       <div>
+        <div style={{ paddingBottom: '10px', borderBottom: '1px solid #ccc', display: 'flex', justifyContent: 'flex-end' }}>
+        <Tooltip placement="bottom" title="计划全景">
+           <Icon type="ellipsis" style={{ marginRight: '15px' }}
+             onClick={() => {
+               this.props.dispatch({
+                 type: 'TaskManager/changeShowType',
+                 payload: {
+                   showType: 2,
+                 },
+               });
+             }}
+           />
+         </Tooltip>
+        </div>
         <Tree onSelect={this.onSelect} loadData={(node) => this.onLoadData(node)}>
           {this.renderTreeNode(this.state.tree)}
         </Tree>

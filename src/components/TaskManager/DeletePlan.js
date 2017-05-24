@@ -27,7 +27,7 @@ class DeletePlan extends React.PureComponent {
         <div className={Styles.bottomButton}>
           <Button
             className={Styles.buttonStyle}
-            onClick={() => this.props.handleOk(6)}
+            onClick={() => this.props.handleOk(6, {})}
           >确定</Button>
           <Button
             className={Styles.buttonStyle}

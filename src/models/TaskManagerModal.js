@@ -71,6 +71,8 @@ export default {
     errMsg: '',
     selectPlanId: null,
     selectProcId: null,
+    // 展示视图的类型  1 任务管理  2  全景计划
+    showType: 2,
     // menu树
     planItems,
     // 任务列表
@@ -1042,10 +1044,16 @@ export default {
     },
     // 选中的任务Id
     selectProcId(state, action) {
-      console.log('1:' , action.payload.procId);
       return {
         ...state,
         selectProcId: action.payload.procId,
+      }
+    },
+    // 选中展示的视图
+    changeShowType(state, action) {
+      return {
+        ...state,
+        showType: action.payload.showType,
       }
     },
     selectParams(state, action) {

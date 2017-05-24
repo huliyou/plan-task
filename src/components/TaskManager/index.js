@@ -21,6 +21,7 @@ function mapStateToProps(state) {
     getTaskInfo: state.TaskManager.getTaskInfo,
     commentList: state.TaskManager.commentList,
     logList: state.TaskManager.logList,
+    showType: state.TaskManager.showType,
   });
 }
 export default connect(mapStateToProps)(TaskManager);
