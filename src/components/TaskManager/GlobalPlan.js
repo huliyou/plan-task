@@ -92,9 +92,10 @@ class GlobalPlan extends React.PureComponent {
     data.forEach((value, key) => {
        const startTime = value.startTime;
        const endTime = value.endTime;
-       const data = startTime.split("-");
+       const startData = startTime.split("-");
+       const endData = endTime.split("-");
        const width = 0;
-       if(this.state.year == data[0]) {
+       if(this.state.year == startData[0] && this.state.year == endData[0]) {
          const top = (key) * 25 + 118;
          // 开始时间到结束时间间隔几天 width
          const width = moment(endTime).diff(startTime,'days') * 54;
