@@ -72,7 +72,7 @@ export default {
     selectPlanId: null, // 选中的计划ID
     selectProcId: null, // 选中的任务ID
     // 展示视图的类型  1 任务管理  2  全景计划
-    showType: 2,
+    showType: 1,
     // menu树
     planItems,
     // 任务列表
